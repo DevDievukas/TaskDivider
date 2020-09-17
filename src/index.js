@@ -1,13 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+// import thunk from 'redux-thunk';
+import Auth from './store/reducers/Auth';
+import firebase from 'firebase';
+
+firebase.initializeApp({
+  apiKey: 'AIzaSyBEIzMspLyXzmy2HsHTwbsWqrSk8TjnrvU',
+  authDomain: 'tvarkymas-4237a.firebaseapp.com',
+});
+
+const store = createStore(Auth);
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 
