@@ -13,8 +13,46 @@ If desired person is not in database, there should be option for facebook invite
 Header-navbar contains profile picture, display name and login/logout button
 
 Pages {
-  Login
-  main
-  
+  auth
+  main admin
+    main admin inner
+  User tasks
+  profile
+  Task
+}
+Pop-up {
+  complete task
+  add person
+  create task
+  error
+  disable acc
+}
 
+data {
+  user {
+    name
+    lastname
+    uid
+    email
+    password
+    completed tasks
+    rating
+    overdue tasks
+    prfile pic url
+    teams[]
+  }
+  tean {
+    users[]
+    tasks[]
+  }
+  task{
+    frequency
+    start
+    scheduled end
+    assigned people[]
+    confirmation level
+    pic url
+    task Title
+    task description
+  }
 }
