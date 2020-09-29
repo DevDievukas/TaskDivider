@@ -3,7 +3,7 @@ import Navbar from './components/layout/Navbar';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Card from './components/Card';
 import Login from './pages/login/Login';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import * as actionCreators from './store/actions/index';
 import firebase from 'firebase';
 import axios from 'axios';

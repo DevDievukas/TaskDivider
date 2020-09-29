@@ -1,0 +1,20 @@
+User logs in the website
+When user logged on he gets redirected to main page of app
+In main page there is sidedrawer with all teams he is in and ability to create new team
+When creating team he must add tasks and people of team
+While creating a task user must add Title and description
+Photo is optional, but default image is always displayed
+Tasks could be periodical or one time
+If task is periodical frequency must be specified
+When adding people to project, first it is suggested people from previous projects
+If user cant find person there, he can use search to look for user in database
+If desired person is not in database, there should be option for facebook invite to app
+
+Header-navbar contains profile picture, display name and login/logout button
+
+Pages {
+  Login
+  main
+  
+
+}
