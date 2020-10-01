@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Navbar from './components/layout/Navbar';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Card from './components/Card';
+import Card from './components/Card/Card';
 import Login from './pages/login/Login';
 import { connect } from 'react-redux';
 import * as actionCreators from './store/actions/index';
@@ -60,7 +60,7 @@ function App(props) {
       <div className="container" style={{ margin: '0', padding: '0' }}>
         <Navbar />
         <Route path="/" />
-        <Route path="/card" exact component={Card} />
+        <Card />
         <Route path="/login" exact component={Login} />
         <button onClick={getUser}>click</button>
         <button onClick={createUser}>click2</button>

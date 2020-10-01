@@ -1,0 +1,30 @@
+.card-div {
+  height: 20rem;
+  width: 14rem;
+  border: solid 1px grey;
+  display: block;
+  background-color: teal;
+}
+
+.card-img {
+  background-color: hotpink;
+  height: 40%;
+  width: 85%;
+  position: relative;
+  margin: 1rem;
+}
+
+.team-div {
+  margin-left: 1rem;
+}
+
+.team-div p {
+  margin-top: 1rem;
+}
+
+.text-btn {
+  text-decoration: underline;
+  color: blue;
+  position: absolute;
+  margin: 18rem 0 0 10rem;
+}
