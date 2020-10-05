@@ -56,7 +56,7 @@ function Navbar(props) {
   let navbar = (
     <nav
       className="navbar navbar-light bg-primary"
-      style={{ padding: '0', width: '100vw' }}
+      style={{ padding: '0', width: '100vw', margin: '0' }}
     >
       <Link className="navbar-brand" to="/">
         <img

@@ -4,19 +4,35 @@ import img from '../../assets/profile-icon.svg';
 import './Card.css';
 
 const Card = (props) => {
+  let authLevel = false;
+  let descriptionText = props.description;
+  let descriptionBtn = <button className="description-btn">...</button>;
+  if (descriptionText.length > 80) {
+    descriptionText = descriptionText.slice(0, 77);
+  } else {
+    descriptionBtn = null;
+  }
+
+  let cardButton = <button className="card-btn">complete</button>;
+
+  if (authLevel) {
+    cardButton = <button className="card-btn">delete</button>;
+  }
+
+  const description = (
+    <React.Fragment>
+      {descriptionText}
+      {descriptionBtn}
+    </React.Fragment>
+  );
   return (
     <div className="card-div">
-      <p className="text-btn">Delete</p>
       <img src={props.img} className="card-img" />
       <div className="team-div">
         <h4>{props.name}</h4>
-        {/* <p>{props.description}</p> */}
-        <p>
-          lorem epsum besdad asdf idasmp sadf fads sdafh imk;ads ;lmsad oopmwerw
-          l;s,fd safdk kljfasn; jna;lksdnfn unwelsd jnfka ln knsdf nlkdsfsafdsda
-          asdfadf asdfadsf asdfads
-        </p>
+        {description}
       </div>
+      {cardButton}
     </div>
   );
 };

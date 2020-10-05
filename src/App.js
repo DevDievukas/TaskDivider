@@ -2,15 +2,18 @@ import React, { useEffect } from 'react';
 import Navbar from './components/layout/Navbar';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Card from './components/Card/Card';
-import Login from './pages/login/Login';
+import Auth from './pages/Auth/Auth';
 import { connect } from 'react-redux';
 import * as actionCreators from './store/actions/index';
 import firebase from 'firebase';
 import axios from 'axios';
 
 function App(props) {
-  // const userName = useSelector((state) => state.username);
-  // const photoUrl = useSelector((state) => state.photo);
+  const DUMMY_DATA = {
+    image: 'https://i.ibb.co/YDgsCbY/IMG-20200817-061706.jpg',
+    name: 'Norbertas',
+    description: 'reikia susitvarkyti kambary',
+  };
 
   const user = {
     displayName: 'Boyka',
@@ -58,12 +61,34 @@ function App(props) {
   return (
     <Router>
       <div className="container" style={{ margin: '0', padding: '0' }}>
-        <Navbar />
-        <Route path="/" />
-        <Card />
-        <Route path="/login" exact component={Login} />
-        <button onClick={getUser}>click</button>
-        <button onClick={createUser}>click2</button>
+        <Route path="/" component={Auth} />
+        <Route path="/auth" exact component={Auth} />
+        {/* <button onClick={getUser}>click</button> */}
+        {/* <button onClick={createUser}>click2</button> */}
+      </div>
+
+      {/* <Navbar /> */}
+      <div style={{ display: 'none' }}>
+        <Card
+          img={DUMMY_DATA.image}
+          name={DUMMY_DATA.name}
+          description={DUMMY_DATA.description}
+        />
+        <Card
+          img={DUMMY_DATA.image}
+          name={DUMMY_DATA.name}
+          description={DUMMY_DATA.description}
+        />
+        <Card
+          img={DUMMY_DATA.image}
+          name={DUMMY_DATA.name}
+          description={DUMMY_DATA.description}
+        />
+        <Card
+          img={DUMMY_DATA.image}
+          name={DUMMY_DATA.name}
+          description={DUMMY_DATA.description}
+        />
       </div>
     </Router>
   );
