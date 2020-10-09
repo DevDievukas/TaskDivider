@@ -57,7 +57,7 @@ const Input = (props) => {
         placeholder={props.placeholder}
         onChange={changeHandler}
         value={inputState.value}
-        // onBlur={touchHandler}
+        onBlur={touchHandler}
         className={props.className}
       />
     ) : (
@@ -66,7 +66,7 @@ const Input = (props) => {
         rows={props.rows || 3}
         onChange={changeHandler}
         value={inputState.value}
-        // onBlur={touchHandler}
+        onBlur={touchHandler}
       />
     );
 

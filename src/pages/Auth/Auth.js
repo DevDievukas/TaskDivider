@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import firebase from 'firebase';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { useHistory } from 'react-router';
 
 import { connect } from 'react-redux';
 import * as actionCreators from '../../store/actions/index';
-import { VALIDATOR_REQUIRE } from '../../shared/validators/validators';
-import Input from '../../shared/Input/Input';
+import SignIn from './SignIn';
+import Register from './Register';
 
 import './Auth.css';
 
@@ -33,110 +32,11 @@ function Login(props) {
     setSignIn(true);
   };
 
-  const uiConfig = {
-    signInFlow: 'popup',
-    signInOptions: [
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    ],
-    callbacks: {
-      signInSuccessWithAuthResult: () => false,
-    },
+  const placeSubmitHandler = (event) => {
+    event.preventDefault();
   };
 
-  const dummy = (event) => {
-    console.log(event.value);
-  };
-
-  const formElement =
-    signIn === true ? (
-      <form className="form">
-        <div className="form-group">
-          <Input
-            placeholder="Email adress"
-            type="email"
-            id="email"
-            element="input"
-            validators={[]}
-            onInput={dummy}
-          />
-        </div>
-        <div className="form-group">
-          <Input
-            id="password"
-            element="input"
-            type="password"
-            validators={[]}
-            onInput={dummy}
-            placeholder="password"
-          />
-        </div>
-        <div className="form-group form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="exampleCheck1"
-          />
-          <label className="form-check-label">Keep signed in</label>
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Sign In!
-        </button>
-
-        <p className="forgot-password">forgot password?</p>
-
-        <StyledFirebaseAuth
-          uiConfig={uiConfig}
-          firebaseAuth={firebase.auth()}
-        />
-      </form>
-    ) : (
-      <form className="form">
-        <div className="form-group">
-          <Input
-            placeholder="Email adress"
-            type="email"
-            id="email"
-            element="input"
-            validators={[]}
-            onInput={dummy}
-          />
-        </div>
-        <div className="form-group">
-          <Input
-            placeholder="Full name"
-            type="input"
-            id="name"
-            element="input"
-            validators={[]}
-            onInput={dummy}
-          />
-        </div>
-        <div className="form-group">
-          <Input
-            id="password"
-            element="input"
-            type="password"
-            validators={[]}
-            onInput={dummy}
-            placeholder="password"
-          />
-        </div>
-        <div className="form-group">
-          <Input
-            id="passwordRepeat"
-            element="input"
-            type="password"
-            validators={[]}
-            onInput={dummy}
-            placeholder="confirm password"
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Register
-        </button>
-      </form>
-    );
+  const formElement = signIn === true ? <SignIn /> : <Register />;
 
   return (
     <main className="auth-main">
@@ -164,7 +64,10 @@ function Login(props) {
           <h2 onClick={switchSignInHandler}>Sign In</h2>
           <h2 onClick={switchRegisterHandler}>Register</h2>
         </div>
-        {formElement}
+
+        <form className="form" onSubmit={placeSubmitHandler}>
+          {formElement}
+        </form>
       </div>
       <p className="copyright-disclaimer">©All rights reserved Boyka studios</p>
     </main>
