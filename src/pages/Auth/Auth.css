@@ -10,85 +10,125 @@
   opacity: 0.8;
 }
 
+.title-text {
+  background-color: rgba(146, 238, 241, 0.623);
+  padding-bottom: 0.4rem;
+  padding-top: 0.6rem;
+  text-align: center;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+.title-text h4 {
+  display: none;
+}
 .auth-box__div {
-  position: fixed;
-  border: 0.4px solid rgba(207, 199, 199, 0.781);
-  background-color: rgba(255, 255, 255, 0.801);
-  left: 50vw;
-  top: 15vh;
-  width: 25rem;
+  width: 100%;
   text-align: right;
-  padding-bottom: 1rem;
-  box-shadow: 2px 3px gainsboro;
-  border-radius: 5%;
+  padding-top: 1.5rem;
+}
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.bi-person-circle {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  color: #3412f585;
+  width: 40%;
 }
 
 .switch-auth__div {
   display: flex;
   justify-content: space-around;
-  color: #e0d7a8;
+  color: #4806ff;
   margin-top: 1rem;
   margin-bottom: 1.3rem;
-  border-bottom: 3px solid rgba(216, 215, 215, 0.459);
-  /* padding-bottom: 1rem; */
+  border-bottom: 3px solid rgba(101, 7, 252, 0.459);
 }
 
-.switch-auth__div h2 {
-  cursor: pointer;
-  margin-bottom: 2px;
-}
+/* .switch-auth__div h2:active {
+  color: #2c00a7;
+  text-shadow: 0.4px 0.4px #130058;
+} */
 
-.switch-auth__div h2:hover {
-  color: #ada67e;
-  margin-bottom: -1.4px;
-  border-bottom: 3px solid #ada67e49;
-}
-
-.auth-form {
-  text-align: center;
-}
-.auth-form input {
-  width: 65%;
-  margin-bottom: 1rem;
-}
-
-.auth-button {
-  margin-left: 67%;
-}
-
-.checkbox-div {
-  display: flex;
-}
-
-.checkbox-div input {
-  margin-right: 0.2rem;
-  margin-top: 6px;
+.form {
+  margin-right: 1.2rem;
+  margin-left: 1rem;
+  text-align: right;
+  margin-top: 2rem;
 }
 
 .forgot-password {
   color: rgb(3, 110, 197);
   text-decoration: underline;
   cursor: pointer;
-  margin-right: 3rem;
-  margin-top: 0.3rem;
+  margin-top: 0.45rem;
 }
 
-.form {
-  display: inline-block;
-  text-align: right;
-  margin-right: 2.2rem;
-}
-.form-group {
-  width: 20rem;
+.btn {
+  width: 100%;
 }
 
-.form-control {
-  text-align: right;
+.copyright-disclaimer {
+  position: fixed;
+  bottom: 0;
+  margin: 0;
+  width: 100%;
+  height: 2rem;
+  background-color: rgba(146, 238, 241, 0.623);
+  text-align: center;
 }
+@media only screen and (min-width: 600px) {
+  .title-text {
+    position: absolute;
+    top: 12rem;
+    left: 15rem;
+  }
+  .auth-box__div {
+    position: fixed;
+    border: 0.4px solid rgba(207, 199, 199, 0.781);
+    background-color: rgba(255, 255, 255, 0.801);
+    left: 65rem;
+    top: 10rem;
+    width: 25rem;
+    text-align: right;
+    padding-bottom: 1rem;
+    box-shadow: 2px 3px gainsboro;
+    border-radius: 5%;
+  }
 
-.bi-person-circle {
-  margin-top: -4em;
-  margin-right: 7em;
-  color: #e0d7a8;
-  /* background-color: white; */
+  .switch-auth__div {
+    display: flex;
+    justify-content: space-around;
+    color: #e0d7a8;
+    margin-top: 1rem;
+    margin-bottom: 1.3rem;
+    border-bottom: 3px solid rgba(216, 215, 215, 0.459);
+  }
+
+  .switch-auth__div h2 {
+    cursor: pointer;
+    margin-bottom: 2px;
+  }
+
+  .switch-auth__div h2:hover {
+    color: #ada67e;
+    margin-bottom: -1.4px;
+    border-bottom: 3px solid #ada67e49;
+  }
+
+  .form {
+    display: inline-block;
+    margin-right: 2.2rem;
+    text-align: right;
+  }
+  .form-group {
+    width: 20rem;
+  }
+
+  .bi-person-circle {
+    margin-top: -4em;
+    margin-right: 7em;
+    color: #e0d7a8;
+  }
 }
