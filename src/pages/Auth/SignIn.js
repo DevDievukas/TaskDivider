@@ -69,9 +69,16 @@ const SignIn = (props) => {
     },
     [dispatch]
   );
+  
+  const placeSubmitHandler = (event) => {
+    event.preventDefault();
+    console.log(formState.inputs);
+    props.onAuth(formState.inputs.email.value, ' ');
+    props.redirect();
+  };
 
   return (
-    <React.Fragment>
+    <form className="form" onSubmit={placeSubmitHandler}>
       <div className="form-group">
         <Input
           placeholder="Email adress"
@@ -112,8 +119,7 @@ const SignIn = (props) => {
       <p className="forgot-password">forgot password?</p>
 
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-    </React.Fragment>
-  );
+</form>  );
 };
 
 export default SignIn;

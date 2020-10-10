@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useSelector } from 'react';
 import Navbar from './components/layout/Navbar';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Card from './components/Card/Card';
@@ -9,6 +9,9 @@ import firebase from 'firebase';
 import axios from 'axios';
 
 function App(props) {
+  
+
+
   const DUMMY_DATA = {
     image: 'https://i.ibb.co/YDgsCbY/IMG-20200817-061706.jpg',
     name: 'Norbertas',
@@ -58,16 +61,16 @@ function App(props) {
       });
   }
 
+  
+
   return (
     <Router>
+      <Navbar />
       <div className="container" style={{ margin: '0', padding: '0' }}>
-        <Route path="/" component={Auth} />
+        <Route path="/" />
         <Route path="/auth" exact component={Auth} />
-        {/* <button onClick={getUser}>click</button> */}
-        {/* <button onClick={createUser}>click2</button> */}
       </div>
 
-      {/* <Navbar /> */}
       <div style={{ display: 'none' }}>
         <Card
           img={DUMMY_DATA.image}

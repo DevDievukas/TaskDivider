@@ -66,9 +66,14 @@ const Register = () => {
     },
     [dispatch]
   );
+  
+  const placeSubmitHandler = (event) => {
+    event.preventDefault();
+    console.log(formState.inputs);
+  };
 
   return (
-    <React.Fragment>
+    <form className="form" onSubmit={placeSubmitHandler}>
       <div className="form-group">
         <Input
           placeholder="Email adress"
@@ -118,8 +123,7 @@ const Register = () => {
       >
         Register
       </button>
-    </React.Fragment>
-  );
+</form>  );
 };
 
 export default Register;

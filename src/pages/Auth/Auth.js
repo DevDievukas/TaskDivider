@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useSelector } from 'react';
 import firebase from 'firebase';
 import { useHistory } from 'react-router';
 
@@ -11,17 +11,23 @@ import './Auth.css';
 
 function Login(props) {
   const [signIn, setSignIn] = useState(true);
+  
 
   let history = useHistory();
+
+  const redirect = () => {
+    history.push('/');
+  }
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         props.onAuth(user.displayName, user.photoURL);
         console.log('[login] - redirect');
-        history.push('/');
+        redirect();
       }
     });
+
   }, []);
 
   const switchRegisterHandler = () => {
@@ -32,22 +38,17 @@ function Login(props) {
     setSignIn(true);
   };
 
-  const placeSubmitHandler = (event) => {
-    event.preventDefault();
-  };
 
-  const formElement = signIn === true ? <SignIn /> : <Register />;
+  const formElement = signIn === true ? <SignIn onAuth={props.onAuth} redirect={redirect}/> : <Register />;
 
   return (
     <main className="auth-main">
       <div className="title-text">
-        <h1>Task Distributor</h1>
+        <h2>Task Distributor</h2>
         <h4>App slogan here</h4>
       </div>
       <div className="auth-box__div">
         <svg
-          width="10em"
-          height="10em"
           viewBox="0 0 16 16"
           className="bi bi-person-circle"
           fill="currentColor"
@@ -64,10 +65,7 @@ function Login(props) {
           <h2 onClick={switchSignInHandler}>Sign In</h2>
           <h2 onClick={switchRegisterHandler}>Register</h2>
         </div>
-
-        <form className="form" onSubmit={placeSubmitHandler}>
           {formElement}
-        </form>
       </div>
       <p className="copyright-disclaimer">©All rights reserved Boyka studios</p>
     </main>

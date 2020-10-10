@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import {useHistory} from 'react-router';
 import firebase from 'firebase';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -10,16 +11,18 @@ function Navbar(props) {
   const validity = useSelector((state) => state.valid);
   const profPic = useSelector((state) => state.photo);
 
+  const history = useHistory();
+
   let rightButton = (
-    <Link className="navbar-brand" to="/login">
+    <Link className="navbar-brand" to="/auth">
       Login
     </Link>
   );
 
   const logout = () => {
     props.signout();
-    console.log('[Navbar] - called');
     firebase.auth().signOut();
+    history.push('/auth');
   };
 
   if (validity) {
@@ -53,7 +56,8 @@ function Navbar(props) {
     );
   }
 
-  let navbar = (
+  
+  const navbar = validity === true ? (
     <nav
       className="navbar navbar-light bg-primary"
       style={{ padding: '0', width: '100vw', margin: '0' }}
@@ -67,7 +71,10 @@ function Navbar(props) {
       </Link>
       {rightButton}
     </nav>
-  );
+  ) : <div className="title-text">
+        <h2>Task Distributor</h2>
+        <h4>App slogan here</h4>
+      </div>;
 
   return navbar;
 }
