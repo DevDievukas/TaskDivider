@@ -12,10 +12,8 @@ import * as actionCreators from '../../store/actions/index';
 
 import './Navbar.css';
 
-function Navbar(props) {
+const Navbar = (props) => {
   const validity = useSelector((state) => state.valid);
-  const profPic = useSelector((state) => state.photo);
-  const name = useSelector((state) => state.username);
   const [drawerIsOpen, setDrawerisOpen] = useState(false);
 
   const openDrawerHandler = () => {
@@ -54,10 +52,12 @@ function Navbar(props) {
     linkDirection = '/main'
   }
 
+  const text = "Username"
+
 const navbar = (<React.Fragment>
-  {drawerIsOpen && <Backdrop onClick={closeSdrawerHandler} />}
+  {drawerIsOpen && <Backdrop onClick={closeSdrawerHandler}/>}
   <SideDrawer show = {drawerIsOpen} onClick={closeSdrawerHandler}>
-  <SideDrawerNav logout={logout}/>
+  <SideDrawerNav logout={logout}  name={text}/>
 </SideDrawer>
   <header className="navbar">
     <Link className="navbar-brand" to={`${linkDirection}`}>

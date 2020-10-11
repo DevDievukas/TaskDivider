@@ -1,0 +1,14 @@
+.group-element-btn {
+  width: 100%;
+  height: 5rem;
+  background-color: transparent;
+  border: 3px solid rgb(98, 0, 255);
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.group-element-btn:active,
+.group-element-btn:focus {
+  background-color: rgb(231, 229, 229);
+  border-color: rgb(16, 1, 148);
+}

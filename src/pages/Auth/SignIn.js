@@ -72,7 +72,6 @@ const SignIn = (props) => {
   
   const placeSubmitHandler = (event) => {
     event.preventDefault();
-    console.log(formState.inputs);
     props.onAuth(formState.inputs.email.value, ' ');
     props.redirect();
   };
@@ -111,7 +110,6 @@ const SignIn = (props) => {
       <button
         type="submit"
         className="btn "
-        onClick={() => console.log(formState.isValid)}
       >
         Sign In!
       </button>

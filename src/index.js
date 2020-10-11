@@ -6,6 +6,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import Auth from './store/reducers/Auth';
 import firebase from 'firebase';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import './index.css';
 
@@ -18,7 +19,9 @@ const store = createStore(Auth);
 
 ReactDOM.render(
   <Provider store={store}>
+    <Router>
     <App />
+    </Router>
   </Provider>,
   document.getElementById('root')
 );

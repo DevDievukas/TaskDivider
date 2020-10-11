@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useSelector } from 'react';
+import React, { useEffect, useState } from 'react';
 import firebase from 'firebase';
 import { useHistory } from 'react-router';
 

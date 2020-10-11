@@ -2,45 +2,50 @@ import React from 'react';
 
 import Task from './Task';
 
+import './MyTasks.css';
+
 const MyTasks = () => {
   
   const DUMMY_DATA = {
-    image: 'https://i.ibb.co/YDgsCbY/IMG-20200817-061706.jpg',
-    name: 'Norbertas',
-    description: 'reikia susitvarkyti kambary',
+    one: {
+      image: 'https://i.ibb.co/YDgsCbY/IMG-20200817-061706.jpg',
+      name: 'Norbertas',
+      description: 'reikia susitvarkyti kambary',
+      id: 1
+    },
+    two:{
+      image: 'https://i.ibb.co/YDgsCbY/IMG-20200817-061706.jpg',
+      name: 'Norbertas',
+      description: 'reikia susitvarkyti kambary',
+      id: 2
+    },
+    three: {
+      image: 'https://i.ibb.co/YDgsCbY/IMG-20200817-061706.jpg',
+      name: 'Norbertas',
+      description: 'reikia susitvarkyti kambary',
+      id:3
+    }
   };
 
-  
-{/* <Task img={DUMMY_DATA.image} title={DUMMY_DATA.name} description={DUMMY_DATA.description}/> */}
-
   return (
-    <div id="carouselExampleIndicators" className="carousel slide">
-    <ol className="carousel-indicators">
-      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-    </ol>
-    <div className="carousel-inner">
-      <div className="carousel-item active">
-        <Task img={DUMMY_DATA.image} title={DUMMY_DATA.name} description={DUMMY_DATA.description}/>
+    <div className="accordion" id="accordionExample">
+      <div className="card">
+        <div className="card-header" id="headingOne">
+          <h2 className="mb-0">
+            <button  type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Collapsible Group Item #1
+            </button>
+          </h2>
+        </div>
+
+        <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div className="card-body">
+            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+          </div>
+        </div>
       </div>
-      <div className="carousel-item">
-        <Task img={DUMMY_DATA.image} title={DUMMY_DATA.name} description={DUMMY_DATA.description}/>
-      </div>
-      <div className="carousel-item">
-        <Task img={DUMMY_DATA.image} title={DUMMY_DATA.name} description={DUMMY_DATA.description}/>
-      </div>
-    </div>
-    <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-      <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span className="sr-only">Previous</span>
-    </a>
-    <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-      <span className="carousel-control-next-icon" aria-hidden="true"></span>
-      <span className="sr-only">Next</span>
-    </a>
   </div>
-)
+  )
 }
 
 export default MyTasks;
