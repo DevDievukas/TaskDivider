@@ -1,80 +1,74 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useSelector } from 'react-redux';
 import {useHistory} from 'react-router';
 import firebase from 'firebase';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import Backdrop from '../../shared/UIElements/Backdrop';
+import SideDrawer from '../../shared/SideDrawer/SideDrawer';
+import SideDrawerNav from './SideDrawerNav';
 import * as actionCreators from '../../store/actions/index';
+
+import './Navbar.css';
 
 function Navbar(props) {
   const validity = useSelector((state) => state.valid);
   const profPic = useSelector((state) => state.photo);
+  const name = useSelector((state) => state.username);
+  const [drawerIsOpen, setDrawerisOpen] = useState(false);
+
+  const openDrawerHandler = () => {
+    setDrawerisOpen(true);
+  }
+
+  const closeSdrawerHandler = () => {
+    setDrawerisOpen(false);
+  }
+  let linkDirection = '/';
 
   const history = useHistory();
 
   let rightButton = (
     <Link className="navbar-brand" to="/auth">
-      Login
+      <p>Login</p>
     </Link>
   );
 
   const logout = () => {
     props.signout();
     firebase.auth().signOut();
-    history.push('/auth');
+    history.push('/');
   };
 
   if (validity) {
     rightButton = (
-      <div className="dropdown">
-        <button
-          className="btn btn-primary"
-          type="button"
-          id="dropdownMenuButton"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div
-          className="dropdown-menu dropdown-menu-right"
-          aria-labelledby="dropdownMenuButton"
-        >
-          <Link className="dropdown-item" to="#">
-            Profile
-          </Link>
-          <Link className="dropdown-item" to="#">
-            My groups
-          </Link>
-          <Link className="dropdown-item" to="#" onClick={logout}>
-            Logout
-          </Link>
-        </div>
-      </div>
+      <h1 className="main-navigation__title"> <button
+      className="main-navigation__menu-btn"
+      onClick={openDrawerHandler}
+    >
+      <span /> <span /> <span />
+    </button>
+    </h1>
     );
+    linkDirection = '/main'
   }
 
-  
-  const navbar = validity === true ? (
-    <nav
-      className="navbar navbar-light bg-primary"
-      style={{ padding: '0', width: '100vw', margin: '0' }}
-    >
-      <Link className="navbar-brand" to="/">
-        <img
-          src={profPic}
-          alt="profile"
-          style={{ width: '3vh', marginLeft: '15px' }}
-        />
-      </Link>
-      {rightButton}
-    </nav>
-  ) : <div className="title-text">
-        <h2>Task Distributor</h2>
-        <h4>App slogan here</h4>
-      </div>;
+const navbar = (<React.Fragment>
+  {drawerIsOpen && <Backdrop onClick={closeSdrawerHandler} />}
+  <SideDrawer show = {drawerIsOpen} onClick={closeSdrawerHandler}>
+  <SideDrawerNav logout={logout}/>
+</SideDrawer>
+  <header className="navbar">
+    <Link className="navbar-brand" to={`${linkDirection}`}>
+      <svg width="2em" height="2em" viewBox="0 0 16 16" className="bi bi-command" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M3.5 2a1.5 1.5 0 1 0 0 3H5V3.5A1.5 1.5 0 0 0 3.5 2zM6 5V3.5A2.5 2.5 0 1 0 3.5 6H5v4H3.5A2.5 2.5 0 1 0 6 12.5V11h4v1.5a2.5 2.5 0 1 0 2.5-2.5H11V6h1.5A2.5 2.5 0 1 0 10 3.5V5H6zm4 1H6v4h4V6zm1-1h1.5A1.5 1.5 0 1 0 11 3.5V5zm0 6v1.5a1.5 1.5 0 1 0 1.5-1.5H11zm-6 0H3.5A1.5 1.5 0 1 0 5 12.5V11z"/>
+      </svg>
+    </Link>
+   {rightButton}
+  </header>
+  </React.Fragment>
+  )
 
   return navbar;
 }

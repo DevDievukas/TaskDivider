@@ -4,7 +4,7 @@ import { updateObject } from '../Utility';
 
 const initialState = {
   valid: false,
-  username: null,
+  username: 'Name',
   photo: `https://image.flaticon.com/icons/svg/892/892781.svg`,
 };
 

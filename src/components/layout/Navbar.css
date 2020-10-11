@@ -1,0 +1,59 @@
+.navbar {
+  padding: 0;
+  width: 100vw;
+  margin-bottom: 1rem;
+  background-color: rgb(100, 4, 168);
+  box-shadow: 1px 1px rgb(134, 8, 224);
+}
+
+.navbar p {
+  color: rgb(218, 216, 216);
+  padding-left: 0.7rem;
+  margin: 0;
+  padding-bottom: 0.4rem;
+  font-size: 120%;
+}
+
+.bi {
+  margin-left: 0.7rem;
+  color: rgb(218, 216, 216);
+}
+
+.btn div {
+  width: 30px;
+  height: 3px;
+  background-color: rgb(218, 216, 216);
+  margin: 6px 0;
+}
+
+.main-navigation__menu-btn {
+  width: 1.5rem;
+  height: 2.3rem;
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-right: 2.2rem;
+  margin-top: 0.4rem;
+  cursor: pointer;
+}
+
+.main-navigation__menu-btn span {
+  display: block;
+  width: 2.4rem;
+  height: 3px;
+  background: rgb(218, 216, 216);
+}
+
+.main-navigation__title {
+  color: white;
+}
+
+.main-navigation__header-nav {
+  display: none;
+}
+
+.main-navigation__drawer-nav {
+  height: 100%;
+}

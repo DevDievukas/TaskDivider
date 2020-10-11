@@ -110,7 +110,7 @@ const SignIn = (props) => {
       </div>
       <button
         type="submit"
-        className="btn btn-primary"
+        className="btn "
         onClick={() => console.log(formState.isValid)}
       >
         Sign In!

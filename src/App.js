@@ -1,22 +1,24 @@
 import React, { useEffect, useSelector } from 'react';
-import Navbar from './components/layout/Navbar';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Card from './components/Card/Card';
-import Auth from './pages/Auth/Auth';
 import { connect } from 'react-redux';
-import * as actionCreators from './store/actions/index';
 import firebase from 'firebase';
 import axios from 'axios';
 
-function App(props) {
+import Navbar from './components/layout/Navbar';
+import * as actionCreators from './store/actions/index';
+import Card from './components/Card/Card';
+
+import Auth from './pages/Auth/Auth';
+import Starting from './pages/Starting/Starting';
+import Main from './pages/Main/Main';
+import AddGroup from './pages/AddGroup/AddGroup';
+import Groups from './pages/Groups/Groups';
+import MyTasks from './pages/MyTasks/MyTasks';
+import Profile from './pages/Profile/Profile';
+import Team from './pages/Team/Team';
+
   
-
-
-  const DUMMY_DATA = {
-    image: 'https://i.ibb.co/YDgsCbY/IMG-20200817-061706.jpg',
-    name: 'Norbertas',
-    description: 'reikia susitvarkyti kambary',
-  };
+function App(props) {
 
   const user = {
     displayName: 'Boyka',
@@ -61,37 +63,19 @@ function App(props) {
       });
   }
 
-  
 
   return (
     <Router>
       <Navbar />
-      <div className="container" style={{ margin: '0', padding: '0' }}>
-        <Route path="/" />
+      <div className="container">
+        <Route path="/" exact component={Starting}/>
         <Route path="/auth" exact component={Auth} />
-      </div>
-
-      <div style={{ display: 'none' }}>
-        <Card
-          img={DUMMY_DATA.image}
-          name={DUMMY_DATA.name}
-          description={DUMMY_DATA.description}
-        />
-        <Card
-          img={DUMMY_DATA.image}
-          name={DUMMY_DATA.name}
-          description={DUMMY_DATA.description}
-        />
-        <Card
-          img={DUMMY_DATA.image}
-          name={DUMMY_DATA.name}
-          description={DUMMY_DATA.description}
-        />
-        <Card
-          img={DUMMY_DATA.image}
-          name={DUMMY_DATA.name}
-          description={DUMMY_DATA.description}
-        />
+        <Route path="/main" exact component={Main} />
+        <Route path="/addgroup" exact component={AddGroup} />
+        <Route path="/groups" exact component={Groups} />
+        <Route path="/mytasks" exact component={MyTasks} />
+        <Route path="/profile" exact component={Profile} />
+        <Route path="/team" exact component={Team} />
       </div>
     </Router>
   );
