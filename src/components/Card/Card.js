@@ -1,5 +1,4 @@
 import React from 'react';
-import img from '../../assets/profile-icon.svg';
 
 import './Card.css';
 

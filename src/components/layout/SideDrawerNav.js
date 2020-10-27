@@ -7,7 +7,7 @@ const SideDrawerNav = (props) => {
   return (
     <React.Fragment>
       <div className="sidedrawer-header">
-      <Link className="dropdown-item" to="/profile" >{props.name}</Link>
+      <Link className="dropdown-item profile" to="/profile" >{props.name}</Link>
       </div>
     <nav className="main-navigation__drawer-nav">
       <Link className="dropdown-item" to="/main">

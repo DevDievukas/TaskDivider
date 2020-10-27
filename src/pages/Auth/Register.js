@@ -2,6 +2,7 @@ import React, { useReducer, useCallback } from 'react';
 
 import {
   VALIDATOR_EMAIL,
+  VALIDATOR_MAXLENGTH,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REPEAT_PASSWORD,
   VALIDATOR_REQUIRE,
@@ -43,7 +44,7 @@ const Register = () => {
         value: '',
         isValid: false,
       },
-      name: {
+      username: {
         value: '',
         isValid: false,
       },
@@ -86,11 +87,11 @@ const Register = () => {
       </div>
       <div className="form-group">
         <Input
-          placeholder="Full name"
+          placeholder="Username"
           type="input"
-          id="name"
+          id="username"
           element="input"
-          validators={[VALIDATOR_REQUIRE()]}
+          validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(10)]}
           onInput={InputHandler}
         />
       </div>

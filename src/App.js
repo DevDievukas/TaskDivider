@@ -1,12 +1,14 @@
-import React, { useEffect} from 'react';
-import { BrowserRouter as Router, Route} from 'react-router-dom';
-import { Redirect, Switch, useHistory } from 'react-router';
-import { connect, useSelector  } from 'react-redux';
+import React, { useEffect, useState, useCallback } from 'react';
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
 import firebase from 'firebase';
-// import axios from 'axios';
+import axios from 'axios';
 
 import Navbar from './components/layout/Navbar';
-import * as actionCreators from './store/actions/index';
 
 import Auth from './pages/Auth/Auth';
 import Starting from './pages/Starting/Starting';
@@ -15,18 +17,19 @@ import AddGroup from './pages/AddGroup/AddGroup';
 import MyTasks from './pages/MyTasks/MyTasks';
 import Profile from './pages/Profile/Profile';
 import Team from './pages/Team/Team';
-
+import { AuthContext } from './shared/Context/auth-context';
 
 const App = (props) => {
-  
-  const history = useHistory();
-  const validity = useSelector(state => state.valid);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  let routes;
 
+  const login = useCallback(() => {
+    setIsLoggedIn(true);
+  }, []);
 
-  // const user = {
-  //   displayName: 'Boyka',
-  //   email: 'Boykagmailcom',
-  // };
+  const logout = useCallback(() => {
+    setIsLoggedIn(false);
+  }, []);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -37,77 +40,84 @@ const App = (props) => {
     });
   }, [props]);
 
+  console.log('[logged]' + isLoggedIn);
+  if (isLoggedIn) {
+    routes = (
+      <Switch>
+        <Route path="/main" exact>
+          <Main />
+        </Route>
+        <Route path="/addgroup" exact>
+          <AddGroup />
+        </Route>
+        <Route path="/profile" exact>
+          <Profile />
+        </Route>
+        <Route path="/team" exact>
+          <Team />
+        </Route>
+        <Route path="/:groupId/tasks" exact>
+          <MyTasks />
+        </Route>
+        <Redirect to="/main" />
+      </Switch>
+    );
+  } else {
+    routes = (
+      <Switch>
+        <Route path="/" exact>
+          <Starting />
+        </Route>
+        <Route path="/auth" exact>
+          <Auth />
+        </Route>
+        <Route path="/:groupId/tasks" exact>
+          <MyTasks />
+        </Route>
+        <Redirect to="/auth" />
+      </Switch>
+    );
+  }
 
-  // function getUser() {
-  //   axios
-  //     .get(`https://tvarkymas-4237a.firebaseio.com/Users/${user.email}.json`)
-  //     .then((response) => {
-  //       if (!response.data) {
-  //         createUser();
-  //       } else {
-  //         console.log('[App][success]' + response.data);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log('[App][fail}' + err);
-  //     });
-  // }
-
-  // function createUser() {
-  //   axios
-  //     .post(
-  //       `https://tvarkymas-4237a.firebaseio.com/Users/${user.email}.json`,
-  //       user
-  //     )
-  //     .then((res) => {
-  //       console.log('[App]' + res);
-  //     })
-  //     .catch((err) => {
-  //       console.log('[App] ' + err);
-  //     });
-  // }
-
-  const redirection = validity ? <Redirect to="/main" /> : <Redirect to="/" />;
-
-  console.log('[validity] ' + validity);
   return (
-    // <Router>
-    <React.Fragment>
-      <Navbar />
-      <div className="container">
-        <Switch>
-          <Route path="/" exact>
-            <Starting />
-          </Route>
-          <Route path="/auth" exact>
-            <Auth />
-          </Route>
-          <Route path="/main" exact >
-            <Main />
-          </Route>
-          <Route path="/addgroup" exact>
-            <AddGroup />
-          </Route>
-          <Route path="/:groupId/tasks" exact >
-            <MyTasks />
-          </Route>
-          <Route path="/profile" exact>
-            <Profile />
-          </Route>
-          <Route path="/team" exact >
-            <Team />
-          </Route>
-          {redirection}
-        </Switch>
-      </div>
-    </React.Fragment>
+    <AuthContext.Provider
+      value={{ isLogedIn: isLoggedIn, login: login, logout: logout }}
+    >
+      <Router>
+        <Navbar />
+        <main className="container">{routes}</main>
+      </Router>
+    </AuthContext.Provider>
   );
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onAuth: (username, photo) => dispatch(actionCreators.auth(username, photo)),
-  };
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default App;
+
+// function getUser() {
+//   axios
+//     .get(`https://tvarkymas-4237a.firebaseio.com/Users/${user.email}.json`)
+//     .then((response) => {
+//       if (!response.data) {
+//         createUser();
+//       } else {
+//         console.log('[App][success]' + response.data);
+//       }
+//     })
+//     .catch((err) => {
+//       console.log('[App][fail}' + err);
+//     });
+// }
+
+// function createUser() {
+//   axios
+//     .post(
+//       `https://tvarkymas-4237a.firebaseio.com/Users/${user.email}.json`,
+//       user
+//     )
+//     .then((res) => {
+//       console.log('[App]' + res);
+//     })
+//     .catch((err) => {
+//       console.log('[App] ' + err);
+//     })
+// }

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import { connect } from 'react-redux';
-import * as actionCreators from '../store/actions/index';
-
 function Card(props) {
   const [room, setRoom] = useState('');
   const [counter, setCounter] = useState(0);
@@ -69,19 +66,10 @@ function Card(props) {
           <button onClick={forward} className="btn btn-primary">
             Sekantis
           </button>
-          {/* <a onClick={props.onAuth} className="btn btn-primary">
-            Sekantis
-          </a> */}
         </div>
       </div>
     </div>
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onAuth: () => dispatch(actionCreators.auth()),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(Card);
+export default Card;

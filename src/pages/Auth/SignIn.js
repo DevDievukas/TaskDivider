@@ -69,15 +69,9 @@ const SignIn = (props) => {
     },
     [dispatch]
   );
-  
-  const placeSubmitHandler = (event) => {
-    event.preventDefault();
-    props.onAuth(formState.inputs.email.value, ' ');
-    props.redirect();
-  };
 
   return (
-    <form className="form" onSubmit={placeSubmitHandler}>
+    <form className="form" onSubmit={props.onAuth}>
       <div className="form-group">
         <Input
           placeholder="Email adress"
@@ -107,17 +101,15 @@ const SignIn = (props) => {
         />
         <label className="form-check-label">Keep signed in</label>
       </div>
-      <button
-        type="submit"
-        className="btn "
-      >
+      <button type="submit" className="btn ">
         Sign In!
       </button>
 
       <p className="forgot-password">forgot password?</p>
 
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-</form>  );
+    </form>
+  );
 };
 
 export default SignIn;

@@ -12,7 +12,12 @@
 }
 
 .sidedrawer-header {
-  background-color: teal;
+  background-color: rgb(209, 209, 209);
   height: 15%;
   width: 100%;
+}
+
+.profile {
+  position: relative;
+  top: 50%;
 }
