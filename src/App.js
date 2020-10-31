@@ -40,44 +40,53 @@ const App = (props) => {
     });
   }, [props]);
 
-  console.log('[logged]' + isLoggedIn);
-  if (isLoggedIn) {
-    routes = (
-      <Switch>
-        <Route path="/main" exact>
-          <Main />
-        </Route>
-        <Route path="/addgroup" exact>
-          <AddGroup />
-        </Route>
-        <Route path="/profile" exact>
-          <Profile />
-        </Route>
-        <Route path="/team" exact>
-          <Team />
-        </Route>
-        <Route path="/:groupId/tasks" exact>
-          <MyTasks />
-        </Route>
-        <Redirect to="/main" />
-      </Switch>
-    );
-  } else {
-    routes = (
-      <Switch>
-        <Route path="/" exact>
-          <Starting />
-        </Route>
-        <Route path="/auth" exact>
-          <Auth />
-        </Route>
-        <Route path="/:groupId/tasks" exact>
-          <MyTasks />
-        </Route>
-        <Redirect to="/auth" />
-      </Switch>
-    );
-  }
+  // console.log('[logged]' + isLoggedIn);
+  // if (isLoggedIn) {
+  //   routes = (
+  //     <Switch>
+  //       <Route path="/main" exact>
+  //         <Main />
+  //       </Route>
+  //       <Route path="/addgroup" exact>
+  //         <AddGroup />
+  //       </Route>
+  //       <Route path="/profile" exact>
+  //         <Profile />
+  //       </Route>
+  //       <Route path="/team" exact>
+  //         <Team />
+  //       </Route>
+  //       <Route path="/:groupId/tasks" exact>
+  //         <MyTasks />
+  //       </Route>
+  //       <Redirect to="/main" />
+  //     </Switch>
+  //   );
+  // } else {
+  //   routes = (
+  //     <Switch>
+  //       <Route path="/" exact>
+  //         <Starting />
+  //       </Route>
+  //       <Route path="/auth" exact>
+  //         <Auth />
+  //       </Route>
+  //       <Route path="/:groupId/tasks" exact>
+  //         <MyTasks />
+  //       </Route>
+  //       <Redirect to="/auth" />
+  //     </Switch>
+  //   );
+  // }
+
+  routes = (
+    <Switch>
+      <Route path="/main" exact>
+        <Main />
+      </Route>
+      <Redirect to="/main" />
+    </Switch>
+  );
 
   return (
     <AuthContext.Provider

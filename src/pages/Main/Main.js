@@ -26,12 +26,6 @@ const Main = () => {
       });
   };
 
-  const iterate = () => {
-    data.map((stuff) => {
-      console.log(stuff);
-    });
-  };
-
   if (data) {
     return (
       <React.Fragment>

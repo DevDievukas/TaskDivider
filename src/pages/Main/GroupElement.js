@@ -1,40 +1,51 @@
 import React, { useEffect, useState } from 'react';
 
+import axios from 'axios';
+
+import ExpandedElement from './ExpandedElement';
 import './GroupElement.css';
 
 const GroupElement = (props) => {
   const [expanded, setExpanded] = useState(false);
+  const [roomData, setRoomData] = useState();
 
-  let text = <p>Šią savaite ilsitės</p>;
-  let roomsText = '';
+  useEffect(() => {
+    const roomIdArr = [];
+    const roomDataArr = [];
+    if (props.person.rooms) {
+      for (let [key, value] of Object.entries(props.person.rooms)) {
+        roomIdArr.push(value);
+      }
+      roomIdArr.forEach((element) => {
+        axios
+          .get(
+            `https://tvarkymas-4237a.firebaseio.com/Swalmen/rooms/${element.room}.json`
+          )
+          .then((response) => {
+            const tempObj = {
+              images: response.data.images,
+              name: response.data.name,
+            };
+            roomDataArr.push(tempObj);
+          })
+          .catch((err) => {
+            console.log('[main][fail]' + err);
+          });
+      });
+      setRoomData(roomDataArr);
+    }
+  }, []);
 
   const setExpandedHandler = () => {
     setExpanded(!expanded);
   };
-
-  if (props.person.rooms) {
-    // props.person.rooms.map((room) => {
-    //   roomsText += room.name;
-    // });
-
-    for (let [key, value] of Object.entries(props.person.rooms)) {
-      roomsText += ' ' + value.room;
-    }
-
-    text = <h4>Jūs šią savaite tvarkote:</h4>;
-    // text = (
-    //   <div>
-    //     <h4>Jūs šią savaite tvarkote:</h4>
-    //     {roomsText}
-    //   </div>
-    // );
-  }
 
   if (!expanded) {
     return (
       <button
         className="group-element-btn"
         onClick={setExpandedHandler}
+        // onClick={conso}
         group={props.person.name}
       >
         {props.person.name}
@@ -43,14 +54,9 @@ const GroupElement = (props) => {
   } else {
     return (
       <div onClick={setExpandedHandler}>
-        <h1>{props.person.name}</h1>
-        <div>
-          {text}
-          {roomsText}
-        </div>
+        <ExpandedElement person={props.person.name} rooms={roomData} />
       </div>
     );
   }
 };
-
 export default GroupElement;
