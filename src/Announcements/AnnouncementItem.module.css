@@ -1,0 +1,15 @@
+.date {
+  margin-right: 70%;
+  margin-bottom: -0.4rem;
+  color: rgb(214, 214, 214);
+}
+
+.card {
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.image {
+  height: 60vh;
+  padding: 10px;
+}

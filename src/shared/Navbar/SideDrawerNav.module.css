@@ -1,0 +1,37 @@
+.dropdownItem {
+  border-bottom: 1.5px solid violet;
+  padding-bottom: 0.4rem;
+  display: block;
+  color: black;
+  text-align: right;
+  padding-right: 0.4rem;
+}
+
+.dropdownItem:active {
+  background-color: gainsboro;
+  color: black;
+  text-decoration: none;
+}
+
+.mainNavigationDrawer {
+  margin-top: 2rem;
+  width: 30vw;
+}
+
+.logout {
+  position: fixed;
+  bottom: 10%;
+}
+
+.sidedrawerHeader {
+  background-color: rgb(174, 78, 243);
+  height: 15%;
+  width: 100%;
+}
+
+.profile {
+  position: relative;
+  top: 50%;
+  color: black;
+  text-align: center;
+}

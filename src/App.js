@@ -8,16 +8,15 @@ import {
 import firebase from 'firebase';
 import axios from 'axios';
 
-import Navbar from './components/layout/Navbar';
+import Navbar from './shared/Navbar/Navbar';
 
-import Auth from './pages/Auth/Auth';
-import Starting from './pages/Starting/Starting';
-import Main from './pages/Main/Main';
-import AddGroup from './pages/AddGroup/AddGroup';
-import MyTasks from './pages/MyTasks/MyTasks';
-import Profile from './pages/Profile/Profile';
-import Team from './pages/Team/Team';
+import Auth from './Auth/Auth';
+import Starting from './Starting/Starting';
+import Schedule from './Schedule/Schedule';
+import ScharedItems from './SharedItems/SharedItems';
+import Announcements from './Announcements/Annauncements';
 import { AuthContext } from './shared/Context/auth-context';
+import SharedItems from './SharedItems/SharedItems';
 
 const App = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -81,10 +80,16 @@ const App = (props) => {
 
   routes = (
     <Switch>
-      <Route path="/main" exact>
-        <Main />
+      <Route path="/Schedule" exact>
+        <Schedule />
       </Route>
-      <Redirect to="/main" />
+      <Route path="/announcements" exact>
+        <Announcements />
+      </Route>
+      <Route path="/shareditems" exact>
+        <SharedItems />
+      </Route>
+      <Redirect to="/announcements" />
     </Switch>
   );
 
