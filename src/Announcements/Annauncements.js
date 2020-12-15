@@ -16,10 +16,23 @@ const Announcements = (props) => {
       .get('https://tvarkymas-4237a.firebaseio.com/Swalmen/Announcements.json')
       .then((response) => {
         const tempArray = [];
-        for (let [key, value] of Object.entries(response.data)) {
-          tempArray.push(value);
+        const tempArray2 = [];
+        try {
+          for (let [key, value] of Object.entries(response.data)) {
+            tempArray.push(value);
+          }
+        } catch (err) {
+          console.log(err);
         }
-        setData(tempArray);
+        try {
+          for (let i = 0; i < 3; i++) {
+            tempArray2.push(tempArray[tempArray.length - 1 - i]);
+          }
+          tempArray2.reverse();
+        } catch (err) {
+          console.log(err);
+        }
+        setData(tempArray2);
       })
       .catch((err) => {
         console.log('[annnouncement][fail]' + err);
@@ -31,7 +44,7 @@ const Announcements = (props) => {
 
   return (
     <ul className={styles.groupList}>
-      {data.map((ann) => {
+      {data.reverse().map((ann) => {
         if (ann) {
           return (
             <AnnouncementItem
@@ -40,8 +53,11 @@ const Announcements = (props) => {
               text={ann.body}
               date={ann.date}
               img={ann.img}
+              link={ann.link}
             />
           );
+        } else {
+          return;
         }
       })}
     </ul>

@@ -2,8 +2,16 @@
   padding: 0;
   width: 100vw;
   margin-bottom: 1rem;
-  background-color: rgb(100, 4, 168);
-  box-shadow: 1px 1px rgb(134, 8, 224);
+  background-color: #c0c0c0;
+  box-shadow: 0px 3px rgba(224, 224, 224, 0.692);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  width: 50px;
+  color: white;
+  margin: 3px 12px;
 }
 
 .navbar p {
@@ -26,7 +34,7 @@
   margin: 6px 0;
 }
 
-.main-navigation__menu-btn {
+.mainNavigationMenuBtn {
   width: 1.5rem;
   height: 2.3rem;
   background: transparent;
@@ -39,21 +47,27 @@
   cursor: pointer;
 }
 
-.main-navigation__menu-btn span {
+.mainNavigationMenuBtn span {
   display: block;
   width: 2.4rem;
   height: 3px;
-  background: rgb(218, 216, 216);
+  background: rgb(77, 77, 77);
 }
 
-.main-navigation__title {
+.mainNavigationTitle {
   color: white;
 }
 
-.main-navigation__header-nav {
+.mainNavigationHeaderNav {
   display: none;
 }
 
-.main-navigation__drawer-nav {
+.mainNavigationDrawerNav {
   height: 100%;
+}
+
+.authButton {
+  justify-content: center;
+  padding-right: 10px;
+  color: black;
 }

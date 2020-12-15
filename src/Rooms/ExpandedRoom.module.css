@@ -1,0 +1,14 @@
+.roomCard {
+  width: 80%;
+  margin-bottom: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.roomImage {
+  width: 100%;
+}
+
+.roomTitle {
+  text-align: center;
+}

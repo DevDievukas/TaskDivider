@@ -9,22 +9,22 @@
   border-radius: 8px;
 }
 
-.modal__header {
+.modalHeader {
   width: 100%;
   padding: 1rem 0.5rem;
   background: #2a006e;
   color: white;
 }
 
-.modal__header h2 {
+.modalHeader h2 {
   margin: 0.5rem;
 }
 
-.modal__content {
+.modalContent {
   padding: 1rem 0.5rem;
 }
 
-.modal__footer {
+.modalFooter {
   padding: 1rem 0.5rem;
 }
 
@@ -35,23 +35,23 @@
   }
 }
 
-.modal-enter {
+.modalEnter {
   transform: translateY(-10rem);
   opacity: 0;
 }
 
-.modal-enter-active {
+.modalEnterActive {
   transform: translateY(0);
   opacity: 1;
   transition: all 200ms;
 }
 
-.modal-exit {
+.modalExit {
   transform: translateY(0);
   opacity: 1;
 }
 
-.modal-exit-active {
+.modalExitActive {
   transform: translateY(-10rem);
   opacity: 0;
   transition: all 200ms;

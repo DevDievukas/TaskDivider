@@ -1,5 +1,14 @@
 {
-  "projects": {
-    "default": "tvarkymas-4237a"
+  "targets": {
+    "tvarkymas-4237a": {
+      "hosting": {
+        "prod": [
+          "tvarkymas-4237a"
+        ],
+        "swalmen": [
+          "swalmen"
+        ]
+      }
+    }
   }
 }

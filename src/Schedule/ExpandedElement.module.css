@@ -1,10 +1,11 @@
 .expandedDiv {
   width: 100%;
-  border: 3px solid rgb(98, 0, 255);
+  border: 1px solid rgba(71, 71, 71, 0.411);
   border-radius: 10px;
   margin-bottom: 1rem;
   text-align: center;
   z-index: 500;
+  box-shadow: 2px 2px rgba(128, 128, 128, 0.479);
 }
 
 .expandedDiv img {
@@ -12,7 +13,7 @@
 }
 
 .expandedDiv h1 {
-  border-bottom: 1px solid rgb(3, 3, 3);
+  border-bottom: 1px solid rgb(122, 121, 121);
   background-color: rgba(216, 191, 216, 0.219);
 }
 .caro {
@@ -23,6 +24,4 @@
 
 .caro ol li {
   padding-top: 0;
-  background-color: rgb(255, 0, 170);
-  margin-top: -3.5rem;
 }

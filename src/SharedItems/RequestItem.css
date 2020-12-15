@@ -1,0 +1,54 @@
+.request-div {
+  display: flex;
+  justify-content: space-between;
+  border: 0.5px solid blue;
+  padding-right: 0.6rem;
+  /* width: 100vw; */
+}
+
+.request-inner__div {
+  display: flex;
+  width: 30vw;
+}
+
+.request-inner__div p {
+  border-right: 0.5px solid blue;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 1rem;
+  text-align: center;
+  height: auto;
+}
+
+.date {
+  width: 30%;
+}
+
+.name {
+  width: 70%;
+}
+
+.desc-div {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  width: 70vw;
+  justify-content: space-between;
+}
+
+.desc-div button {
+  background-color: transparent;
+  border: none;
+  font-size: 28px;
+  color: firebrick;
+  font-weight: bold;
+  width: 8%;
+}
+
+.desc-div p {
+  margin: 0;
+  padding: 0;
+  margin-right: 0.1rem;
+  width: 90%;
+  text-align: right;
+}

@@ -1,14 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import './Button.css';
+import styles from './Button.module.css';
 
-const Button = props => {
+const Button = (props) => {
   if (props.href) {
     return (
       <a
-        className={`button button--${props.size || 'default'} ${props.inverse &&
-          'button--inverse'} ${props.danger && 'button--danger'}`}
+        className={`${styles.button}  ${
+          props.inverse && styles.buttonInverse
+        } ${props.danger && styles.buttonDanger}`}
         href={props.href}
       >
         {props.children}
@@ -20,8 +21,9 @@ const Button = props => {
       <Link
         to={props.to}
         exact={props.exact}
-        className={`button button--${props.size || 'default'} ${props.inverse &&
-          'button--inverse'} ${props.danger && 'button--danger'}`}
+        className={`${styles.button}  ${
+          props.inverse && styles.buttonInverse
+        } ${props.danger && styles.buttonDanger}`}
       >
         {props.children}
       </Link>
@@ -29,8 +31,9 @@ const Button = props => {
   }
   return (
     <button
-      className={`button button--${props.size || 'default'} ${props.inverse &&
-        'button--inverse'} ${props.danger && 'button--danger'} ${props.className}` }
+      className={`${styles.button}  ${props.inverse && styles.buttonInverse} ${
+        props.danger && styles.buttonDanger
+      }`}
       type={props.type}
       onClick={props.onClick}
       disabled={props.disabled}

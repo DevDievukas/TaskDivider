@@ -10,6 +10,13 @@
 }
 
 .image {
-  height: 60vh;
-  padding: 10px;
+  height: 50vh;
+  padding: 30px;
+  margin-top: -20px;
+  margin-bottom: -30px;
+}
+
+.link {
+  margin-top: 0;
+  margin-left: 60%;
 }
