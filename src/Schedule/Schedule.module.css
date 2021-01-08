@@ -1,3 +1,21 @@
 .groupList {
   padding: 0;
+  text-align: center;
+}
+
+.date {
+  text-align: center;
+}
+
+.generateBtn {
+  width: 95%;
+  height: 3rem;
+  margin-bottom: 2rem;
+  background-color: rgb(198, 228, 255);
+  border-color: oldlace;
+  border-radius: 10px;
+}
+
+.scheduleDiv {
+  text-align: center;
 }

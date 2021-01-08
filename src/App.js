@@ -10,52 +10,46 @@ import { AuthContext } from './shared/Context/auth-context';
 import { useAuth } from './shared/hooks/auth-hook';
 
 import Navbar from './shared/Navbar/Navbar';
+import HouseNavbar from './shared/Navbar/HouseNavbar';
 
 import Rooms from './Rooms/Rooms';
+import People from './People/People';
 import Schedule from './Schedule/Schedule';
 import SharedItems from './SharedItems/SharedItems';
 import Announcements from './Announcements/Annauncements';
-import Auth from './Auth/Auth';
-import Main from './Main/Main';
 import Houses from './House/Houses';
-import House from './House/House';
-import RoomsManager from './House/Rooms';
-import People from './House/People';
+import Auth from './Auth/Auth';
 
 const App = () => {
-  const { token, login, logout, userId } = useAuth();
+  const { token, login, logout, userId, houseId, name } = useAuth();
   let routes = (
     <Switch>
       <Route path="/" exact>
-        <Main />
+        <Auth />
       </Route>
-      <Route path="/Schedule" exact>
+      <ProtectedRoute path="/:houseId/Schedule" exact>
+        <HouseNavbar />
         <Schedule />
-      </Route>
+      </ProtectedRoute>
       <ProtectedRoute path="/Houses" exact>
         <Houses />
       </ProtectedRoute>
-      <ProtectedRoute path="/House/:houseId" exact>
-        <House />
-      </ProtectedRoute>
-      <Route path="/announcements" exact>
+      <ProtectedRoute path="/:houseId/announcements" exact>
+        <HouseNavbar />
         <Announcements />
-      </Route>
-      <Route path="/shareditems" exact>
-        <SharedItems />
-      </Route>
-      <Route path="/rooms" exact>
-        <Rooms />
-      </Route>
-      <ProtectedRoute path="/house/rooms" exact>
-        <RoomsManager />
       </ProtectedRoute>
-      <ProtectedRoute path="/house/people" exact>
+      <ProtectedRoute path="/:houseId/shareditems" exact>
+        <HouseNavbar />
+        <SharedItems />
+      </ProtectedRoute>
+      <ProtectedRoute path="/:houseId/rooms" exact>
+        <HouseNavbar />
+        <Rooms />
+      </ProtectedRoute>
+      <ProtectedRoute path="/:houseId/people" exact>
+        <HouseNavbar />
         <People />
       </ProtectedRoute>
-      <Route path="/Auth" exact>
-        <Auth />
-      </Route>
       <Redirect to="/" />
     </Switch>
   );
@@ -66,11 +60,13 @@ const App = () => {
         userId: userId,
         login: login,
         logout: logout,
+        houseId: houseId,
+        name: name,
       }}
     >
       <Router>
         <Navbar />
-        <main className="container">{routes}</main>
+        {routes}
       </Router>
     </AuthContext.Provider>
   );

@@ -1,42 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 
-import styles from './RoomElement.module.css';
-
 import Card from 'react-bootstrap/Card';
 import ExpandedRoom from './ExpandedRoom';
+
+import styles from './RoomElement.module.css';
 
 const RoomElement = (props) => {
   const [expanded, setExpanded] = useState(false);
   const [roomData, setRoomData] = useState();
 
   useEffect(() => {
-    const peopleArr = [];
+    const peopleArr = props.people.map((person) => person);
     const peopleNames = [];
-    if (props.people) {
-      for (let [key, value] of Object.entries(props.people)) {
-        peopleArr.push(value);
-      }
-      peopleArr.forEach((element) => {
-        axios
-          .get(
-            `https://tvarkymas-4237a.firebaseio.com/Swalmen/Complete/${element.id}.json`
-          )
-          .then((response) => {
-            const personObj = {
-              name: response.data.name,
-              validity: element.valid,
-            };
-            peopleNames.push(personObj);
-          })
-          .catch((err) => {
-            console.log('[main][fail]' + err);
-          });
-      });
-      setRoomData(peopleNames);
-    }
-  }, []);
+    peopleArr.forEach(async (element) => {
+      await axios
+        .get(`${process.env.REACT_APP_BACKEND_URL}/person/${element.cleaner}`)
+        .then((response) => {
+          const personObj = {
+            name: response.data.person.name,
+            validity: element.validity,
+            id: response.data.person._id,
+          };
+          peopleNames.push(personObj);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+    setRoomData(peopleNames);
+  }, [props.people]);
 
   const setExpandedHandler = () => {
     setExpanded(!expanded);
@@ -47,16 +41,23 @@ const RoomElement = (props) => {
       <Card className={styles.roomElement} onClick={setExpandedHandler}>
         <Card.Img
           variant="top"
-          src={props.images[0]}
+          src={`${process.env.REACT_APP_ASSET_URL}/${props.images}`}
           className={styles.roomImage}
         />
-        <h5 className={styles.roomTitle}>{props.id}</h5>
+        <h5 className={styles.roomTitle}>{props.roomName}</h5>
       </Card>
     );
   } else {
     return (
-      <div onClick={setExpandedHandler}>
-        <ExpandedRoom room={props.id} img={props.images} people={roomData} />
+      <div>
+        <ExpandedRoom
+          room={props.roomName}
+          img={props.images}
+          people={roomData}
+          id={props.id}
+          close={setExpandedHandler}
+          onDelete={props.onDelete}
+        />
       </div>
     );
   }

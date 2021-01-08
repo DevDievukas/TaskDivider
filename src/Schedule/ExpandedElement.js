@@ -13,32 +13,36 @@ const ExpandedElement = (props) => {
   });
 
   const focus = useRef(null);
-  if (props.rooms) {
+  if (props.rooms.length > 0) {
     return (
       <div ref={focus} className={styles.expandedDiv}>
         <h1>{props.person}</h1>
         <h4>Šią savaite tvarkote: </h4>
-        <h3>{props.rooms.roomName}</h3>
 
         {props.rooms.map((room) => {
           return (
-            <div key={room.name} className={styles.imgDiv}>
-              <Carousel
+            <div key={room.roomName} className={styles.imgDiv}>
+              {/* <Carousel
                 controls={false}
                 interval={3000}
                 className={styles.caro}
               >
                 {room.images.map((img) => {
                   return (
-                    <Carousel.Item key={img} className={styles.caroItem}>
-                      <img className="d-block w-100" src={img} alt={img} />
-                    </Carousel.Item>
+                    <Carousel.Item key={img} className={styles.caroItem}> */}
+              <img
+                className="d-block w-100"
+                src={`${process.env.REACT_APP_ASSET_URL}/${room.image}`}
+                alt={room.image}
+              />
+              <h5>{room.roomName}</h5>
+              {/* </Carousel.Item>
                   );
                 })}
-              </Carousel>
-              <h5>{room.name}</h5>
+              </Carousel> */}
             </div>
           );
+          // );
         })}
       </div>
     );

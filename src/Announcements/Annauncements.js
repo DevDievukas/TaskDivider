@@ -48,7 +48,7 @@ const Announcements = (props) => {
         if (ann) {
           return (
             <AnnouncementItem
-              key={ann.title}
+              key={ann.date}
               title={ann.title}
               text={ann.body}
               date={ann.date}

@@ -15,6 +15,7 @@ const ModalOverlay = (props) => {
         onSubmit={
           props.onSubmit ? props.onSubmit : (event) => event.preventDefault()
         }
+        onCancel={props.onCancel}
       >
         <div className={`${styles.modalContent} ${props.contentClass}`}>
           {props.children}
@@ -36,7 +37,7 @@ const Modal = (props) => {
         in={props.show}
         mountOnEnter
         unmountOnExit
-        timeout={200}
+        timeout={50}
         classNames="modal"
       >
         <ModalOverlay {...props} />

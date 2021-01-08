@@ -1,0 +1,16 @@
+.roomDiv {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  border-bottom: 1px SOLID GRAY;
+  padding-bottom: 5px;
+}
+
+.removeBtn {
+  height: 40px;
+  margin-top: auto;
+  margin-bottom: auto;
+  border: none;
+  background-color: transparent;
+  color: black;
+}

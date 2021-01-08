@@ -4,13 +4,13 @@ import { useParams } from 'react-router-dom';
 
 import Spinner from '../shared/Spinner/Spinner';
 import ErrorModal from '../shared/UIElements/ErrorModal';
-import RoomsControl from './RoomsControl';
+import PeopleControl from './PeopleControl';
 
 import { AuthContext } from '../shared/Context/auth-context';
 import { useLoadingHook } from '../shared/hooks/loading-hook';
 
-import styles from './Rooms.module.css';
-import RoomElement from './RoomElement';
+import styles from './People.module.css';
+import PersonElement from './PersonElement';
 
 const Rooms = () => {
   const houseId = useParams().houseId;
@@ -26,18 +26,20 @@ const Rooms = () => {
   } = useLoadingHook();
 
   useEffect(() => {
-    getRooms();
+    getPeople();
   }, []);
 
-  const getRooms = () => {
+  const getPeople = () => {
     setIsLoading(true);
     if (houseId) {
       axios
-        .get(`${process.env.REACT_APP_BACKEND_URL}/room/allByHouse/${houseId}`)
+        .get(
+          `${process.env.REACT_APP_BACKEND_URL}/person/allByHouse/${houseId}`
+        )
         .then((response) => {
           setIsLoading(false);
-          const rooms = response.data.rooms.map((room) => room);
-          setData(rooms);
+          const people = response.data.people.map((person) => person);
+          setData(people);
         })
         .catch((err) => {
           setIsLoading(false);
@@ -62,8 +64,10 @@ const Rooms = () => {
     }
   };
 
-  const roomDeleteHandler = (deletedRoomId) => {
-    const filteredData = data.filter((room) => room._id !== deletedRoomId);
+  const PersonDeleteHandler = (deletedPersonId) => {
+    const filteredData = data.filter(
+      (person) => person._id !== deletedPersonId
+    );
     setData(filteredData);
   };
 
@@ -72,24 +76,23 @@ const Rooms = () => {
       <div className={styles.mainDiv}>
         <ErrorModal error={error} onClear={clearError} />
         {isLoading && <Spinner />}
-        {userId ? <RoomsControl onCreate={getRooms} /> : null}
+        {userId ? <PeopleControl onCreate={getPeople} /> : null}
         {data.length <= 0 ? (
-          <h1> no rooms</h1>
+          <h1> no people</h1>
         ) : (
-          <ul className={styles.groupList}>
-            {data.map((room) => {
+          <div>
+            {data.map((person) => {
               return (
-                <RoomElement
-                  key={room._id}
-                  id={room._id}
-                  roomName={room.roomName}
-                  images={room.images}
-                  people={room.cleaners}
-                  onDelete={roomDeleteHandler}
+                <PersonElement
+                  key={person._id}
+                  id={person._id}
+                  name={person.name}
+                  rooms={person.rooms}
+                  onDelete={PersonDeleteHandler}
                 />
               );
             })}
-          </ul>
+          </div>
         )}
       </div>
     );

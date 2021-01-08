@@ -71,3 +71,13 @@
   padding-right: 10px;
   color: black;
 }
+
+.signOutDiv {
+  margin-right: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.signOutDiv p {
+  color: black;
+}

@@ -4,3 +4,8 @@
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
+.mainDiv {
+  width: 100%;
+  text-align: center;
+}

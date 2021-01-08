@@ -46,6 +46,7 @@ const ImageUpload = (props) => {
         ref={filePickerRef}
         style={{ display: 'none' }}
         type="file"
+        multiple
         accept=".jpg, .png, .jpeg"
         onChange={pickedHandler}
       />

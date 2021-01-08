@@ -7,6 +7,7 @@
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 8px;
+  text-align: center;
 }
 
 .modalHeader {
@@ -21,11 +22,11 @@
 }
 
 .modalContent {
-  padding: 1rem 0.5rem;
+  padding: 1rem 0.5rem 0 0.5rem;
 }
 
 .modalFooter {
-  padding: 1rem 0.5rem;
+  padding: 0.4rem 0.5rem;
 }
 
 @media (min-width: 768px) {
