@@ -106,7 +106,7 @@ const AssignRoom = (props) => {
             <button onClick={props.close} type="button">
               CANCEL
             </button>
-            <button type="Submit">ADD</button>
+            {rooms[0] ? <button type="Submit">ADD</button> : null}
           </div>
         </form>
       ) : null}

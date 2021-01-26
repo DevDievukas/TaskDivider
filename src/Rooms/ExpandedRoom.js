@@ -83,24 +83,27 @@ const ExpandedRoom = (props) => {
       </Modal>
       <Card ref={roomFocus} className={styles.roomCard} onClick={props.close}>
         {isLoading && <Spinner />}
-        <Carousel controls={false} interval={3000} className={styles.caro}>
-          {/* {props.img.map((img) => {
-            return (
-              <Carousel.Item key={img} className={styles.caroItem}>
-                <img
-                  className="d-block w-100"
-                  src={`${process.env.REACT_APP_ASSET_URL}/${img}`}
-                  alt={img}
-                />
-              </Carousel.Item>
-            );
-          })} */}
+        {props.img.length > 0 ? (
+          <Carousel controls={false} interval={3000} className={styles.caro}>
+            {props.img.map((img) => {
+              return (
+                <Carousel.Item key={img} className={styles.caroItem}>
+                  <img className="d-block w-100" src={img} alt={img} />
+                </Carousel.Item>
+              );
+            })}
+            {/* <img className="d-block w-100" src={props.img} alt={'img'} /> */}
+          </Carousel>
+        ) : (
           <img
             className="d-block w-100"
-            src={`${process.env.REACT_APP_ASSET_URL}/${props.img}`}
-            alt={'img'}
+            src={
+              'https://image.freepik.com/free-vector/lovely-living-room-interior_23-2147517931.jpg'
+            }
+            alt={'room image'}
           />
-        </Carousel>
+        )}
+
         <h2 className={styles.roomTitle}>{props.room}</h2>
         {props.people.map((person) => {
           return (

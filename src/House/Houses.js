@@ -36,10 +36,10 @@ const Houses = () => {
         value: '',
         isValid: false,
       },
-      frequency: {
-        value: '',
-        isValid: false,
-      },
+      // frequency: {
+      //   value: '',
+      //   isValid: false,
+      // },
     },
     false
   );
@@ -63,14 +63,16 @@ const Houses = () => {
         }
         setCards(
           data.houses.map((house) => {
-            return (
-              <HouseCard
-                houseName={house.houseName}
-                pic={pic}
-                key={house._id}
-                houseId={house._id}
-              />
-            );
+            if (house) {
+              return (
+                <HouseCard
+                  houseName={house.houseName}
+                  pic={pic}
+                  key={house._id}
+                  houseId={house._id}
+                />
+              );
+            }
           })
         );
       }
@@ -107,7 +109,7 @@ const Houses = () => {
           {
             houseName: formState.inputs.houseName.value,
             password: formState.inputs.password.value,
-            frequency: formState.inputs.frequency.value,
+            // frequency: formState.inputs.frequency.value,
           },
           {
             headers: {
@@ -150,7 +152,7 @@ const Houses = () => {
             validators={[]}
             onInput={inputHandler}
           />
-          <InputSelector
+          {/* <InputSelector
             id="frequency"
             label="Please select cleaning frequency: "
             onInput={inputHandler}
@@ -161,7 +163,7 @@ const Houses = () => {
             <option value="2">Every 2 weeks</option>
             <option value="3">Every 3 weeks</option>
             <option value="4">Monthly</option>
-          </InputSelector>
+          </InputSelector> */}
           <Button onClick={() => setHouseCreation(false)}>Cancel</Button>
           <Button type="Submit">Create</Button>
         </form>

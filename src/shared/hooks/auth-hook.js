@@ -54,15 +54,15 @@ export const useAuth = () => {
     localStorage.removeItem('houseData');
   }, []);
 
-  useEffect(() => {
-    if (token && tokenExpirationDate) {
-      const remainingTime =
-        tokenExpirationDate.getTime() - new Date().getTime();
-      logoutTimer = setTimeout(logout, remainingTime);
-    } else {
-      clearTimeout(logoutTimer);
-    }
-  }, [token, logout, tokenExpirationDate]);
+  // useEffect(() => {
+  //   if (token && tokenExpirationDate) {
+  //     const remainingTime =
+  //       tokenExpirationDate.getTime() - new Date().getTime();
+  //     logoutTimer = setTimeout(logout, remainingTime);
+  //   } else {
+  //     clearTimeout(logoutTimer);
+  //   }
+  // }, [token, logout, tokenExpirationDate]);
 
   useEffect(() => {
     const storedUserData = JSON.parse(localStorage.getItem('userData'));

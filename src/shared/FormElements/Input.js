@@ -49,8 +49,29 @@ const Input = (props) => {
     });
   };
 
-  const element =
-    props.element === 'input' ? (
+  // const element =
+  //   props.element === 'input' ? (
+  //     <input
+  //       id={props.id}
+  //       type={props.type}
+  //       placeholder={props.placeholder}
+  //       onChange={changeHandler}
+  //       value={inputState.value}
+  //       onBlur={touchHandler}
+  //     />
+  //   ) : (
+  //     <textarea
+  //       id={props.id}
+  //       rows={props.rows || 3}
+  //       onChange={changeHandler}
+  //       value={inputState.value}
+  //       onBlur={touchHandler}
+  //     />
+  //   );
+
+  let element;
+  if (props.element === 'input') {
+    element = (
       <input
         id={props.id}
         type={props.type}
@@ -59,7 +80,9 @@ const Input = (props) => {
         value={inputState.value}
         onBlur={touchHandler}
       />
-    ) : (
+    );
+  } else if (props.element === 'textarea') {
+    element = (
       <textarea
         id={props.id}
         rows={props.rows || 3}
@@ -68,6 +91,18 @@ const Input = (props) => {
         onBlur={touchHandler}
       />
     );
+  } else if (props.element === 'checkbox') {
+    element = (
+      <input
+        id={props.id}
+        type={props.type}
+        placeholder={props.placeholder}
+        onChange={changeHandler}
+        value={inputState.value}
+        onBlur={touchHandler}
+      />
+    );
+  }
 
   return (
     <div

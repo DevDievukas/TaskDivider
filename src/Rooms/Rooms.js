@@ -12,6 +12,8 @@ import { useLoadingHook } from '../shared/hooks/loading-hook';
 import styles from './Rooms.module.css';
 import RoomElement from './RoomElement';
 
+import ImageUpload from './ImgUpload';
+
 const Rooms = () => {
   const houseId = useParams().houseId;
   const { userId } = useContext(AuthContext);
@@ -70,6 +72,7 @@ const Rooms = () => {
   if (data) {
     return (
       <div className={styles.mainDiv}>
+        <ImageUpload />
         <ErrorModal error={error} onClear={clearError} />
         {isLoading && <Spinner />}
         {userId ? <RoomsControl onCreate={getRooms} /> : null}

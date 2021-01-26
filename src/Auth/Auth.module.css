@@ -40,13 +40,12 @@
 
 .signupBtn {
   width: 95%;
-  position: absolute;
-  top: 90%;
   right: 2.5%;
   background-color: rgb(255, 136, 136);
   border-color: oldlace;
   border-radius: 10px;
   height: 3rem;
+  margin-top: 15rem;
 }
 
 .authDiv {

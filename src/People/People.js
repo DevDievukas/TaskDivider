@@ -40,20 +40,7 @@ const Rooms = () => {
           setIsLoading(false);
           const people = response.data.people.map((person) => person);
           setData(people);
-        })
-        .catch((err) => {
-          setIsLoading(false);
-          if (err.response) {
-            setError(err.response.data.message);
-          }
-        });
-    } else {
-      axios
-        .get('https://tvarkymas-4237a.firebaseio.com/Swalmen/rooms.json')
-        .then((response) => {
-          setIsLoading(false);
-          const rooms = response.data.map((room) => room);
-          setData(rooms);
+          console.log(people);
         })
         .catch((err) => {
           setIsLoading(false);
@@ -77,20 +64,22 @@ const Rooms = () => {
         <ErrorModal error={error} onClear={clearError} />
         {isLoading && <Spinner />}
         {userId ? <PeopleControl onCreate={getPeople} /> : null}
-        {data.length <= 0 ? (
+        {data.length <= 0 || data[0] === null ? (
           <h1> no people</h1>
         ) : (
           <div>
             {data.map((person) => {
-              return (
-                <PersonElement
-                  key={person._id}
-                  id={person._id}
-                  name={person.name}
-                  rooms={person.rooms}
-                  onDelete={PersonDeleteHandler}
-                />
-              );
+              if (person) {
+                return (
+                  <PersonElement
+                    key={person._id}
+                    id={person._id}
+                    name={person.name}
+                    rooms={person.rooms}
+                    onDelete={PersonDeleteHandler}
+                  />
+                );
+              }
             })}
           </div>
         )}

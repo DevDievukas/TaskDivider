@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router';
 
 import Input from '../shared/FormElements/Input';
@@ -40,9 +40,21 @@ const Auth = () => {
         value: '',
         isValid: false,
       },
+      // remember: {
+      //   value: false,
+      //   isValid: true,
+      // },
     },
     false
   );
+
+  useEffect(() => {
+    if (auth.userId) {
+      history.push('/houses');
+    } else if (auth.houseId) {
+      history.push(`/${auth.houseId}/schedule`);
+    }
+  }, [auth.token]);
 
   const authSubmitHandler = async (event) => {
     event.preventDefault();
@@ -65,9 +77,7 @@ const Auth = () => {
               setError(error.response.data.message);
             }
           });
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     } else if (!isLoginMode && !houseLogin) {
       setIsLoading(true);
       try {
@@ -88,9 +98,7 @@ const Auth = () => {
               setError(error.response.data.message);
             }
           });
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     } else {
       setIsLoading(true);
       try {
@@ -107,7 +115,6 @@ const Auth = () => {
               false
             );
             history.push(`${res.data.houseId}/announcements`);
-
             setIsLoading(false);
           })
           .catch((error) => {
@@ -116,14 +123,26 @@ const Auth = () => {
               setError(error.response.data.message);
             }
           });
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     }
   };
 
   const switchModeHandler = () => {
-    setHouseLogin(false);
+    if (isLoginMode) {
+      setFormData(
+        {
+          ...formState.inputs,
+          houseName: undefined,
+          // remember: undefined,
+          email: {
+            value: '',
+            isValid: false,
+          },
+        },
+        false
+      );
+      setHouseLogin(false);
+    }
     setIsLoginMode((prevMode) => !prevMode);
   };
 
@@ -210,6 +229,17 @@ const Auth = () => {
             errorText="Please enter valid password, at least 6 characters."
             onInput={inputHandler}
           />
+          {/* {isLoginMode ? (
+            <Input
+              element="checkbox"
+              id="remember"
+              type="checkbox"
+              validators={[]}
+              onInput={inputHandler}
+              initialValue="false"
+              initialValid={true}
+            />
+          ) : null} */}
           <button
             type="Submit"
             disabled={!formState.isValid}

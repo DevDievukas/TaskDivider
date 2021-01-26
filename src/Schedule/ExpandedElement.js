@@ -22,24 +22,40 @@ const ExpandedElement = (props) => {
         {props.rooms.map((room) => {
           return (
             <div key={room.roomName} className={styles.imgDiv}>
-              {/* <Carousel
-                controls={false}
-                interval={3000}
-                className={styles.caro}
-              >
-                {room.images.map((img) => {
-                  return (
-                    <Carousel.Item key={img} className={styles.caroItem}> */}
-              <img
+              {room.image.length > 0 ? (
+                <Carousel
+                  controls={false}
+                  interval={3000}
+                  className={styles.caro}
+                >
+                  (
+                  {room.image.map((img) => {
+                    return (
+                      <Carousel.Item key={img} className={styles.caroItem}>
+                        {/* <img
                 className="d-block w-100"
                 src={`${process.env.REACT_APP_ASSET_URL}/${room.image}`}
                 alt={room.image}
-              />
-              <h5>{room.roomName}</h5>
-              {/* </Carousel.Item>
-                  );
-                })}
-              </Carousel> */}
+              /> */}
+                        <img className="d-block w-100" src={img} alt={img} />
+                        <h5>{room.roomName}</h5>
+                      </Carousel.Item>
+                    );
+                  })}
+                  )
+                </Carousel>
+              ) : (
+                <div>
+                  <img
+                    className="d-block w-100"
+                    src={
+                      'https://image.freepik.com/free-vector/lovely-living-room-interior_23-2147517931.jpg'
+                    }
+                    alt={'room image'}
+                  />{' '}
+                  <h5>{room.roomName}</h5>
+                </div>
+              )}
             </div>
           );
           // );

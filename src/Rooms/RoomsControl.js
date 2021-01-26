@@ -34,10 +34,10 @@ const RoomsControl = (props) => {
         value: '',
         isValid: false,
       },
-      image: {
-        value: null,
-        isValid: false,
-      },
+      // image: {
+      //   value: null,
+      //   isValid: false,
+      // },
     },
     false
   );
@@ -53,17 +53,22 @@ const RoomsControl = (props) => {
   const addRoomSubmitHandler = (event) => {
     event.preventDefault();
     setIsLoading(true);
-    const formData = new FormData();
-    formData.append('roomName', formState.inputs.roomName.value);
-    formData.append('house', houseId);
-    formData.append('image', formState.inputs.image.value);
+    // const formData = new FormData();
+    // formData.append('roomName', formState.inputs.roomName.value);
+    // formData.append('house', houseId);
+    // formData.append('image', formState.inputs.image.value);
+
     try {
       axios
-        .post(`${process.env.REACT_APP_BACKEND_URL}/room/`, formData, {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        })
+        .post(
+          `${process.env.REACT_APP_BACKEND_URL}/room/`,
+          { roomName: formState.inputs.roomName.value, house: houseId },
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        )
         .then((res) => {
           setIsLoading(false);
           props.onCreate();
@@ -99,12 +104,12 @@ const RoomsControl = (props) => {
           error="Please enter room name."
           onInput={inputHandler}
         />
-        <ImageUpload
+        {/* <ImageUpload
           id="image"
           center
           onInput={inputHandler}
           errorText="please provide an image"
-        />
+        /> */}
         <div className={styles.btnDiv}>
           <Button onClick={closeAddRoomModal} type="button">
             CANCEL

@@ -6,12 +6,19 @@ import Card from 'react-bootstrap/Card';
 import ExpandedRoom from './ExpandedRoom';
 
 import styles from './RoomElement.module.css';
+import { EnvelopeSimple } from 'phosphor-react';
 
 const RoomElement = (props) => {
   const [expanded, setExpanded] = useState(false);
   const [roomData, setRoomData] = useState();
+  let imgSrc =
+    'https://image.freepik.com/free-vector/lovely-living-room-interior_23-2147517931.jpg';
 
   useEffect(() => {
+    if (props.images[0]) {
+      imgSrc = props.images[0];
+    }
+
     const peopleArr = props.people.map((person) => person);
     const peopleNames = [];
     peopleArr.forEach(async (element) => {
@@ -39,11 +46,7 @@ const RoomElement = (props) => {
   if (!expanded) {
     return (
       <Card className={styles.roomElement} onClick={setExpandedHandler}>
-        <Card.Img
-          variant="top"
-          src={`${process.env.REACT_APP_ASSET_URL}/${props.images}`}
-          className={styles.roomImage}
-        />
+        <Card.Img variant="top" src={imgSrc} className={styles.roomImage} />
         <h5 className={styles.roomTitle}>{props.roomName}</h5>
       </Card>
     );
