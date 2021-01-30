@@ -72,8 +72,8 @@ const Rooms = () => {
   if (data) {
     return (
       <div className={styles.mainDiv}>
-        <ImageUpload />
         <ErrorModal error={error} onClear={clearError} />
+        <ImageUpload />
         {isLoading && <Spinner />}
         {userId ? <RoomsControl onCreate={getRooms} /> : null}
         {data.length <= 0 ? (
