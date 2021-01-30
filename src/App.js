@@ -9,6 +9,8 @@ import ProtectedRoute from './ProtectedRoute';
 import { AuthContext } from './shared/Context/auth-context';
 import { useAuth } from './shared/hooks/auth-hook';
 
+import { useSelector, useDispatch } from 'react-redux';
+
 import Navbar from './shared/Navbar/Navbar';
 import HouseNavbar from './shared/Navbar/HouseNavbar';
 
@@ -21,6 +23,8 @@ import Houses from './House/Houses';
 import Auth from './Auth/Auth';
 
 const App = () => {
+  const counter = useSelector((state) => state);
+  const dispatch = useDispatch();
   const { token, login, logout, userId, houseId, name } = useAuth();
   let routes = (
     <Switch>
@@ -66,7 +70,10 @@ const App = () => {
     >
       <Router>
         <Navbar />
-        {routes}
+        <button onClick={() => dispatch({ type: 'Car' })}>Car</button>
+        <h1>{counter.vehicle}</h1>
+        <button onClick={() => dispatch({ type: 'Bike' })}>Bike</button>
+        {/* {routes} */}
       </Router>
     </AuthContext.Provider>
   );
