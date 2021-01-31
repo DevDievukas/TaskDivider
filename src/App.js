@@ -6,10 +6,6 @@ import {
   Redirect,
 } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
-import { AuthContext } from './shared/Context/auth-context';
-import { useAuth } from './shared/hooks/auth-hook';
-
-import { useSelector, useDispatch } from 'react-redux';
 
 import Navbar from './shared/Navbar/Navbar';
 import HouseNavbar from './shared/Navbar/HouseNavbar';
@@ -23,9 +19,6 @@ import Houses from './House/Houses';
 import Auth from './Auth/Auth';
 
 const App = () => {
-  const counter = useSelector((state) => state);
-  const dispatch = useDispatch();
-  const { token, login, logout, userId, houseId, name } = useAuth();
   let routes = (
     <Switch>
       <Route path="/" exact>
@@ -57,28 +50,13 @@ const App = () => {
       <Redirect to="/" />
     </Switch>
   );
+
   return (
-    <AuthContext.Provider
-      value={{
-        token: token,
-        userId: userId,
-        login: login,
-        logout: logout,
-        houseId: houseId,
-        name: name,
-      }}
-    >
-      <Router>
-        <Navbar />
-        <button onClick={() => dispatch({ type: 'Car' })}>Car</button>
-        <h1>{counter.vehicle}</h1>
-        <button onClick={() => dispatch({ type: 'Bike' })}>Bike</button>
-        {/* {routes} */}
-      </Router>
-    </AuthContext.Provider>
+    <Router>
+      <Navbar />
+      {routes}
+    </Router>
   );
 };
-
-// REACT_APP_BACKEND_URL=http://localhost:5000/api
 
 export default App;

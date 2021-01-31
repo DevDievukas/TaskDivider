@@ -1,17 +1,18 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-
-import { AuthContext } from '../Context/auth-context';
 
 import { SignOut } from 'phosphor-react';
 import styles from './Navbar.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout, startLogout } from '../../Store/actions/Auth';
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
-  const { userId, houseId, token, name, logout } = useContext(AuthContext);
+  const auth = useSelector((state) => state);
 
   const redirectLogout = () => {
-    logout();
+    dispatch(startLogout());
     history.push('/');
   };
 
@@ -30,11 +31,11 @@ const Navbar = () => {
   );
   let linkDirection = '/';
 
-  if (userId) {
+  if (auth.userId) {
     linkDirection = '/houses';
-  } else if (houseId) {
-    linkDirection = `/${houseId}/announcements`;
-    leftButton = <h3>{name}</h3>;
+  } else if (auth.houseId) {
+    linkDirection = `/${auth.houseId}/announcements`;
+    leftButton = <h3>{auth.houseName}</h3>;
   }
 
   const navbar = (
@@ -43,7 +44,7 @@ const Navbar = () => {
         <Link className={styles.navbarBrand} to={`${linkDirection}`}>
           {leftButton}
         </Link>
-        {token ? rightButton : null}
+        {auth.token ? rightButton : null}
       </header>
     </React.Fragment>
   );

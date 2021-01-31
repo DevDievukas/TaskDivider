@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useContext, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
 
 import ErrorModal from '../shared/UIElements/ErrorModal';
@@ -8,13 +8,13 @@ import RoomElement from './RoomElement';
 import Modal from '../shared/UIElements/Modal';
 
 import img from '../assets/DefaultProfile.png';
-import { AuthContext } from '../shared/Context/auth-context';
 import { useLoadingHook } from '../shared/hooks/loading-hook';
 
 import styles from './ExpandedPerson.module.css';
+import { useSelector } from 'react-redux';
 
 const ExpandedPerson = (props) => {
-  const { userId, token } = useContext(AuthContext);
+  const { userId, token } = useSelector((state) => state);
   const [assignRoom, setAssignRoom] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState();

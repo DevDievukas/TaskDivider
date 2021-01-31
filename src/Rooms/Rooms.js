@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import Spinner from '../shared/Spinner/Spinner';
 import ErrorModal from '../shared/UIElements/ErrorModal';
 import RoomsControl from './RoomsControl';
 
-import { AuthContext } from '../shared/Context/auth-context';
 import { useLoadingHook } from '../shared/hooks/loading-hook';
 
 import styles from './Rooms.module.css';
@@ -16,7 +16,7 @@ import ImageUpload from './ImgUpload';
 
 const Rooms = () => {
   const houseId = useParams().houseId;
-  const { userId } = useContext(AuthContext);
+  const userId = useSelector((state) => state);
   const [data, setData] = useState(null);
 
   const {

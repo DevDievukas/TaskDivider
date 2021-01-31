@@ -1,7 +1,5 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-
-import { AuthContext } from '../shared/Context/auth-context';
 
 import { useLoadingHook } from '../shared/hooks/loading-hook';
 import ErrorModal from '../shared/UIElements/ErrorModal';
@@ -9,9 +7,10 @@ import Modal from '../shared/UIElements/Modal';
 import { Trash } from 'phosphor-react';
 
 import styles from './RoomElement.module.css';
+import { useSelector } from 'react-redux';
 
 const RoomElement = (props) => {
-  const { token } = useContext(AuthContext);
+  const token = useSelector((state) => state);
   const [showModal, setShowModal] = useState(false);
 
   const { onRemove, roomName, id, personId } = props;

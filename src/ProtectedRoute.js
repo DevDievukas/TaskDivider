@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
 import Auth from './Auth/Auth';
 import Houses from './House/Houses';
 
-import { AuthContext } from './shared/Context/auth-context';
 const ProtectedRoute = ({ children, ...rest }) => {
-  const { token } = useContext(AuthContext);
+  const token = useSelector((state) => state.token);
   return (
     <Route
       {...rest}

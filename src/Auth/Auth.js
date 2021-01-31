@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 
 import Input from '../shared/FormElements/Input';
@@ -6,6 +6,7 @@ import { useForm } from '../shared/hooks/form-hook';
 import ErrorModal from '../shared/UIElements/ErrorModal';
 import LoadingSpinner from '../shared/Spinner/Spinner';
 
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import { useLoadingHook } from '../shared/hooks/loading-hook';
@@ -14,13 +15,14 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_EMAIL,
 } from '../shared/validators/validators';
-import { AuthContext } from '../shared/Context/auth-context';
 
 import styles from './Auth.module.css';
+import { startHouseAuth, startUserAuth } from '../Store/actions/Auth';
 
 const Auth = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
-  const auth = useContext(AuthContext);
+  const auth = useSelector((state) => state);
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [houseLogin, setHouseLogin] = useState(true);
   const {
@@ -67,7 +69,9 @@ const Auth = () => {
             password: formState.inputs.password.value,
           })
           .then((res) => {
-            auth.login(res.data.userId, res.data.token, res.data.email, true);
+            dispatch(
+              startUserAuth(res.data.userId, res.data.token, res.data.email)
+            );
             history.push('/houses');
             setIsLoading(false);
           })
@@ -87,7 +91,9 @@ const Auth = () => {
             password: formState.inputs.password.value,
           })
           .then((res) => {
-            auth.login(res.data.userId, res.data.token, res.data.email, true);
+            dispatch(
+              startUserAuth(res.data.userId, res.data.token, res.data.email)
+            );
             history.push('/houses');
 
             setIsLoading(false);
@@ -108,11 +114,12 @@ const Auth = () => {
             password: formState.inputs.password.value,
           })
           .then((res) => {
-            auth.login(
-              res.data.houseId,
-              res.data.token,
-              res.data.houseName,
-              false
+            dispatch(
+              startHouseAuth(
+                res.data.houseId,
+                res.data.token,
+                res.data.houseName
+              )
             );
             history.push(`${res.data.houseId}/announcements`);
             setIsLoading(false);

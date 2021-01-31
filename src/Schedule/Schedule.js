@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import { useLoadingHook } from '../shared/hooks/loading-hook';
-import { AuthContext } from '../shared/Context/auth-context';
 
 import GroupElement from './GroupElement';
 import Spinner from '../shared/Spinner/Spinner';
@@ -12,12 +11,13 @@ import Modal from '../shared/UIElements/Modal';
 import Button from '../shared/FormElements/Button';
 
 import styles from './Schedule.module.css';
+import { useSelector } from 'react-redux';
 
 const Schedule = () => {
   const [data, setData] = useState(null);
   const [message, setMessage] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const { token, userId } = useContext(AuthContext);
+  const { token, userId } = useSelector((state) => state);
   const houseId = useParams().houseId;
   const {
     error,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
@@ -6,15 +6,15 @@ import Spinner from '../shared/Spinner/Spinner';
 import ErrorModal from '../shared/UIElements/ErrorModal';
 import PeopleControl from './PeopleControl';
 
-import { AuthContext } from '../shared/Context/auth-context';
 import { useLoadingHook } from '../shared/hooks/loading-hook';
 
 import styles from './People.module.css';
 import PersonElement from './PersonElement';
+import { useSelector } from 'react-redux';
 
 const Rooms = () => {
   const houseId = useParams().houseId;
-  const { userId } = useContext(AuthContext);
+  const userId = useSelector((state) => state.userId);
   const [data, setData] = useState(null);
 
   const {

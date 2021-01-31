@@ -2,23 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import firebase from 'firebase';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducer from './Store/authReducer';
+import { applyMiddleware, createStore } from 'redux';
+import reducer from './Store/reducers/auth';
+import thunk from 'redux-thunk';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
-firebase.initializeApp({
-  apiKey: 'AIzaSyBEIzMspLyXzmy2HsHTwbsWqrSk8TjnrvU',
-  authDomain: 'tvarkymas-4237a.firebaseapp.com',
-});
-
-const vehicle = createStore(reducer);
+const auth = createStore(reducer, applyMiddleware(thunk));
 
 ReactDOM.render(
-  <Provider store={vehicle}>
+  <Provider store={auth}>
     <App />
   </Provider>,
   document.getElementById('root')

@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import { useParams } from 'react-router-dom';
-import { AuthContext } from '../Context/auth-context';
 
 import HouseNavbarItem from './HouseNavbarItem';
 
 import styles from './HouseNavbar.module.css';
+import { useSelector } from 'react-redux';
 
 const HouseNavbar = () => {
   const houseId = useParams().houseId;
-  const { userId } = useContext(AuthContext);
+  const userId = useSelector((state) => state.userId);
 
   const houseNavbar = (
     <header className={styles.navbar}>

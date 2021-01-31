@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import axios from 'axios';
 
 import ImageUpload from '../shared/FormElements/ImageUpload';
 import { useForm } from '../shared/hooks/form-hook';
-import { AuthContext } from '../shared/Context/auth-context';
 import AddButton from '../shared/UIElements/AddButton/AddButton';
+import { useSelector } from 'react-redux';
 
 const ImgUpload = () => {
-  const { token } = useContext(AuthContext);
+  const token = useSelector((state) => state);
   const [formState, inputHandler] = useForm({
     image: {
       value: null,

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
@@ -6,14 +6,14 @@ import ErrorModal from '../shared/UIElements/ErrorModal';
 import InputSelector from '../shared/FormElements/InputSelector';
 
 import { useForm } from '../shared/hooks/form-hook';
-import { AuthContext } from '../shared/Context/auth-context';
 import { useLoadingHook } from '../shared/hooks/loading-hook';
 
 import styles from './AssignRoom.module.css';
+import { useSelector } from 'react-redux';
 
 const AssignRoom = (props) => {
   const { assignedRooms, onAsign, close } = props;
-  const { token } = useContext(AuthContext);
+  const token = useSelector((state) => state.token);
   const [rooms, setRooms] = useState();
   const houseId = useParams().houseId;
 

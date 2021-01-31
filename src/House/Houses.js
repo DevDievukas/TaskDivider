@@ -1,21 +1,20 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import Input from '../shared/FormElements/Input';
 import Button from '../shared/FormElements/Button';
-import InputSelector from '../shared/FormElements/InputSelector';
 import axios from 'axios';
 
 import { useForm } from '../shared/hooks/form-hook';
 import { useLoadingHook } from '../shared/hooks/loading-hook';
-import { AuthContext } from '../shared/Context/auth-context';
 
 import HouseCard from '../shared/UIElements/HouseCard';
 import pic from '../assets/house.svg';
 import Spinner from '../shared/Spinner/Spinner';
 import ErrorModal from '../shared/UIElements/ErrorModal';
 import styles from './Houses.module.css';
+import { useSelector } from 'react-redux';
 
 const Houses = () => {
-  const { userId, token } = useContext(AuthContext);
+  const auth = useSelector((state) => state);
   const [houseCreation, setHouseCreation] = useState(false);
   const [data, setData] = useState();
   const [cards, setCards] = useState();
@@ -53,7 +52,7 @@ const Houses = () => {
 
   useEffect(() => {
     getHouses();
-  }, [userId]);
+  }, [auth.userId]);
 
   useEffect(() => {
     if (data) {
@@ -81,11 +80,11 @@ const Houses = () => {
 
   const getHouses = () => {
     setIsLoading(true);
-    if (userId) {
+    if (auth.userId) {
       axios
-        .get(`${process.env.REACT_APP_BACKEND_URL}/house/user/${userId}`, {
+        .get(`${process.env.REACT_APP_BACKEND_URL}/house/user/${auth.userId}`, {
           headers: {
-            authorization: `Bearer ${token}`,
+            authorization: `Bearer ${auth.token}`,
           },
         })
         .then((response) => {
@@ -113,7 +112,7 @@ const Houses = () => {
           },
           {
             headers: {
-              authorization: `Bearer ${token}`,
+              authorization: `Bearer ${auth.token}`,
             },
           }
         )

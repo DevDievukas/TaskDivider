@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useContext, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 
 import axios from 'axios';
 
@@ -8,7 +8,6 @@ import Modal from '../shared/UIElements/Modal';
 
 import Button from '../shared/FormElements/Button';
 
-import { AuthContext } from '../shared/Context/auth-context';
 import { useLoadingHook } from '../shared/hooks/loading-hook';
 
 import styles from './ExpandedRoom.module.css';
@@ -16,8 +15,9 @@ import PersonName from './PersonName';
 
 import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
+import { useSelector } from 'react-redux';
 const ExpandedRoom = (props) => {
-  const { userId, token } = useContext(AuthContext);
+  const { userId, token } = useSelector((state) => state);
   const [showModal, setShowModal] = useState(false);
 
   const {

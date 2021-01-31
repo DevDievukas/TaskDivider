@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -11,15 +11,15 @@ import Spinner from '../shared/Spinner/Spinner';
 import AddButton from '../shared/UIElements/AddButton/AddButton';
 
 import { useForm } from '../shared/hooks/form-hook';
-import { AuthContext } from '../shared/Context/auth-context';
 import { VALIDATOR_REQUIRE } from '../shared/validators/validators';
 import { useLoadingHook } from '../shared/hooks/loading-hook';
 
 import styles from './RoomsControl.module.css';
+import { useSelector } from 'react-redux';
 
 const RoomsControl = (props) => {
   const [showModal, setShowModal] = useState(false);
-  const { token } = useContext(AuthContext);
+  const token = useSelector((state) => state.token);
   const houseId = useParams().houseId;
   const {
     error,
