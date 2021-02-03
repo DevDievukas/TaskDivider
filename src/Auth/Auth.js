@@ -50,14 +50,6 @@ const Auth = () => {
     false
   );
 
-  useEffect(() => {
-    if (auth.userId) {
-      history.push('/houses');
-    } else if (auth.houseId) {
-      history.push(`/${auth.houseId}/schedule`);
-    }
-  }, [auth.token]);
-
   const authSubmitHandler = async (event) => {
     event.preventDefault();
     if (isLoginMode && !houseLogin) {
@@ -72,8 +64,7 @@ const Auth = () => {
             dispatch(
               startUserAuth(res.data.userId, res.data.token, res.data.email)
             );
-            history.push('/houses');
-            setIsLoading(false);
+            history.push('/');
           })
           .catch((error) => {
             setIsLoading(false);
@@ -94,9 +85,7 @@ const Auth = () => {
             dispatch(
               startUserAuth(res.data.userId, res.data.token, res.data.email)
             );
-            history.push('/houses');
-
-            setIsLoading(false);
+            history.push('/');
           })
           .catch((error) => {
             setIsLoading(false);
@@ -121,8 +110,7 @@ const Auth = () => {
                 res.data.houseName
               )
             );
-            history.push(`${res.data.houseId}/announcements`);
-            setIsLoading(false);
+            history.push('/');
           })
           .catch((error) => {
             setIsLoading(false);

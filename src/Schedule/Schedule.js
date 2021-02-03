@@ -17,8 +17,8 @@ const Schedule = () => {
   const [data, setData] = useState(null);
   const [message, setMessage] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const { token, userId } = useSelector((state) => state);
-  const houseId = useParams().houseId;
+  const { token, userId, houseId } = useSelector((state) => state);
+  const houseParam = useParams().houseId;
   const {
     error,
     setError,
@@ -40,10 +40,10 @@ const Schedule = () => {
 
   const generateSchedule = (event) => {
     event.preventDefault();
-    if (houseId) {
+    if (houseParam) {
       axios
         .post(
-          `${process.env.REACT_APP_BACKEND_URL}/room/generateSchedule/${houseId}`,
+          `${process.env.REACT_APP_BACKEND_URL}/room/generateSchedule/${houseParam}`,
           null,
           {
             headers: {
@@ -68,7 +68,11 @@ const Schedule = () => {
   const getGroups = () => {
     setIsLoading(true);
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/room/Schedule/${houseId}`)
+      .get(
+        `${process.env.REACT_APP_BACKEND_URL}/room/Schedule/${
+          houseParam || houseId
+        }`
+      )
       .then((response) => {
         setIsLoading(false);
         if (response.data.message) {
@@ -87,7 +91,7 @@ const Schedule = () => {
 
   return (
     <div className={styles.scheduleDiv}>
-      <ErrorModal error={error} onClear={clearError} />{' '}
+      <ErrorModal error={error} onClear={clearError} />
       <Modal
         show={showModal}
         onCancel={closeGenerateModal}

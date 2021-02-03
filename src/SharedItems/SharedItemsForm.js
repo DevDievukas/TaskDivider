@@ -15,11 +15,11 @@ const SharedItemsForm = (props) => {
     setInitialName(name);
   }, []);
 
-  if (initialName === '') {
-    return <h1>Ups įvyko klaida, rašyk norbiui</h1>;
-  } else {
-    return <Form name={initialName} close={() => history.push('/main')} />;
-  }
+  // if (initialName === '') {
+  //   return <h1>Ups įvyko klaida, rašyk norbiui</h1>;
+  // } else {
+  return <Form name={initialName} close={() => history.push('/main')} />;
+  // }
 };
 
 export default SharedItemsForm;

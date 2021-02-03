@@ -1,0 +1,6 @@
+.radioDiv {
+  padding-left: 0;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}

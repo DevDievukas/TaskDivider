@@ -4,35 +4,23 @@ import axios from 'axios';
 import styles from './Announcements.module.css';
 import AnnouncementItem from './AnnouncementItem';
 import Spinner from '../shared/Spinner/Spinner';
+import AnnouncementsControl from './AnnouncementsControl';
+import { useParams } from 'react-router';
 
 const Announcements = (props) => {
   const [data, setData] = useState(null);
+  const houseId = useParams().houseId;
   useEffect(() => {
     getGroups();
   }, []);
 
   const getGroups = () => {
     axios
-      .get('https://tvarkymas-4237a.firebaseio.com/Swalmen/Announcements.json')
+      .get(
+        `${process.env.REACT_APP_BACKEND_URL}/announcement/allByHouse/${houseId}`
+      )
       .then((response) => {
-        const tempArray = [];
-        const tempArray2 = [];
-        try {
-          for (let [key, value] of Object.entries(response.data)) {
-            tempArray.push(value);
-          }
-        } catch (err) {
-          console.log(err);
-        }
-        try {
-          for (let i = 0; i < 3; i++) {
-            tempArray2.push(tempArray[tempArray.length - 1 - i]);
-          }
-          tempArray2.reverse();
-        } catch (err) {
-          console.log(err);
-        }
-        setData(tempArray2);
+        setData(response.data.announcements);
       })
       .catch((err) => {
         console.log('[annnouncement][fail]' + err);
@@ -44,15 +32,17 @@ const Announcements = (props) => {
 
   return (
     <ul className={styles.groupList}>
+      <AnnouncementsControl />
       {data.reverse().map((ann) => {
+        console.log(ann.title);
         if (ann) {
           return (
             <AnnouncementItem
-              key={ann.date}
+              key={ann._id}
               title={ann.title}
               text={ann.body}
-              date={ann.date}
-              img={ann.img}
+              // date={ann.date}
+              img={ann.image}
               link={ann.link}
             />
           );

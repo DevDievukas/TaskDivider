@@ -81,3 +81,7 @@
 .signOutDiv p {
   color: black;
 }
+
+.signOutDiv :hover {
+  cursor: pointer;
+}

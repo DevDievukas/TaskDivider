@@ -39,3 +39,23 @@
   border-color: red;
   background: #ffd1d1;
 }
+
+.radioDiv {
+  display: grid;
+}
+
+.radio {
+  z-index: 300;
+  grid-row: 1;
+  grid-column: 1;
+  padding-top: 1em;
+  margin-left: -2.2em;
+}
+
+.radioImg {
+  z-index: 200;
+  grid-row: 1;
+  grid-column: 1;
+  width: 100px;
+  margin-top: -2;
+}

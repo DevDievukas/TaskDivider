@@ -32,9 +32,9 @@ const Navbar = () => {
   let linkDirection = '/';
 
   if (auth.userId) {
-    linkDirection = '/houses';
+    linkDirection = '/';
   } else if (auth.houseId) {
-    linkDirection = `/${auth.houseId}/announcements`;
+    linkDirection = `/announcements`;
     leftButton = <h3>{auth.houseName}</h3>;
   }
 

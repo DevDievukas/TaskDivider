@@ -102,6 +102,33 @@ const Input = (props) => {
         onBlur={touchHandler}
       />
     );
+  } else if (props.element === 'radio') {
+    element = (
+      <label htmlfor={props.id} className={styles.radioDiv}>
+        <input
+          type="radio"
+          id={props.id}
+          name="image"
+          value={props.src}
+          className={styles.radio}
+          onChange={changeHandler}
+        />
+        {<img src={props.src} alt={props.src} className={styles.radioImg} />}
+      </label>
+      // <div className={styles.radioDiv}>
+      //   <input
+      //     id={props.id}
+      //     type={props.type}
+      //     placeholder={props.placeholder}
+      //     onChange={changeHandler}
+      //     value={inputState.value}
+      //     onBlur={touchHandler}
+      //     className={styles.radio}
+      //     // checked={props.checked}
+      //   />
+      //   <img src={props.src} alt={props.src} className={styles.radioImg} />
+      // </div>
+    );
   }
 
   return (
