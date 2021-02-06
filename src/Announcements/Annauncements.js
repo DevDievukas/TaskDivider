@@ -32,18 +32,17 @@ const Announcements = (props) => {
 
   return (
     <ul className={styles.groupList}>
-      <AnnouncementsControl />
+      <AnnouncementsControl onCreate={getGroups} />
       {data.reverse().map((ann) => {
-        console.log(ann.title);
         if (ann) {
           return (
             <AnnouncementItem
               key={ann._id}
               title={ann.title}
               text={ann.body}
-              // date={ann.date}
               img={ann.image}
               link={ann.link}
+              date={ann.date}
             />
           );
         } else {

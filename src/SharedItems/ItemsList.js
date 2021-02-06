@@ -1,27 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import axios from 'axios';
 
 import RequestItem from './RequestItem';
 
 const ItemsList = () => {
+  const houseParam = useParams().houseId;
   const [requestData, setRequestData] = useState('');
   const [rerender, setRerender] = useState(false);
   const getData = () => {
     axios
-      .get(`https://tvarkymas-4237a.firebaseio.com/Requests.json`)
+      .get(
+        `${process.env.REACT_APP_BACKEND_URL}/request/allByHouseId/${houseParam}`
+      )
       .then((response) => {
-        setRequestData(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const deleteRequest = (props) => {
-    axios
-      .delete(`https://tvarkymas-4237a.firebaseio.com/Requests/${props}.json`)
-      .then((response) => {
-        setRerender(!rerender);
+        setRequestData(response.data.requests);
       })
       .catch((err) => {
         console.log(err);
@@ -32,25 +26,19 @@ const ItemsList = () => {
     getData();
   }, [rerender]);
   let dataTable;
-  if (requestData) {
-    let requests = [];
-    requests = Object.values(requestData);
-    const requestIds = Object.keys(requestData);
-    dataTable = <h2>Data is loading</h2>;
-
-    let i = -1;
-    dataTable = requests.map((item) => {
-      i++;
-      return (
-        <RequestItem
-          date={item[2]}
-          name={item[0]}
-          request={item[1]}
-          key={requestIds[i]}
-          id={requestIds[i]}
-          delete={deleteRequest}
-        />
-      );
+  if (requestData.length > 0) {
+    dataTable = requestData.map((request) => {
+      if (request.author) {
+        return (
+          <RequestItem
+            date={request.date}
+            name={request.author}
+            request={request.body}
+            key={request._id}
+            id={request._id}
+          />
+        );
+      }
     });
   }
 

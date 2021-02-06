@@ -70,14 +70,6 @@ const AnnouncementsControl = (props) => {
   const addAnnouncSubmitHandler = (event) => {
     event.preventDefault();
     setIsLoading(true);
-
-    // const announcement = {
-    //   title: formState.inputs.title.value,
-    //   body: formState.inputs.body.value,
-    //   image: formState.inputs.image.value,
-    //   house: houseId
-    // }
-
     try {
       axios
         .post(
@@ -96,7 +88,7 @@ const AnnouncementsControl = (props) => {
         )
         .then((res) => {
           setIsLoading(false);
-          // props.onCreate();
+          props.onCreate();
           closeAnnouncModal();
         })
         .catch((error) => {

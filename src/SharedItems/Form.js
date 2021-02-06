@@ -1,5 +1,7 @@
 import React, { useCallback, useReducer, useState } from 'react';
 
+import { useParams } from 'react-router-dom';
+
 import Input from '../shared/FormElements/Input';
 import Button from '../shared/FormElements/Button';
 import axios from 'axios';
@@ -7,6 +9,7 @@ import axios from 'axios';
 import Modal from './Modal/Modal';
 
 import { VALIDATOR_REQUIRE } from '../shared/validators/validators';
+import { useSelector } from 'react-redux';
 
 const formReducer = (state, action) => {
   switch (action.type) {
@@ -33,14 +36,16 @@ const formReducer = (state, action) => {
 };
 
 const Form = (props) => {
+  const houseParam = useParams().houseId;
+  const token = useSelector((state) => state.token);
   const [success, setSuccess] = useState(null);
   const [formState, dispatch] = useReducer(formReducer, {
     inputs: {
-      vardas: {
+      author: {
         value: '',
         isValid: false,
       },
-      prašymas: {
+      body: {
         value: '',
         isValid: false,
       },
@@ -60,16 +65,21 @@ const Form = (props) => {
     [dispatch]
   );
 
-  let today = new Date(),
-    date = today.getMonth() + 1 + '-' + today.getDate();
-
   const postRequest = () => {
     axios
-      .post(`https://tvarkymas-4237a.firebaseio.com/Requests/.json`, [
-        formState.inputs.vardas.value,
-        formState.inputs.prašymas.value,
-        date,
-      ])
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/request`,
+        {
+          author: formState.inputs.author.value,
+          body: formState.inputs.body.value,
+          house: houseParam,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         console.log('[App]' + res);
         setSuccess(<Modal close={props.close} />);
@@ -81,7 +91,7 @@ const Form = (props) => {
 
   const formSubmit = (event) => {
     event.preventDefault();
-    localStorage.setItem('Vardas', formState.inputs.vardas.value);
+    localStorage.setItem('Vardas', formState.inputs.author.value);
     postRequest();
   };
 
@@ -89,7 +99,7 @@ const Form = (props) => {
     <div>
       <form onSubmit={formSubmit}>
         <Input
-          id="vardas"
+          id="author"
           placeholder="Vardas"
           element="input"
           type="text"
@@ -101,7 +111,7 @@ const Form = (props) => {
           initialValid={props.name}
         />
         <Input
-          id="prašymas"
+          id="body"
           placeholder="Prašymas"
           element="input"
           type="text"
