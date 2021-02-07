@@ -1,3 +1,8 @@
 form {
-  padding: 0 1em 0.7em 1em;
+  padding: 0 1em 1em 1em;
+}
+
+.submitBtn {
+  width: 100%;
+  background-color: firebrick;
 }

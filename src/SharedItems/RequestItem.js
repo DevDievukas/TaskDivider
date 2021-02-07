@@ -1,17 +1,20 @@
 import React from 'react';
 
-import './RequestItem.css';
+import styles from './RequestItem.module.css';
 
 const RequestItem = (props) => {
+  const { date, name, request, id } = props;
+
+  const parsedDate = date.substr(5, 5);
   return (
-    <div className="request-div">
-      <div className="request-inner__div">
-        <p className="date"> {props.date}</p>
-        <p className="name">{props.name}</p>
+    <div className={styles.requestDiv}>
+      <div className={styles.requestInner__div}>
+        <p className={styles.date}> {parsedDate}</p>
+        <p className={styles.name}>{name}</p>
       </div>
-      <div className="desc-div">
-        <p>{props.request}</p>
-        {/* <button onClick={() => props.delete(props.id)}>x</button> */}
+      <div className={styles.descDiv}>
+        <p>{request}</p>
+        <button onClick={() => props.delete(id)}>x</button>
       </div>
     </div>
   );

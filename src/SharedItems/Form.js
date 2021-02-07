@@ -14,6 +14,7 @@ import styles from './Form.module.css';
 
 const Form = (props) => {
   const houseParam = useParams().houseId;
+  const { name } = props;
   const token = useSelector((state) => state.token);
   const [formState, inputHandler] = useForm(
     {
@@ -52,25 +53,6 @@ const Form = (props) => {
       });
   };
 
-  const deleteRequests = () => {
-    axios
-      .delete(
-        `${process.env.REACT_APP_BACKEND_URL}/request/all/${houseParam}`,
-
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => {
-        console.table(res.data);
-      })
-      .catch((err) => {
-        console.log('[App] ' + err);
-      });
-  };
-
   const formSubmit = (event) => {
     event.preventDefault();
     localStorage.setItem('Vardas', formState.inputs.author.value);
@@ -88,8 +70,8 @@ const Form = (props) => {
           validators={[VALIDATOR_REQUIRE()]}
           error="Įveskite vardą."
           onInput={inputHandler}
-          initialValue={props.name}
-          initialValid={props.name}
+          initialValue={'name'}
+          initialValid={name}
         />
         <Input
           id="body"
@@ -100,27 +82,14 @@ const Form = (props) => {
           error="Įveskite tai ko jums trūksta name"
           onInput={inputHandler}
         />
-        <Button type="submit" disabled={!formState.isValid}>
+        <Button
+          type="submit"
+          disabled={!formState.isValid}
+          className={styles.submitBtn}
+        >
           Pateikti Prašymą
         </Button>
       </form>
-      <Button danger onClick={deleteRequests}>
-        Panaikinti prašymus
-      </Button>
-      <Button
-        danger
-        onClick={() =>
-          console.log(
-            formState.inputs.body.isValid +
-              ' ' +
-              formState.inputs.author.isValid +
-              ' ' +
-              formState.isValid
-          )
-        }
-      >
-        test
-      </Button>
     </div>
   );
 };

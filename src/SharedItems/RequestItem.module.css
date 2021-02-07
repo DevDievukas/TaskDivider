@@ -1,18 +1,20 @@
-.request-div {
+.requestDiv {
   display: flex;
   justify-content: space-between;
-  border: 0.5px solid blue;
-  padding-right: 0.6rem;
-  /* width: 100vw; */
+  border-bottom: 0.5px solid rgb(4, 4, 63);
+  border-top: 0.5px solid rgb(4, 4, 63);
+  padding-right: 0.6em;
+  margin-bottom: 0.6em;
+  margin: 0 0.4em 0.6em 0.4em;
 }
 
-.request-inner__div {
+.requestInner__div {
   display: flex;
   width: 30vw;
 }
 
-.request-inner__div p {
-  border-right: 0.5px solid blue;
+.requestInner__div p {
+  border-right: 0.5px dotted rgb(4, 4, 63);
   margin-top: 0;
   margin-bottom: 0;
   padding-top: 1rem;
@@ -28,7 +30,7 @@
   width: 70%;
 }
 
-.desc-div {
+.descDiv {
   display: flex;
   margin: 0;
   padding: 0;
@@ -36,7 +38,9 @@
   justify-content: space-between;
 }
 
-.desc-div button {
+.descDiv button {
+  margin: auto;
+  padding: auto;
   background-color: transparent;
   border: none;
   font-size: 28px;
@@ -45,8 +49,8 @@
   width: 8%;
 }
 
-.desc-div p {
-  margin: 0;
+.descDiv p {
+  margin: auto;
   padding: 0;
   margin-right: 0.1rem;
   width: 90%;
