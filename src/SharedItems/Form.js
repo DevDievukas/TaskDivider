@@ -1,46 +1,22 @@
-import React, { useCallback, useReducer, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useParams } from 'react-router-dom';
+import { useForm } from '../shared/hooks/form-hook';
 
 import Input from '../shared/FormElements/Input';
 import Button from '../shared/FormElements/Button';
 import axios from 'axios';
 
-import Modal from './Modal/Modal';
-
 import { VALIDATOR_REQUIRE } from '../shared/validators/validators';
 import { useSelector } from 'react-redux';
 
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case 'INPUT_CHANGE':
-      let formIsValid = true;
-      for (const inputId in state.inputs) {
-        if (inputId === action.inputId) {
-          formIsValid = formIsValid && action.isValid;
-        } else {
-          formIsValid = formIsValid && state.inputs[inputId].isValid;
-        }
-      }
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.inputId]: { value: action.value, isValid: action.isValid },
-        },
-        isValid: formIsValid,
-      };
-    default:
-      return state;
-  }
-};
+import styles from './Form.module.css';
 
 const Form = (props) => {
   const houseParam = useParams().houseId;
   const token = useSelector((state) => state.token);
-  const [success, setSuccess] = useState(null);
-  const [formState, dispatch] = useReducer(formReducer, {
-    inputs: {
+  const [formState, inputHandler] = useForm(
+    {
       author: {
         value: '',
         isValid: false,
@@ -50,19 +26,7 @@ const Form = (props) => {
         isValid: false,
       },
     },
-    isValid: false,
-  });
-
-  const InputHandler = useCallback(
-    (id, value, isValid) => {
-      dispatch({
-        type: 'INPUT_CHANGE',
-        value: value,
-        isValid: isValid,
-        inputId: id,
-      });
-    },
-    [dispatch]
+    false
   );
 
   const postRequest = () => {
@@ -81,8 +45,26 @@ const Form = (props) => {
         }
       )
       .then((res) => {
-        console.log('[App]' + res);
-        setSuccess(<Modal close={props.close} />);
+        console.table(res);
+      })
+      .catch((err) => {
+        console.log('[App] ' + err);
+      });
+  };
+
+  const deleteRequests = () => {
+    axios
+      .delete(
+        `${process.env.REACT_APP_BACKEND_URL}/request/all/${houseParam}`,
+
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.table(res.data);
       })
       .catch((err) => {
         console.log('[App] ' + err);
@@ -97,16 +79,15 @@ const Form = (props) => {
 
   return (
     <div>
-      <form onSubmit={formSubmit}>
+      <form onSubmit={formSubmit} className={styles.form}>
         <Input
           id="author"
           placeholder="Vardas"
           element="input"
           type="text"
-          // label="vardas"
           validators={[VALIDATOR_REQUIRE()]}
           error="Įveskite vardą."
-          onInput={InputHandler}
+          onInput={inputHandler}
           initialValue={props.name}
           initialValid={props.name}
         />
@@ -115,16 +96,31 @@ const Form = (props) => {
           placeholder="Prašymas"
           element="input"
           type="text"
-          // label="prašymas"
           validators={[VALIDATOR_REQUIRE()]}
           error="Įveskite tai ko jums trūksta name"
-          onInput={InputHandler}
+          onInput={inputHandler}
         />
         <Button type="submit" disabled={!formState.isValid}>
           Pateikti Prašymą
         </Button>
       </form>
-      {success}
+      <Button danger onClick={deleteRequests}>
+        Panaikinti prašymus
+      </Button>
+      <Button
+        danger
+        onClick={() =>
+          console.log(
+            formState.inputs.body.isValid +
+              ' ' +
+              formState.inputs.author.isValid +
+              ' ' +
+              formState.isValid
+          )
+        }
+      >
+        test
+      </Button>
     </div>
   );
 };

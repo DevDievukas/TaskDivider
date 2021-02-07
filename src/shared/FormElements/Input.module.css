@@ -29,17 +29,6 @@
   border-color: #510077;
 }
 
-.formControlInvalid label,
-.formControlInvalid p {
-  color: red;
-}
-
-.formControlInvalid input,
-.formControlInvalid textarea {
-  border-color: red;
-  background: #ffd1d1;
-}
-
 .radioDiv {
   display: grid;
 }
