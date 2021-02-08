@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './RequestItem.module.css';
 
 const RequestItem = (props) => {
-  const { date, name, request, id } = props;
+  const { date, name, request, id, userId } = props;
 
   const parsedDate = date.substr(5, 5);
   return (
@@ -14,7 +14,7 @@ const RequestItem = (props) => {
       </div>
       <div className={styles.descDiv}>
         <p>{request}</p>
-        <button onClick={() => props.delete(id)}>x</button>
+        {userId ? <button onClick={() => props.delete(id)}>x</button> : null}
       </div>
     </div>
   );

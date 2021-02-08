@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 import { useParams } from 'react-router-dom';
@@ -8,17 +8,13 @@ import Form from './Form';
 import Button from '../shared/FormElements/Button';
 import Modal from '../shared/UIElements/Modal';
 
-import { useHistory } from 'react-router';
-
 import styles from './SharedItems.module.css';
 
 const SharedItemsForm = (props) => {
   const houseParam = useParams().houseId;
-  const { token, userId } = useSelector((state) => state);
-  const [initialName, setInitialName] = useState('');
+  const { token, userId, houseId } = useSelector((state) => state);
   const [showModal, setShowModal] = useState(false);
 
-  let history = useHistory();
   const clearRequestsSubmitHandler = (event) => {
     event.preventDefault();
     axios
@@ -39,11 +35,6 @@ const SharedItemsForm = (props) => {
         console.log('[App] ' + err);
       });
   };
-
-  useEffect(() => {
-    const name = localStorage.getItem('Vardas');
-    setInitialName(name);
-  }, []);
 
   const closeClearRequestsModal = () => {
     setShowModal(false);
@@ -66,7 +57,7 @@ const SharedItemsForm = (props) => {
         </Button>
         <Button type="submit">CLEAR</Button>
       </Modal>
-      <Form name={initialName} close={() => history.push(`/`)} />
+      <Form houseId={houseId} />
       {userId ? (
         <Button
           danger

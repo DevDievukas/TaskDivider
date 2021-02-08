@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useParams } from 'react-router-dom';
 import { useForm } from '../shared/hooks/form-hook';
@@ -8,14 +8,12 @@ import Button from '../shared/FormElements/Button';
 import axios from 'axios';
 
 import { VALIDATOR_REQUIRE } from '../shared/validators/validators';
-import { useSelector } from 'react-redux';
 
 import styles from './Form.module.css';
 
 const Form = (props) => {
   const houseParam = useParams().houseId;
-  const { name } = props;
-  const token = useSelector((state) => state.token);
+  const { houseId } = props;
   const [formState, inputHandler] = useForm(
     {
       author: {
@@ -30,21 +28,20 @@ const Form = (props) => {
     false
   );
 
+  console.log(formState.inputs.author.value);
+
+  useEffect(() => {
+    const name = localStorage.getItem('Vardas');
+    inputHandler('author', name, true);
+  }, []);
+
   const postRequest = () => {
     axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/request`,
-        {
-          author: formState.inputs.author.value,
-          body: formState.inputs.body.value,
-          house: houseParam,
-        },
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .post(`${process.env.REACT_APP_BACKEND_URL}/request`, {
+        author: formState.inputs.author.value,
+        body: formState.inputs.body.value,
+        house: houseParam || houseId,
+      })
       .then((res) => {
         console.table(res);
       })
@@ -61,25 +58,23 @@ const Form = (props) => {
 
   return (
     <div>
-      <form onSubmit={formSubmit} className={styles.form}>
+      <form onSubmit={formSubmit}>
         <Input
           id="author"
-          placeholder="Vardas"
+          placeholder="Name"
           element="input"
           type="text"
           validators={[VALIDATOR_REQUIRE()]}
-          error="Įveskite vardą."
+          error="Enter name."
           onInput={inputHandler}
-          initialValue={'name'}
-          initialValid={name}
         />
         <Input
           id="body"
-          placeholder="Prašymas"
+          placeholder="Request"
           element="input"
           type="text"
           validators={[VALIDATOR_REQUIRE()]}
-          error="Įveskite tai ko jums trūksta name"
+          error="Enter your request"
           onInput={inputHandler}
         />
         <Button
@@ -87,7 +82,7 @@ const Form = (props) => {
           disabled={!formState.isValid}
           className={styles.submitBtn}
         >
-          Pateikti Prašymą
+          SUBMIT REQUEST
         </Button>
       </form>
     </div>

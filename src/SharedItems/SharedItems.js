@@ -11,13 +11,19 @@ import styles from './SharedItems.module.css';
 
 const SharedItems = (props) => {
   const houseParam = useParams().houseId;
-  const { token } = useSelector((state) => state);
+  const { token, userId, houseId } = useSelector((state) => state);
   const [data, setData] = useState();
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const getData = () => {
     axios
       .get(
-        `${process.env.REACT_APP_BACKEND_URL}/request/allByHouseId/${houseParam}`
+        `${process.env.REACT_APP_BACKEND_URL}/request/allByHouseId/${
+          houseParam || houseId
+        }`
       )
       .then((response) => {
         setData(response.data.requests);
@@ -42,16 +48,13 @@ const SharedItems = (props) => {
       });
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
   return (
-    <div>
+    <div className={styles.requestDiv}>
       <div className={styles.formDiv}>
         <SharedItemsForm />
       </div>
       <div>
-        <ItemsList data={data} deleteRequest={deleteRequest} />
+        <ItemsList data={data} deleteRequest={deleteRequest} userId={userId} />
       </div>
     </div>
   );

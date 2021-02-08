@@ -1,8 +1,8 @@
 .formDiv {
-  margin-bottom: 1em;
+  margin-bottom: 2em;
   text-align: right;
 }
 
-.clearBtn {
-  text-align: right;
+.requestDiv {
+  padding: 0 1em 1em 1em;
 }

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import RequestItem from './RequestItem';
 
 const ItemsList = (props) => {
-  const { data, deleteRequest } = props;
+  const { data, deleteRequest, userId } = props;
   const [dataTable, setDataTable] = useState();
   useEffect(() => {
     if (data) {
@@ -19,11 +19,14 @@ const ItemsList = (props) => {
                   key={request._id}
                   id={request._id}
                   delete={deleteRequest}
+                  userId={userId}
                 />
               );
             }
           })
         );
+      } else {
+        setDataTable(<h1>NO REQUESTS ACTIVE</h1>);
       }
     }
   }, [data]);

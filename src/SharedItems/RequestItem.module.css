@@ -5,7 +5,6 @@
   border-top: 0.5px solid rgb(4, 4, 63);
   padding-right: 0.6em;
   margin-bottom: 0.6em;
-  margin: 0 0.4em 0.6em 0.4em;
 }
 
 .requestInner__div {
@@ -14,12 +13,8 @@
 }
 
 .requestInner__div p {
-  border-right: 0.5px dotted rgb(4, 4, 63);
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-top: 1rem;
   text-align: center;
-  height: auto;
+  margin: auto;
 }
 
 .date {
