@@ -29,13 +29,10 @@ const Form = (props) => {
 
   const formSubmit = (event) => {
     event.preventDefault();
-    const today = new Date();
-    const date = today.getDate() + '-' + parseInt(today.getMonth() + 1);
     const request = {
       author: formState.inputs.author.value,
       body: formState.inputs.body.value,
       house: houseParam || houseId,
-      date: date.toString(),
     };
     if (initialAuthor !== formState.inputs.author.value) {
       localStorage.setItem('houseItName', formState.inputs.author.value);

@@ -64,9 +64,7 @@ const SharedItems = (props) => {
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/request`, request)
       .then((res) => {
-        const newReq = request;
-        newReq._id = Math.random();
-        setData((prevData) => [...prevData, newReq]);
+        setData((prevData) => [...prevData, res.data.request]);
       })
       .catch((err) => {
         console.log('[App] ' + err);
