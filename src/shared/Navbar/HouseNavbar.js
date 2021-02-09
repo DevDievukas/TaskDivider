@@ -8,29 +8,29 @@ import styles from './HouseNavbar.module.css';
 import { useSelector } from 'react-redux';
 
 const HouseNavbar = () => {
-  const houseId = useParams().houseId;
-  const { userId } = useSelector((state) => state);
+  const houseParam = useParams().houseId;
+  const { userId } = useSelector((state) => ({ ...state.auth }));
 
   let houseNavbar;
   if (userId) {
     houseNavbar = (
       <header className={styles.navbar}>
         <div className={styles.section}>
-          <HouseNavbarItem direction={`/${houseId}/rooms`} title="Rooms" />
+          <HouseNavbarItem direction={`/${houseParam}/rooms`} title="Rooms" />
           <HouseNavbarItem
-            direction={`/${houseId}/schedule`}
+            direction={`/${houseParam}/schedule`}
             title="Schedule"
           />
 
-          <HouseNavbarItem direction={`/${houseId}/people`} title="People" />
+          <HouseNavbarItem direction={`/${houseParam}/people`} title="People" />
         </div>
         <div className={styles.section}>
           <HouseNavbarItem
-            direction={`/${houseId}/announcements`}
+            direction={`/${houseParam}/announcements`}
             title="Announcements"
           />
           <HouseNavbarItem
-            direction={`/${houseId}/sharedItems`}
+            direction={`/${houseParam}/sharedItems`}
             title="Requests"
           />
         </div>

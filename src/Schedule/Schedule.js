@@ -2,30 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import { useLoadingHook } from '../shared/hooks/loading-hook';
-
 import GroupElement from './GroupElement';
-import Spinner from '../shared/Spinner/Spinner';
-import ErrorModal from '../shared/UIElements/ErrorModal';
 import Modal from '../shared/UIElements/Modal';
 import Button from '../shared/FormElements/Button';
 
 import styles from './Schedule.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  createError,
+  startLoading,
+  stopLoading,
+} from '../Store/actions/Loading';
 
 const Schedule = () => {
   const [data, setData] = useState(null);
   const [message, setMessage] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const { token, userId, houseId } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { token, userId, houseId } = useSelector((state) => ({
+    ...state.auth,
+  }));
   const houseParam = useParams().houseId;
-  const {
-    error,
-    setError,
-    clearError,
-    isLoading,
-    setIsLoading,
-  } = useLoadingHook();
   useEffect(() => {
     getGroups();
   }, []);
@@ -52,21 +49,19 @@ const Schedule = () => {
           }
         )
         .then((response) => {
-          console.log(response.data);
           closeGenerateModal();
         })
         .then(() => getGroups())
         .catch((err) => {
           if (err.response) {
-            console.log(err.response.data);
-            setError(err.response.data.message);
+            dispatch(createError(err.response.data.message));
           }
         });
     }
   };
 
   const getGroups = () => {
-    setIsLoading(true);
+    dispatch(startLoading());
     axios
       .get(
         `${process.env.REACT_APP_BACKEND_URL}/room/Schedule/${
@@ -74,37 +69,32 @@ const Schedule = () => {
         }`
       )
       .then((response) => {
-        setIsLoading(false);
+        dispatch(stopLoading());
         if (response.data.message) {
           setMessage(response.data.message);
         }
         setData(response.data.schedule);
       })
       .catch((err) => {
-        setIsLoading(false);
-
         if (err.response) {
-          setError(err.response.data.message);
+          dispatch(createError(err.response.data.message));
         }
       });
   };
 
   return (
     <div className={styles.scheduleDiv}>
-      <ErrorModal error={error} onClear={clearError} />
       <Modal
         show={showModal}
         onCancel={closeGenerateModal}
         header="GENERATE SCHEDULE?"
         onSubmit={generateSchedule}
       >
-        {isLoading && <Spinner asOverlay />}
         <Button type="button" onClick={closeGenerateModal}>
           CANCEL
         </Button>
         <Button type="Submit">GENERATE</Button>
       </Modal>
-      {isLoading && <Spinner />}
       {userId ? (
         <button onClick={openGenerateModal} className={styles.generateBtn}>
           GENERATE SCHEDULE

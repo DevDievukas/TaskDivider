@@ -1,32 +1,27 @@
 import React, { useRef, useEffect, useState } from 'react';
-
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
-import Spinner from '../shared/Spinner/Spinner';
-import ErrorModal from '../shared/UIElements/ErrorModal';
 import Modal from '../shared/UIElements/Modal';
 
 import Button from '../shared/FormElements/Button';
-
-import { useLoadingHook } from '../shared/hooks/loading-hook';
 
 import styles from './ExpandedRoom.module.css';
 import PersonName from './PersonName';
 
 import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
-import { useSelector } from 'react-redux';
+import {
+  createError,
+  startLoading,
+  stopLoading,
+} from '../Store/actions/Loading';
+
 const ExpandedRoom = (props) => {
-  const { userId, token } = useSelector((state) => state);
+  const { id, img, room, people, close, onDelete, userId, token } = props;
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
 
-  const {
-    error,
-    setError,
-    clearError,
-    isLoading,
-    setIsLoading,
-  } = useLoadingHook();
   const roomFocus = useRef(null);
 
   useEffect(() => {
@@ -37,22 +32,21 @@ const ExpandedRoom = (props) => {
   }, []);
 
   const deleteRoomHandler = async () => {
-    setIsLoading(true);
+    dispatch(startLoading());
     try {
       axios
-        .delete(`${process.env.REACT_APP_BACKEND_URL}/room/${props.id}`, {
+        .delete(`${process.env.REACT_APP_BACKEND_URL}/room/${id}`, {
           headers: {
             authorization: `Bearer ${token}`,
           },
         })
         .then((res) => {
-          setIsLoading(false);
-          props.onDelete(props.id);
+          dispatch(stopLoading());
+          onDelete(id);
         });
-    } catch (err) {
-      setIsLoading(false);
-      if (err.response) {
-        setError(error.response.data.message);
+    } catch (error) {
+      if (error.response) {
+        dispatch(createError(error.response.data.message));
       }
     }
   };
@@ -67,7 +61,6 @@ const ExpandedRoom = (props) => {
 
   return (
     <React.Fragment>
-      <ErrorModal error={error} onClear={clearError} />
       <Modal
         show={showModal}
         onCancel={closeDeleteRoomModal}
@@ -81,18 +74,16 @@ const ExpandedRoom = (props) => {
           DELETE
         </Button>
       </Modal>
-      <Card ref={roomFocus} className={styles.roomCard} onClick={props.close}>
-        {isLoading && <Spinner />}
-        {props.img.length > 0 ? (
+      <Card ref={roomFocus} className={styles.roomCard} onClick={close}>
+        {img.length > 0 ? (
           <Carousel controls={false} interval={3000} className={styles.caro}>
-            {props.img.map((img) => {
+            {img.map((img) => {
               return (
                 <Carousel.Item key={img} className={styles.caroItem}>
                   <img className="d-block w-100" src={img} alt={img} />
                 </Carousel.Item>
               );
             })}
-            {/* <img className="d-block w-100" src={props.img} alt={'img'} /> */}
           </Carousel>
         ) : (
           <img
@@ -104,8 +95,8 @@ const ExpandedRoom = (props) => {
           />
         )}
 
-        <h2 className={styles.roomTitle}>{props.room}</h2>
-        {props.people.map((person) => {
+        <h2 className={styles.roomTitle}>{room}</h2>
+        {people.map((person) => {
           return (
             <PersonName
               valid={person.validity}

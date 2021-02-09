@@ -5,6 +5,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import styles from './ExpandedElement.module.css';
 
 const ExpandedElement = (props) => {
+  const { rooms, person } = props;
   useEffect(() => {
     window.scrollTo({
       top: focus.current.offsetTop - 50,
@@ -13,13 +14,13 @@ const ExpandedElement = (props) => {
   });
 
   const focus = useRef(null);
-  if (props.rooms.length > 0) {
+  if (rooms.length > 0) {
     return (
       <div ref={focus} className={styles.expandedDiv}>
-        <h1>{props.person}</h1>
+        <h1>{person}</h1>
         <h4>Šią savaite tvarkote: </h4>
 
-        {props.rooms.map((room) => {
+        {rooms.map((room) => {
           return (
             <div key={room.roomName} className={styles.imgDiv}>
               {room.image.length > 0 ? (
@@ -65,7 +66,7 @@ const ExpandedElement = (props) => {
   } else {
     return (
       <div ref={focus} className={styles.expandedDiv}>
-        <h1>{props.person}</h1>
+        <h1>{person}</h1>
         <img
           src="https://image.freepik.com/free-vector/boy-bed-snoring_1308-5347.jpg"
           alt="resting"

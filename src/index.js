@@ -3,14 +3,20 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import reducer from './Store/reducers/auth';
+import { applyMiddleware, createStore, combineReducers } from 'redux';
+import authReducer from './Store/reducers/authReducer';
+import loadingReducer from './Store/reducers/loadingReducer';
 import thunk from 'redux-thunk';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
-const auth = createStore(reducer, applyMiddleware(thunk));
+const rootReducer = combineReducers({
+  auth: authReducer,
+  load: loadingReducer,
+});
+
+const auth = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={auth}>

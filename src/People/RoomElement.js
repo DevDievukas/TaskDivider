@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
 
-import { useLoadingHook } from '../shared/hooks/loading-hook';
-import ErrorModal from '../shared/UIElements/ErrorModal';
 import Modal from '../shared/UIElements/Modal';
 import { Trash } from 'phosphor-react';
 
 import styles from './RoomElement.module.css';
-import { useSelector } from 'react-redux';
+import { createError } from '../Store/actions/Loading';
 
 const RoomElement = (props) => {
-  const token = useSelector((state) => state);
   const [showModal, setShowModal] = useState(false);
-
-  const { onRemove, roomName, id, personId } = props;
-  const { error, setError, clearError } = useLoadingHook();
+  const dispatch = useDispatch();
+  const { onRemove, roomName, id, personId, token } = props;
 
   const removeRoom = (event) => {
     event.preventDefault();
@@ -36,7 +33,7 @@ const RoomElement = (props) => {
       })
       .catch((err) => {
         if (err.response) {
-          setError(err.response.data.message);
+          dispatch(createError(err.response.data.message));
         }
       });
   };
@@ -51,7 +48,6 @@ const RoomElement = (props) => {
 
   return (
     <React.Fragment>
-      <ErrorModal error={error} onClear={clearError} />
       <Modal
         show={showModal}
         onCancel={closeRemoveRoomModal}

@@ -6,9 +6,9 @@ import Card from 'react-bootstrap/Card';
 import ExpandedRoom from './ExpandedRoom';
 
 import styles from './RoomElement.module.css';
-import { EnvelopeSimple } from 'phosphor-react';
 
 const RoomElement = (props) => {
+  const { userId, token } = props;
   const [expanded, setExpanded] = useState(false);
   const [roomData, setRoomData] = useState();
   let imgSrc =
@@ -60,6 +60,8 @@ const RoomElement = (props) => {
           id={props.id}
           close={setExpandedHandler}
           onDelete={props.onDelete}
+          userId={userId}
+          token={token}
         />
       </div>
     );

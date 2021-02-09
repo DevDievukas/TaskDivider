@@ -1,31 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import Spinner from '../shared/Spinner/Spinner';
-import ErrorModal from '../shared/UIElements/ErrorModal';
 import RoomsControl from './RoomsControl';
-
-import { useLoadingHook } from '../shared/hooks/loading-hook';
 
 import styles from './Rooms.module.css';
 import RoomElement from './RoomElement';
 
 import ImageUpload from './ImgUpload';
+import {
+  createError,
+  startLoading,
+  stopLoading,
+} from '../Store/actions/Loading';
 
 const Rooms = () => {
   const houseParam = useParams().houseId;
-  const { userId, houseId } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { userId, houseId, token } = useSelector((state) => ({
+    ...state.auth,
+  }));
   const [data, setData] = useState(null);
-
-  const {
-    error,
-    setError,
-    clearError,
-    isLoading,
-    setIsLoading,
-  } = useLoadingHook();
 
   useEffect(() => {
     getRooms();
@@ -33,18 +29,17 @@ const Rooms = () => {
 
   const getRooms = () => {
     const id = houseId || houseParam;
-    setIsLoading(true);
+    dispatch(startLoading());
     axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/room/allByHouse/${id}`)
       .then((response) => {
-        setIsLoading(false);
+        dispatch(stopLoading());
         const rooms = response.data.rooms.map((room) => room);
         setData(rooms);
       })
       .catch((err) => {
-        setIsLoading(false);
         if (err.response) {
-          setError(err.response.data.message);
+          dispatch(createError(err.response.data.message));
         }
       });
   };
@@ -58,9 +53,7 @@ const Rooms = () => {
     return (
       <div className={styles.mainDiv}>
         {/* <ImageUpload /> */}
-        <ErrorModal error={error} onClear={clearError} />
-        {isLoading && <Spinner />}
-        {userId ? <RoomsControl onCreate={getRooms} /> : null}
+        {userId ? <RoomsControl onCreate={getRooms} token={token} /> : null}
         {data.length <= 0 ? (
           <h1> no rooms</h1>
         ) : (
@@ -74,6 +67,8 @@ const Rooms = () => {
                   images={room.images}
                   people={room.cleaners}
                   onDelete={roomDeleteHandler}
+                  userId={userId}
+                  token={token}
                 />
               );
             })}
@@ -82,7 +77,7 @@ const Rooms = () => {
       </div>
     );
   }
-  return <Spinner />;
+  return null;
 };
 
 export default Rooms;

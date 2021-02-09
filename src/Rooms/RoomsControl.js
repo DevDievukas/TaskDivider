@@ -1,33 +1,29 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
 
 import Button from '../shared/FormElements/Button';
 import Input from '../shared/FormElements/Input';
 import ImageUpload from '../shared/FormElements/ImageUpload';
-import ErrorModal from '../shared/UIElements/ErrorModal';
 import Modal from '../shared/UIElements/Modal';
-import Spinner from '../shared/Spinner/Spinner';
 import AddButton from '../shared/UIElements/AddButton/AddButton';
 
 import { useForm } from '../shared/hooks/form-hook';
 import { VALIDATOR_REQUIRE } from '../shared/validators/validators';
-import { useLoadingHook } from '../shared/hooks/loading-hook';
 
 import styles from './RoomsControl.module.css';
-import { useSelector } from 'react-redux';
+import {
+  createError,
+  startLoading,
+  stopLoading,
+} from '../Store/actions/Loading';
 
 const RoomsControl = (props) => {
   const [showModal, setShowModal] = useState(false);
-  const token = useSelector((state) => state.token);
-  const houseId = useParams().houseId;
-  const {
-    error,
-    setError,
-    clearError,
-    isLoading,
-    setIsLoading,
-  } = useLoadingHook();
+  const { token } = props;
+  const dispatch = useDispatch();
+  const houseParam = useParams().houseId;
   const [formState, inputHandler] = useForm(
     {
       roomName: {
@@ -52,7 +48,7 @@ const RoomsControl = (props) => {
 
   const addRoomSubmitHandler = (event) => {
     event.preventDefault();
-    setIsLoading(true);
+    dispatch(startLoading());
     // const formData = new FormData();
     // formData.append('roomName', formState.inputs.roomName.value);
     // formData.append('house', houseId);
@@ -62,7 +58,7 @@ const RoomsControl = (props) => {
       axios
         .post(
           `${process.env.REACT_APP_BACKEND_URL}/room/`,
-          { roomName: formState.inputs.roomName.value, house: houseId },
+          { roomName: formState.inputs.roomName.value, house: houseParam },
           {
             headers: {
               authorization: `Bearer ${token}`,
@@ -70,31 +66,28 @@ const RoomsControl = (props) => {
           }
         )
         .then((res) => {
-          setIsLoading(false);
+          dispatch(stopLoading());
           props.onCreate();
           closeAddRoomModal();
         })
         .catch((error) => {
-          setIsLoading(false);
           if (error.response) {
-            setError(error.response.data.message);
+            dispatch(createError(error.response.data.message));
           }
         });
     } catch (err) {
-      setError(err.message);
+      dispatch(createError(err.message));
     }
   };
 
   return (
     <React.Fragment>
-      <ErrorModal error={error} onClear={clearError} />
       <Modal
         show={showModal}
         onCancel={closeAddRoomModal}
         header="Add Room"
         onSubmit={addRoomSubmitHandler}
       >
-        {isLoading && <Spinner asOverlay />}
         <Input
           element="input"
           id="roomName"

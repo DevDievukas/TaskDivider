@@ -6,46 +6,40 @@ import Spinner from '../shared/Spinner/Spinner';
 import ErrorModal from '../shared/UIElements/ErrorModal';
 import PeopleControl from './PeopleControl';
 
-import { useLoadingHook } from '../shared/hooks/loading-hook';
-
 import styles from './People.module.css';
 import PersonElement from './PersonElement';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  createError,
+  startLoading,
+  stopLoading,
+} from '../Store/actions/Loading';
 
 const Rooms = () => {
-  const houseId = useParams().houseId;
-  const userId = useSelector((state) => state.userId);
+  const dispatch = useDispatch();
+  const houseParam = useParams().houseId;
+  const { userId, token } = useSelector((state) => ({ ...state.auth }));
   const [data, setData] = useState(null);
-
-  const {
-    error,
-    setError,
-    clearError,
-    isLoading,
-    setIsLoading,
-  } = useLoadingHook();
 
   useEffect(() => {
     getPeople();
   }, []);
 
   const getPeople = () => {
-    setIsLoading(true);
-    if (houseId) {
+    dispatch(startLoading());
+    if (houseParam) {
       axios
         .get(
-          `${process.env.REACT_APP_BACKEND_URL}/person/allByHouse/${houseId}`
+          `${process.env.REACT_APP_BACKEND_URL}/person/allByHouse/${houseParam}`
         )
         .then((response) => {
-          setIsLoading(false);
+          dispatch(stopLoading());
           const people = response.data.people.map((person) => person);
           setData(people);
-          console.log(people);
         })
         .catch((err) => {
-          setIsLoading(false);
           if (err.response) {
-            setError(err.response.data.message);
+            dispatch(createError(err.response.data.message));
           }
         });
     }
@@ -61,9 +55,7 @@ const Rooms = () => {
   if (data) {
     return (
       <div className={styles.mainDiv}>
-        <ErrorModal error={error} onClear={clearError} />
-        {isLoading && <Spinner />}
-        {userId ? <PeopleControl onCreate={getPeople} /> : null}
+        {userId ? <PeopleControl onCreate={getPeople} token={token} /> : null}
         {data.length <= 0 || data[0] === null ? (
           <h1> no people</h1>
         ) : (
@@ -86,7 +78,7 @@ const Rooms = () => {
       </div>
     );
   }
-  return <Spinner />;
+  return null;
 };
 
 export default Rooms;

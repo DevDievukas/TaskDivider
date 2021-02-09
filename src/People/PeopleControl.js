@@ -4,27 +4,23 @@ import axios from 'axios';
 
 import Button from '../shared/FormElements/Button';
 import Input from '../shared/FormElements/Input';
-import ErrorModal from '../shared/UIElements/ErrorModal';
 import Modal from '../shared/UIElements/Modal';
-import Spinner from '../shared/Spinner/Spinner';
 import AddButton from '../shared/UIElements/AddButton/AddButton';
 
 import { useForm } from '../shared/hooks/form-hook';
 import { VALIDATOR_REQUIRE } from '../shared/validators/validators';
-import { useLoadingHook } from '../shared/hooks/loading-hook';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import {
+  createError,
+  startLoading,
+  stopLoading,
+} from '../Store/actions/Loading';
 
 const RoomsControl = (props) => {
   const [showModal, setShowModal] = useState(false);
-  const token = useSelector((state) => state);
-  const houseId = useParams().houseId;
-  const {
-    error,
-    setError,
-    clearError,
-    isLoading,
-    setIsLoading,
-  } = useLoadingHook();
+  const dispatch = useDispatch();
+  const { token } = props;
+  const houseParam = useParams().houseId;
   const [formState, inputHandler] = useForm(
     {
       name: {
@@ -45,10 +41,10 @@ const RoomsControl = (props) => {
 
   const addPersonSubmitHandler = (event) => {
     event.preventDefault();
-    setIsLoading(true);
+    dispatch(startLoading());
     const person = {
       name: formState.inputs.name.value,
-      house: houseId,
+      house: houseParam,
     };
     try {
       axios
@@ -58,31 +54,28 @@ const RoomsControl = (props) => {
           },
         })
         .then((res) => {
-          setIsLoading(false);
+          dispatch(stopLoading());
           props.onCreate();
           closeAddPersonModal();
         })
         .catch((error) => {
-          setIsLoading(false);
           if (error.response) {
-            setError(error.response.data.message);
+            dispatch(createError(error.response.data.message));
           }
         });
     } catch (err) {
-      setError(err.message);
+      dispatch(createError(err.message));
     }
   };
 
   return (
     <React.Fragment>
-      <ErrorModal error={error} onClear={clearError} />
       <Modal
         show={showModal}
         onCancel={closeAddPersonModal}
         header="Add Person"
         onSubmit={addPersonSubmitHandler}
       >
-        {isLoading && <Spinner asOverlay />}
         <Input
           element="input"
           id="name"

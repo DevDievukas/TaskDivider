@@ -6,6 +6,7 @@ import ExpandedPerson from './ExpandedPerson';
 
 const PersonElement = (props) => {
   const [expanded, setExpanded] = useState(false);
+  const { userId, token } = props;
 
   const setExpandedHandler = () => {
     setExpanded(!expanded);
@@ -25,6 +26,8 @@ const PersonElement = (props) => {
         id={props.id}
         close={setExpandedHandler}
         onDelete={props.onDelete}
+        userId={userId}
+        token={token}
       />
     );
   }

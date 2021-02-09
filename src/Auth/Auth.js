@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 
 import Input from '../shared/FormElements/Input';
 import { useForm } from '../shared/hooks/form-hook';
-import ErrorModal from '../shared/UIElements/ErrorModal';
-import LoadingSpinner from '../shared/Spinner/Spinner';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
-
-import { useLoadingHook } from '../shared/hooks/loading-hook';
 
 import {
   VALIDATOR_MINLENGTH,
@@ -18,20 +14,17 @@ import {
 
 import styles from './Auth.module.css';
 import { startHouseAuth, startUserAuth } from '../Store/actions/Auth';
+import {
+  createError,
+  startLoading,
+  stopLoading,
+} from '../Store/actions/Loading';
 
 const Auth = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const auth = useSelector((state) => state);
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [houseLogin, setHouseLogin] = useState(true);
-  const {
-    error,
-    setError,
-    clearError,
-    isLoading,
-    setIsLoading,
-  } = useLoadingHook();
   const [formState, inputHandler, setFormData] = useForm(
     {
       houseName: {
@@ -51,9 +44,9 @@ const Auth = () => {
   );
 
   const authSubmitHandler = async (event) => {
+    dispatch(startLoading());
     event.preventDefault();
     if (isLoginMode && !houseLogin) {
-      setIsLoading(true);
       try {
         axios
           .post(`${process.env.REACT_APP_BACKEND_URL}/users/login`, {
@@ -61,20 +54,19 @@ const Auth = () => {
             password: formState.inputs.password.value,
           })
           .then((res) => {
+            dispatch(stopLoading());
             dispatch(
               startUserAuth(res.data.userId, res.data.token, res.data.email)
             );
             history.push('/');
           })
           .catch((error) => {
-            setIsLoading(false);
             if (error.response) {
-              setError(error.response.data.message);
+              dispatch(createError(error.response.data.message));
             }
           });
       } catch (err) {}
     } else if (!isLoginMode && !houseLogin) {
-      setIsLoading(true);
       try {
         axios
           .post(`${process.env.REACT_APP_BACKEND_URL}/users/signup`, {
@@ -82,20 +74,19 @@ const Auth = () => {
             password: formState.inputs.password.value,
           })
           .then((res) => {
+            dispatch(stopLoading());
             dispatch(
               startUserAuth(res.data.userId, res.data.token, res.data.email)
             );
             history.push('/');
           })
           .catch((error) => {
-            setIsLoading(false);
             if (error.response) {
-              setError(error.response.data.message);
+              dispatch(createError(error.response.data.message));
             }
           });
       } catch (err) {}
     } else {
-      setIsLoading(true);
       try {
         axios
           .post(`${process.env.REACT_APP_BACKEND_URL}/house/login`, {
@@ -103,6 +94,7 @@ const Auth = () => {
             password: formState.inputs.password.value,
           })
           .then((res) => {
+            dispatch(stopLoading());
             dispatch(
               startHouseAuth(
                 res.data.houseId,
@@ -113,12 +105,13 @@ const Auth = () => {
             history.push('/');
           })
           .catch((error) => {
-            setIsLoading(false);
             if (error.response) {
-              setError(error.response.data.message);
+              dispatch(createError(error.response.data.message));
             }
           });
-      } catch (err) {}
+      } catch (err) {
+        dispatch(createError(err.message));
+      }
     }
   };
 
@@ -173,10 +166,8 @@ const Auth = () => {
 
   return (
     <div>
-      <ErrorModal error={error} onClear={clearError} />
       <h1 className={styles.mainHeader}>App name</h1>
       <div className={styles.authDiv}>
-        {isLoading && <LoadingSpinner asOverlay />}
         {isLoginMode ? (
           <div className={styles.switchTypeDiv}>
             <h3

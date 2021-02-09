@@ -29,7 +29,7 @@ const logout = (state, action) => {
   return updateObject(state, initialState);
 };
 
-const reducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.AUTH_USER:
       return authUser(state, action);
@@ -42,4 +42,4 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-export default reducer;
+export default authReducer;

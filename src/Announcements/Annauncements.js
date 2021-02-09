@@ -7,9 +7,9 @@ import Spinner from '../shared/Spinner/Spinner';
 import AnnouncementsControl from './AnnouncementsControl';
 import { useParams } from 'react-router';
 
-const Announcements = (props) => {
+const Announcements = () => {
   const [data, setData] = useState(null);
-  const houseId = useParams().houseId;
+  const houseParam = useParams().houseId;
   useEffect(() => {
     getGroups();
   }, []);
@@ -17,7 +17,7 @@ const Announcements = (props) => {
   const getGroups = () => {
     axios
       .get(
-        `${process.env.REACT_APP_BACKEND_URL}/announcement/allByHouse/${houseId}`
+        `${process.env.REACT_APP_BACKEND_URL}/announcement/allByHouse/${houseParam}`
       )
       .then((response) => {
         setData(response.data.announcements);
@@ -32,7 +32,7 @@ const Announcements = (props) => {
 
   return (
     <ul className={styles.groupList}>
-      <AnnouncementsControl onCreate={getGroups} />
+      <AnnouncementsControl onCreate={getGroups} houseParam={houseParam} />
       {data.reverse().map((ann) => {
         if (ann) {
           return (

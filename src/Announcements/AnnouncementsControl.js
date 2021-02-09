@@ -1,35 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
+
+import { useDispatch } from 'react-redux';
 
 import Button from '../shared/FormElements/Button';
 import Input from '../shared/FormElements/Input';
 import ImageUpload from '../shared/FormElements/ImageUpload';
-import ErrorModal from '../shared/UIElements/ErrorModal';
 import Modal from '../shared/UIElements/Modal';
-import Spinner from '../shared/Spinner/Spinner';
 import AddButton from '../shared/UIElements/AddButton/AddButton';
 
 import { useForm } from '../shared/hooks/form-hook';
 import { VALIDATOR_REQUIRE } from '../shared/validators/validators';
-import { useLoadingHook } from '../shared/hooks/loading-hook';
 
 import styles from './AnnouncementsControl.module.css';
 import { useSelector } from 'react-redux';
+import {
+  createError,
+  startLoading,
+  stopLoading,
+} from '../Store/actions/Loading';
 
 const AnnouncementsControl = (props) => {
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [images, setImages] = useState();
-  const token = useSelector((state) => state.token);
-  const houseId = useParams().houseId;
+  const { token } = useSelector((state) => ({ ...state.auth }));
+  const houseParam = props;
   let imagesRadio;
-  const {
-    error,
-    setError,
-    clearError,
-    isLoading,
-    setIsLoading,
-  } = useLoadingHook();
   const [formState, inputHandler] = useForm(
     {
       title: {
@@ -69,7 +66,7 @@ const AnnouncementsControl = (props) => {
 
   const addAnnouncSubmitHandler = (event) => {
     event.preventDefault();
-    setIsLoading(true);
+    dispatch(startLoading());
     try {
       axios
         .post(
@@ -78,7 +75,7 @@ const AnnouncementsControl = (props) => {
             title: formState.inputs.title.value,
             body: formState.inputs.body.value,
             image: formState.inputs.image.value,
-            house: houseId,
+            house: houseParam,
           },
           {
             headers: {
@@ -87,18 +84,17 @@ const AnnouncementsControl = (props) => {
           }
         )
         .then((res) => {
-          setIsLoading(false);
+          dispatch(stopLoading());
           props.onCreate();
           closeAnnouncModal();
         })
         .catch((error) => {
-          setIsLoading(false);
           if (error.response) {
-            setError(error.response.data.message);
+            dispatch(createError(error.response.data.message));
           }
         });
     } catch (err) {
-      setError(err.message);
+      dispatch(createError(err.message));
     }
   };
 
@@ -122,14 +118,12 @@ const AnnouncementsControl = (props) => {
   }
   return (
     <React.Fragment>
-      <ErrorModal error={error} onClear={clearError} />
       <Modal
         show={showModal}
         onCancel={closeAnnouncModal}
         header="ANNOUNCE!"
         onSubmit={addAnnouncSubmitHandler}
       >
-        {isLoading && <Spinner asOverlay />}
         <Input
           element="input"
           id="title"

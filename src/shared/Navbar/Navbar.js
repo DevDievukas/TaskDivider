@@ -4,12 +4,13 @@ import { Link, useHistory } from 'react-router-dom';
 import { SignOut } from 'phosphor-react';
 import styles from './Navbar.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout, startLogout } from '../../Store/actions/Auth';
-
+import { startLogout } from '../../Store/actions/Auth';
 const Navbar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const auth = useSelector((state) => state);
+  const { userId, houseId, houseName, token } = useSelector((state) => ({
+    ...state.auth,
+  }));
 
   const redirectLogout = () => {
     dispatch(startLogout());
@@ -31,11 +32,11 @@ const Navbar = () => {
   );
   let linkDirection = '/';
 
-  if (auth.userId) {
+  if (userId) {
     linkDirection = '/';
-  } else if (auth.houseId) {
+  } else if (houseId) {
     linkDirection = `/announcements`;
-    leftButton = <h3>{auth.houseName}</h3>;
+    leftButton = <h3>{houseName}</h3>;
   }
 
   const navbar = (
@@ -44,7 +45,7 @@ const Navbar = () => {
         <Link className={styles.navbarBrand} to={`${linkDirection}`}>
           {leftButton}
         </Link>
-        {auth.token ? rightButton : null}
+        {token ? rightButton : null}
       </header>
     </React.Fragment>
   );

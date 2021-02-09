@@ -4,6 +4,7 @@ import ExpandedElement from './ExpandedElement';
 import styles from './GroupElement.module.css';
 
 const GroupElement = (props) => {
+  const { name, rooms } = props;
   const [expanded, setExpanded] = useState(false);
 
   const setExpandedHandler = () => {
@@ -13,13 +14,13 @@ const GroupElement = (props) => {
   if (!expanded) {
     return (
       <button className={styles.groupElementBtn} onClick={setExpandedHandler}>
-        {props.name}
+        {name}
       </button>
     );
   } else {
     return (
       <div onClick={setExpandedHandler}>
-        <ExpandedElement person={props.name} rooms={props.rooms} />
+        <ExpandedElement person={name} rooms={rooms} />
       </div>
     );
   }

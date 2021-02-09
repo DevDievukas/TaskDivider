@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Button from '../shared/FormElements/Button';
 import Modal from '../shared/UIElements/Modal';
@@ -11,10 +11,18 @@ import Form from './Form';
 import ItemsList from './ItemsList';
 
 import styles from './SharedItems.module.css';
+import {
+  createError,
+  startLoading,
+  stopLoading,
+} from '../Store/actions/Loading';
 
-const SharedItems = (props) => {
+const SharedItems = () => {
   const houseParam = useParams().houseId;
-  const { token, userId, houseId } = useSelector((state) => state);
+  const { token, userId, houseId } = useSelector((state) => ({
+    ...state.auth,
+  }));
+  const dispatch = useDispatch();
   const [data, setData] = useState();
   const [showModalClear, setShowModalClear] = useState(false);
 
@@ -31,6 +39,7 @@ const SharedItems = (props) => {
   }, []);
 
   const getData = () => {
+    dispatch(startLoading());
     axios
       .get(
         `${process.env.REACT_APP_BACKEND_URL}/request/allByHouseId/${
@@ -38,14 +47,16 @@ const SharedItems = (props) => {
         }`
       )
       .then((response) => {
+        dispatch(stopLoading());
         setData(response.data.requests);
       })
       .catch((err) => {
-        console.log(err);
+        dispatch(createError(err.response.data.message));
       });
   };
 
   const deleteRequest = (requestId) => {
+    dispatch(startLoading());
     axios
       .delete(`${process.env.REACT_APP_BACKEND_URL}/request/${requestId}`, {
         headers: {
@@ -53,25 +64,29 @@ const SharedItems = (props) => {
         },
       })
       .then((response) => {
+        dispatch(stopLoading());
         setData((prevData) => prevData.filter((req) => req._id !== requestId));
       })
       .catch((err) => {
-        console.log(err);
+        dispatch(createError(err.response.data.message));
       });
   };
 
   const postRequest = (request) => {
+    dispatch(startLoading());
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/request`, request)
       .then((res) => {
+        dispatch(stopLoading());
         setData((prevData) => [...prevData, res.data.request]);
       })
       .catch((err) => {
-        console.log('[App] ' + err);
+        dispatch(createError(err.response.data.message));
       });
   };
 
   const clearRequestsSubmitHandler = () => {
+    dispatch(startLoading());
     axios
       .delete(
         `${process.env.REACT_APP_BACKEND_URL}/request/all/${houseParam}`,
@@ -83,10 +98,11 @@ const SharedItems = (props) => {
         }
       )
       .then((res) => {
+        dispatch(stopLoading());
         setData(null);
       })
       .catch((err) => {
-        console.log('[App] ' + err);
+        dispatch(createError(err.response.data.message));
       });
   };
 

@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Navbar from './shared/Navbar/Navbar';
 import HouseNavbar from './shared/Navbar/HouseNavbar';
+import Spinner from './shared/Spinner/Spinner';
+import ErrorModal from './shared/UIElements/ErrorModal';
 
 import Rooms from './Rooms/Rooms';
 import People from './People/People';
@@ -18,9 +20,11 @@ import Announcements from './Announcements/Annauncements';
 import Houses from './House/Houses';
 import Auth from './Auth/Auth';
 import { startHouseAuth, startUserAuth } from './Store/actions/Auth';
+import { clearError } from './Store/actions/Loading';
 
 const App = () => {
-  const { userId, houseId } = useSelector((state) => state);
+  const { userId, houseId } = useSelector((state) => ({ ...state.auth }));
+  const { isLoading, error } = useSelector((state) => ({ ...state.load }));
   const dispatch = useDispatch();
   useEffect(() => {
     const storedUserData = JSON.parse(localStorage.getItem('userData'));
@@ -110,6 +114,8 @@ const App = () => {
   return (
     <Router>
       <Navbar />
+      <ErrorModal error={error} onClear={() => dispatch(clearError())} />
+      {isLoading && <Spinner asOverlay />}
       {routes}
     </Router>
   );

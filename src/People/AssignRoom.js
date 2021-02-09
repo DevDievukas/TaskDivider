@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-
-import ErrorModal from '../shared/UIElements/ErrorModal';
+import { useDispatch } from 'react-redux';
 import InputSelector from '../shared/FormElements/InputSelector';
 
 import { useForm } from '../shared/hooks/form-hook';
-import { useLoadingHook } from '../shared/hooks/loading-hook';
 
 import styles from './AssignRoom.module.css';
-import { useSelector } from 'react-redux';
+import {
+  createError,
+  startLoading,
+  stopLoading,
+} from '../Store/actions/Loading';
 
 const AssignRoom = (props) => {
-  const { assignedRooms, onAsign, close } = props;
-  const token = useSelector((state) => state.token);
+  const { assignedRooms, onAsign, close, token } = props;
+  const dispatch = useDispatch();
   const [rooms, setRooms] = useState();
   const houseId = useParams().houseId;
 
@@ -21,7 +23,6 @@ const AssignRoom = (props) => {
     getRooms();
   }, []);
 
-  const { error, setError, clearError } = useLoadingHook();
   const [formState, inputHandler] = useForm(
     {
       room: {
@@ -34,9 +35,11 @@ const AssignRoom = (props) => {
 
   const getRooms = () => {
     if (houseId) {
+      dispatch(startLoading());
       axios
         .get(`${process.env.REACT_APP_BACKEND_URL}/room/allByHouse/${houseId}`)
         .then((response) => {
+          dispatch(stopLoading());
           let rooms = response.data.rooms.map((room) => room);
           assignedRooms.forEach((assignedRoom) => {
             rooms = rooms.filter((room) => room._id !== assignedRoom._id);
@@ -45,7 +48,7 @@ const AssignRoom = (props) => {
         })
         .catch((err) => {
           if (err.response) {
-            setError(err.response.data.message);
+            dispatch(createError(err.response.data.message));
           }
         });
     }
@@ -70,17 +73,16 @@ const AssignRoom = (props) => {
         })
         .catch((err) => {
           if (err.response) {
-            setError(err.response.data.message);
+            dispatch(createError(err.response.data.message));
           }
         });
     } catch (err) {
-      setError(err.message);
+      dispatch(createError(err.message));
     }
   };
 
   return (
     <div className={styles.assignForm}>
-      <ErrorModal error={error} onClear={clearError} />
       {rooms ? (
         <form onSubmit={submitAssign}>
           {rooms[0] ? (

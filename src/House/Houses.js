@@ -4,27 +4,24 @@ import Button from '../shared/FormElements/Button';
 import axios from 'axios';
 
 import { useForm } from '../shared/hooks/form-hook';
-import { useLoadingHook } from '../shared/hooks/loading-hook';
 
 import HouseCard from '../shared/UIElements/HouseCard';
 import pic from '../assets/house.svg';
-import Spinner from '../shared/Spinner/Spinner';
-import ErrorModal from '../shared/UIElements/ErrorModal';
 import styles from './Houses.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  clearError,
+  createError,
+  startLoading,
+  stopLoading,
+} from '../Store/actions/Loading';
 
 const Houses = () => {
-  const auth = useSelector((state) => state);
+  const auth = useSelector((state) => ({ ...state.auth }));
+  const dispatch = useDispatch();
   const [houseCreation, setHouseCreation] = useState(false);
   const [data, setData] = useState();
   const [cards, setCards] = useState();
-  const {
-    error,
-    setError,
-    clearError,
-    isLoading,
-    setIsLoading,
-  } = useLoadingHook();
   const [formState, inputHandler] = useForm(
     {
       houseName: {
@@ -79,7 +76,7 @@ const Houses = () => {
   }, [data]);
 
   const getHouses = () => {
-    setIsLoading(true);
+    dispatch(startLoading());
     if (auth.userId) {
       axios
         .get(`${process.env.REACT_APP_BACKEND_URL}/house/user/${auth.userId}`, {
@@ -88,19 +85,19 @@ const Houses = () => {
           },
         })
         .then((response) => {
-          setIsLoading(false);
+          dispatch(stopLoading());
           setData(response.data);
         })
         .catch((err) => {
-          setIsLoading(false);
           if (err.response) {
-            setError(err.response.data.message);
+            dispatch(createError(err.response.data.message));
           }
         });
     }
   };
 
   const createHouseHandler = (event) => {
+    dispatch(startLoading());
     try {
       axios
         .post(
@@ -117,22 +114,21 @@ const Houses = () => {
           }
         )
         .then((res) => {
-          console.log(res);
+          dispatch(stopLoading());
         })
         .catch((error) => {
           if (error.response) {
-            setError(error.response.data.message);
+            dispatch(clearError(error.response.data.message));
           }
         });
     } catch (err) {
-      setError(err.message);
+      dispatch(clearError(err.message));
     }
   };
 
   return (
     <div className={styles.housesDiv}>
-      <ErrorModal error={error} onClear={clearError} />
-      {isLoading ? <Spinner /> : cards}
+      {cards}
       {houseCreation ? (
         <form onSubmit={createHouseHandler}>
           <Input
