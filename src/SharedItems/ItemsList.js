@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import RequestItem from './RequestItem';
 
+import styles from './SharedItems.module.css';
+
 const ItemsList = (props) => {
   const { data, deleteRequest, userId } = props;
   const [dataTable, setDataTable] = useState();
@@ -26,7 +28,15 @@ const ItemsList = (props) => {
           })
         );
       } else {
-        setDataTable(<h1>NO REQUESTS ACTIVE</h1>);
+        setDataTable(
+          <div className={styles.tableDiv}>
+            <h3>NO REQUESTS ACTIVE</h3>
+            <img
+              src="https://res.cloudinary.com/dgegci4ii/image/upload/v1612861627/Empty_State_wcxslo.png"
+              alt="Nothing found"
+            />
+          </div>
+        );
       }
     }
   }, [data]);

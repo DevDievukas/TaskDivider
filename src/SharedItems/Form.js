@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-import { useParams } from 'react-router-dom';
 import { useForm } from '../shared/hooks/form-hook';
 
 import Input from '../shared/FormElements/Input';
 import Button from '../shared/FormElements/Button';
-import axios from 'axios';
 
 import { VALIDATOR_REQUIRE } from '../shared/validators/validators';
 
 import styles from './Form.module.css';
 
 const Form = (props) => {
-  const houseParam = useParams().houseId;
-  const { houseId } = props;
+  const { houseId, houseParam, postRequest } = props;
   const [formState, inputHandler] = useForm(
     {
       author: {
@@ -28,32 +25,22 @@ const Form = (props) => {
     false
   );
 
-  console.log(formState.inputs.author.value);
-
-  useEffect(() => {
-    const name = localStorage.getItem('Vardas');
-    inputHandler('author', name, true);
-  }, []);
-
-  const postRequest = () => {
-    axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/request`, {
-        author: formState.inputs.author.value,
-        body: formState.inputs.body.value,
-        house: houseParam || houseId,
-      })
-      .then((res) => {
-        console.table(res);
-      })
-      .catch((err) => {
-        console.log('[App] ' + err);
-      });
-  };
+  const initialAuthor = localStorage.getItem('houseItName');
 
   const formSubmit = (event) => {
     event.preventDefault();
-    localStorage.setItem('Vardas', formState.inputs.author.value);
-    postRequest();
+    const today = new Date();
+    const date = today.getDate() + '-' + parseInt(today.getMonth() + 1);
+    const request = {
+      author: formState.inputs.author.value,
+      body: formState.inputs.body.value,
+      house: houseParam || houseId,
+      date: date.toString(),
+    };
+    if (initialAuthor !== formState.inputs.author.value) {
+      localStorage.setItem('houseItName', formState.inputs.author.value);
+    }
+    postRequest(request);
   };
 
   return (
@@ -67,6 +54,8 @@ const Form = (props) => {
           validators={[VALIDATOR_REQUIRE()]}
           error="Enter name."
           onInput={inputHandler}
+          initialValue={initialAuthor}
+          initialValid={initialAuthor}
         />
         <Input
           id="body"
