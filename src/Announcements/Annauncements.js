@@ -1,54 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 
 import styles from './Announcements.module.css';
 import AnnouncementItem from './AnnouncementItem';
-import Spinner from '../shared/Spinner/Spinner';
 import AnnouncementsControl from './AnnouncementsControl';
 import { useParams } from 'react-router';
+import { useLoadData } from '../shared/hooks/loadData-hook';
 
 const Announcements = () => {
-  const [data, setData] = useState(null);
   const houseParam = useParams().houseId;
-  useEffect(() => {
-    getGroups();
-  }, []);
+  const { data, setData } = useLoadData(
+    `${process.env.REACT_APP_BACKEND_URL}/announcement/allByHouse/${houseParam}`
+  );
+  let announcements;
 
-  const getGroups = () => {
-    axios
-      .get(
-        `${process.env.REACT_APP_BACKEND_URL}/announcement/allByHouse/${houseParam}`
-      )
-      .then((response) => {
-        setData(response.data.announcements);
-      })
-      .catch((err) => {
-        console.log('[annnouncement][fail]' + err);
-      });
-  };
-  if (!data) {
-    return <Spinner />;
+  if (data) {
+    announcements = data.reverse().map((ann) => {
+      if (ann) {
+        return (
+          <AnnouncementItem
+            key={ann._id}
+            title={ann.title}
+            text={ann.body}
+            img={ann.image}
+            link={ann.link}
+            date={ann.date}
+          />
+        );
+      } else {
+        return;
+      }
+    });
   }
 
   return (
     <ul className={styles.groupList}>
-      <AnnouncementsControl onCreate={getGroups} houseParam={houseParam} />
-      {data.reverse().map((ann) => {
-        if (ann) {
-          return (
-            <AnnouncementItem
-              key={ann._id}
-              title={ann.title}
-              text={ann.body}
-              img={ann.image}
-              link={ann.link}
-              date={ann.date}
-            />
-          );
-        } else {
-          return;
-        }
-      })}
+      <AnnouncementsControl onCreate={'getGroups'} houseParam={houseParam} />
+      {announcements}
     </ul>
   );
 };

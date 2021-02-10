@@ -4,6 +4,7 @@ import Button from '../shared/FormElements/Button';
 import axios from 'axios';
 
 import { useForm } from '../shared/hooks/form-hook';
+import { useLoadData } from '../shared/hooks/loadData-hook';
 
 import HouseCard from '../shared/UIElements/HouseCard';
 import pic from '../assets/house.svg';
@@ -17,10 +18,17 @@ import {
 } from '../Store/actions/Loading';
 
 const Houses = () => {
-  const auth = useSelector((state) => ({ ...state.auth }));
+  const { token, userId } = useSelector((state) => ({ ...state.auth }));
   const dispatch = useDispatch();
   const [houseCreation, setHouseCreation] = useState(false);
-  const [data, setData] = useState();
+  const { data } = useLoadData(
+    `${process.env.REACT_APP_BACKEND_URL}/house/user/${userId}`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
   const [cards, setCards] = useState();
   const [formState, inputHandler] = useForm(
     {
@@ -48,10 +56,6 @@ const Houses = () => {
   );
 
   useEffect(() => {
-    getHouses();
-  }, [auth.userId]);
-
-  useEffect(() => {
     if (data) {
       if (data.houses.length >= 0) {
         if (data.houses[0] === undefined) {
@@ -75,27 +79,6 @@ const Houses = () => {
     }
   }, [data]);
 
-  const getHouses = () => {
-    dispatch(startLoading());
-    if (auth.userId) {
-      axios
-        .get(`${process.env.REACT_APP_BACKEND_URL}/house/user/${auth.userId}`, {
-          headers: {
-            authorization: `Bearer ${auth.token}`,
-          },
-        })
-        .then((response) => {
-          dispatch(stopLoading());
-          setData(response.data);
-        })
-        .catch((err) => {
-          if (err.response) {
-            dispatch(createError(err.response.data.message));
-          }
-        });
-    }
-  };
-
   const createHouseHandler = (event) => {
     dispatch(startLoading());
     try {
@@ -109,7 +92,7 @@ const Houses = () => {
           },
           {
             headers: {
-              authorization: `Bearer ${auth.token}`,
+              authorization: `Bearer ${token}`,
             },
           }
         )

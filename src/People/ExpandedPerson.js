@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import { useDispatch } from 'react-redux';
 
-import ErrorModal from '../shared/UIElements/ErrorModal';
 import Button from '../shared/FormElements/Button';
 import AssignRoom from './AssignRoom';
 import RoomElement from './RoomElement';

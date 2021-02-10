@@ -20,7 +20,7 @@ const ItemsList = (props) => {
                   request={request.body}
                   key={request._id}
                   id={request._id}
-                  delete={deleteRequest}
+                  deleteRequest={deleteRequest}
                   userId={userId}
                 />
               );

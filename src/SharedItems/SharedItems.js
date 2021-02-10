@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useLoadData } from '../shared/hooks/loadData-hook';
 
 import Button from '../shared/FormElements/Button';
 import Modal from '../shared/UIElements/Modal';
@@ -23,8 +24,12 @@ const SharedItems = () => {
     ...state.auth,
   }));
   const dispatch = useDispatch();
-  const [data, setData] = useState();
   const [showModalClear, setShowModalClear] = useState(false);
+  const { data, setData } = useLoadData(
+    `${process.env.REACT_APP_BACKEND_URL}/request/allByHouseId/${
+      houseParam || houseId
+    }`
+  );
 
   const closeClearRequestsModal = () => {
     setShowModalClear(false);
@@ -32,27 +37,6 @@ const SharedItems = () => {
 
   const openClearRequestsModal = () => {
     setShowModalClear(true);
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = () => {
-    dispatch(startLoading());
-    axios
-      .get(
-        `${process.env.REACT_APP_BACKEND_URL}/request/allByHouseId/${
-          houseParam || houseId
-        }`
-      )
-      .then((response) => {
-        dispatch(stopLoading());
-        setData(response.data.requests);
-      })
-      .catch((err) => {
-        dispatch(createError(err.response.data.message));
-      });
   };
 
   const deleteRequest = (requestId) => {
@@ -78,7 +62,8 @@ const SharedItems = () => {
       .post(`${process.env.REACT_APP_BACKEND_URL}/request`, request)
       .then((res) => {
         dispatch(stopLoading());
-        setData((prevData) => [...prevData, res.data.request]);
+        console.log(res.data);
+        setData((prevData) => [...prevData, res.data]);
       })
       .catch((err) => {
         dispatch(createError(err.response.data.message));

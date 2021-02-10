@@ -2,8 +2,17 @@ import React from 'react';
 
 import styles from './RequestItem.module.css';
 
-const RequestItem = (props) => {
-  const { date, name, request, id, userId } = props;
+type Props ={
+  date: string,
+  name: string,
+  id: string,
+  userId: string,
+  request: string,
+  deleteRequest(id: string): VoidFunction
+}
+
+const RequestItem = (props: Props) => {
+  const { date, name, request, id, userId, deleteRequest } = props;
 
   const parsedDate = date.substr(5, 5);
 
@@ -15,7 +24,7 @@ const RequestItem = (props) => {
       </div>
       <div className={styles.descDiv}>
         <p>{request}</p>
-        {userId ? <button onClick={() => props.delete(id)}>x</button> : null}
+        {userId ? <button onClick={() => deleteRequest(id)}>x</button> : null}
       </div>
     </div>
   );

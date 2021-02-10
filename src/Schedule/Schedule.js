@@ -16,7 +16,6 @@ import {
 
 const Schedule = () => {
   const [data, setData] = useState(null);
-  const [message, setMessage] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const { token, userId, houseId } = useSelector((state) => ({
@@ -70,9 +69,6 @@ const Schedule = () => {
       )
       .then((response) => {
         dispatch(stopLoading());
-        if (response.data.message) {
-          setMessage(response.data.message);
-        }
         setData(response.data.schedule);
       })
       .catch((err) => {
@@ -100,7 +96,6 @@ const Schedule = () => {
           GENERATE SCHEDULE
         </button>
       ) : null}
-      {message && <h1>{message}</h1>}
       {data ? (
         <React.Fragment>
           <h2 className={styles.date}>{data.date.split('T')[0]}</h2>
@@ -117,7 +112,9 @@ const Schedule = () => {
             })}
           </ul>
         </React.Fragment>
-      ) : null}
+      ) : (
+        <h1>No schedules found</h1>
+      )}
     </div>
   );
 };
