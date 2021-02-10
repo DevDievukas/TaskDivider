@@ -6,6 +6,8 @@ import AnnouncementsControl from './AnnouncementsControl';
 import { useParams } from 'react-router';
 import { useLoadData } from '../shared/hooks/loadData-hook';
 
+import EmptyData from '../shared/UIElements//EmptyData/EmptyData';
+
 const Announcements = () => {
   const houseParam = useParams().houseId;
   const { data, setData } = useLoadData(
@@ -15,21 +17,19 @@ const Announcements = () => {
 
   if (data) {
     announcements = data.reverse().map((ann) => {
-      if (ann) {
-        return (
-          <AnnouncementItem
-            key={ann._id}
-            title={ann.title}
-            text={ann.body}
-            img={ann.image}
-            link={ann.link}
-            date={ann.date}
-          />
-        );
-      } else {
-        return;
-      }
+      return (
+        <AnnouncementItem
+          key={ann._id}
+          title={ann.title}
+          text={ann.body}
+          img={ann.image}
+          link={ann.link}
+          date={ann.date}
+        />
+      );
     });
+  } else {
+    announcements = <EmptyData header="NO ANNOUNCEMENTS!" />;
   }
 
   return (

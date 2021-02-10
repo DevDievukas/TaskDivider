@@ -67,7 +67,7 @@ const RoomsControl = (props) => {
         )
         .then((res) => {
           dispatch(stopLoading());
-          props.onCreate();
+          // props.onCreate();
           closeAddRoomModal();
         })
         .catch((error) => {

@@ -10,6 +10,7 @@ import Modal from '../shared/UIElements/Modal';
 
 import Form from './Form';
 import ItemsList from './ItemsList';
+import EmptyData from '../shared/UIElements/EmptyData/EmptyData';
 
 import styles from './SharedItems.module.css';
 import {
@@ -120,9 +121,11 @@ const SharedItems = () => {
           </Button>
         ) : null}
       </div>
-      <div>
+      {data ? (
         <ItemsList data={data} deleteRequest={deleteRequest} userId={userId} />
-      </div>
+      ) : (
+        <EmptyData header="NO REQUEST ACTIVE" />
+      )}
     </div>
   );
 };

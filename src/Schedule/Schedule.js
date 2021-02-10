@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useLoadData } from '../shared/hooks/loadData-hook';
 import axios from 'axios';
 
 import GroupElement from './GroupElement';
 import Modal from '../shared/UIElements/Modal';
 import Button from '../shared/FormElements/Button';
+import EmptyData from '../shared/UIElements/EmptyData/EmptyData.tsx';
 
 import styles from './Schedule.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  createError,
-  startLoading,
-  stopLoading,
-} from '../Store/actions/Loading';
+import { createError } from '../Store/actions/Loading';
 
 const Schedule = () => {
-  const [data, setData] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const { token, userId, houseId } = useSelector((state) => ({
     ...state.auth,
   }));
   const houseParam = useParams().houseId;
-  useEffect(() => {
-    getGroups();
-  }, []);
+  const { data, setData } = useLoadData(
+    `${process.env.REACT_APP_BACKEND_URL}/room/Schedule/${
+      houseParam || houseId
+    }`
+  );
+  let schedule;
 
   const closeGenerateModal = () => {
     setShowModal(false);
@@ -50,7 +50,6 @@ const Schedule = () => {
         .then((response) => {
           closeGenerateModal();
         })
-        .then(() => getGroups())
         .catch((err) => {
           if (err.response) {
             dispatch(createError(err.response.data.message));
@@ -59,24 +58,27 @@ const Schedule = () => {
     }
   };
 
-  const getGroups = () => {
-    dispatch(startLoading());
-    axios
-      .get(
-        `${process.env.REACT_APP_BACKEND_URL}/room/Schedule/${
-          houseParam || houseId
-        }`
-      )
-      .then((response) => {
-        dispatch(stopLoading());
-        setData(response.data.schedule);
-      })
-      .catch((err) => {
-        if (err.response) {
-          dispatch(createError(err.response.data.message));
-        }
-      });
-  };
+  if (data) {
+    schedule = (
+      <React.Fragment>
+        <h2 className={styles.date}>{data.date.split('T')[0]}</h2>
+        <ul className={styles.groupList}>
+          {data.list.map((person) => {
+            return (
+              <GroupElement
+                key={person.name}
+                id={person.name}
+                name={person.name}
+                rooms={person.rooms}
+              />
+            );
+          })}
+        </ul>
+      </React.Fragment>
+    );
+  } else {
+    schedule = <EmptyData header="NO SCHEDULES!" />;
+  }
 
   return (
     <div className={styles.scheduleDiv}>
@@ -96,25 +98,7 @@ const Schedule = () => {
           GENERATE SCHEDULE
         </button>
       ) : null}
-      {data ? (
-        <React.Fragment>
-          <h2 className={styles.date}>{data.date.split('T')[0]}</h2>
-          <ul className={styles.groupList}>
-            {data.list.map((person) => {
-              return (
-                <GroupElement
-                  key={person.name}
-                  id={person.name}
-                  name={person.name}
-                  rooms={person.rooms}
-                />
-              );
-            })}
-          </ul>
-        </React.Fragment>
-      ) : (
-        <h1>No schedules found</h1>
-      )}
+      {schedule}
     </div>
   );
 };

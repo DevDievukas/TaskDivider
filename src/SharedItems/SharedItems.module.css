@@ -5,22 +5,9 @@
 
 .requestDiv {
   padding: 0 1em 1em 1em;
+  max-width: 100%;
 }
 
 .clearBtn {
   margin-top: 1em;
-}
-
-.tableDiv {
-  text-align: center;
-}
-
-.tableDiv h3 {
-  margin: auto;
-  margin-bottom: -0.8em;
-}
-
-.tableDiv img {
-  margin: auto;
-  max-width: 100%;
 }

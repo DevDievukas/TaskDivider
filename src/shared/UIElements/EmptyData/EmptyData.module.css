@@ -1,0 +1,13 @@
+.div {
+  text-align: center;
+}
+
+.div h3 {
+  margin: auto;
+  margin-bottom: -0.8em;
+}
+
+.div img {
+  margin: auto;
+  max-width: 100%;
+}

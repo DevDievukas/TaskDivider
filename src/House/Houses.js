@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Input from '../shared/FormElements/Input';
 import Button from '../shared/FormElements/Button';
 import axios from 'axios';
@@ -12,7 +12,6 @@ import styles from './Houses.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   clearError,
-  createError,
   startLoading,
   stopLoading,
 } from '../Store/actions/Loading';
@@ -29,7 +28,7 @@ const Houses = () => {
       },
     }
   );
-  const [cards, setCards] = useState();
+  let houses;
   const [formState, inputHandler] = useForm(
     {
       houseName: {
@@ -48,36 +47,27 @@ const Houses = () => {
     false
   );
 
-  const noHouse = (
-    <div>
-      <h2>There are no houes. Would you like to create one?</h2>
-      <Button onClick={() => setHouseCreation(true)}>Create</Button>
-    </div>
-  );
-
-  useEffect(() => {
-    if (data) {
-      if (data.houses.length >= 0) {
-        if (data.houses[0] === undefined) {
-          return setCards(noHouse);
-        }
-        setCards(
-          data.houses.map((house) => {
-            if (house) {
-              return (
-                <HouseCard
-                  houseName={house.houseName}
-                  pic={pic}
-                  key={house._id}
-                  houseId={house._id}
-                />
-              );
-            }
-          })
+  if (data) {
+    houses = data.map((house) => {
+      if (house) {
+        return (
+          <HouseCard
+            houseName={house.houseName}
+            pic={pic}
+            key={house._id}
+            houseId={house._id}
+          />
         );
       }
-    }
-  }, [data]);
+    });
+  } else {
+    houses = (
+      <div>
+        <h2>There are no houes. Would you like to create one?</h2>
+        <Button onClick={() => setHouseCreation(true)}>Create</Button>
+      </div>
+    );
+  }
 
   const createHouseHandler = (event) => {
     dispatch(startLoading());
@@ -111,7 +101,7 @@ const Houses = () => {
 
   return (
     <div className={styles.housesDiv}>
-      {cards}
+      {houses}
       {houseCreation ? (
         <form onSubmit={createHouseHandler}>
           <Input

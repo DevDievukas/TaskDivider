@@ -7,6 +7,7 @@ import RoomsControl from './RoomsControl';
 
 import styles from './Rooms.module.css';
 import RoomElement from './RoomElement';
+import EmptyData from '../shared/UIElements/EmptyData/EmptyData.tsx';
 
 import ImageUpload from './ImgUpload';
 
@@ -20,6 +21,7 @@ const Rooms = () => {
       houseId || houseParam
     }`
   );
+  let rooms;
 
   const roomDeleteHandler = (deletedRoomId) => {
     const filteredData = data.filter((room) => room._id !== deletedRoomId);
@@ -27,34 +29,34 @@ const Rooms = () => {
   };
 
   if (data) {
-    return (
-      <div className={styles.mainDiv}>
-        {/* <ImageUpload /> */}
-        {userId ? <RoomsControl onCreate={'getRooms'} token={token} /> : null}
-        {data.length <= 0 ? (
-          <h1> no rooms</h1>
-        ) : (
-          <ul className={styles.groupList}>
-            {data.map((room) => {
-              return (
-                <RoomElement
-                  key={room._id}
-                  id={room._id}
-                  roomName={room.roomName}
-                  images={room.images}
-                  people={room.cleaners}
-                  onDelete={roomDeleteHandler}
-                  userId={userId}
-                  token={token}
-                />
-              );
-            })}
-          </ul>
-        )}
-      </div>
+    rooms = (
+      <ul className={styles.groupList}>
+        {data.map((room) => {
+          return (
+            <RoomElement
+              key={room._id}
+              id={room._id}
+              roomName={room.roomName}
+              images={room.images}
+              people={room.cleaners}
+              onDelete={roomDeleteHandler}
+              userId={userId}
+              token={token}
+            />
+          );
+        })}
+      </ul>
     );
+  } else {
+    rooms = <EmptyData header="NO ROOMS FOUND" />;
   }
-  return null;
+  return (
+    <div className={styles.mainDiv}>
+      {/* <ImageUpload /> */}
+      {userId ? <RoomsControl token={token} /> : null}
+      {rooms}
+    </div>
+  );
 };
 
 export default Rooms;

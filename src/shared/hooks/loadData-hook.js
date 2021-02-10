@@ -17,7 +17,10 @@ export const useLoadData = (url, headers) => {
       .get(url, headers)
       .then((response) => {
         dispatch(stopLoading());
-        setData(response.data);
+        console.log(response.data);
+        if (response.data.length > 0) {
+          setData(response.data);
+        }
       })
       .catch((err) => {
         dispatch(createError(err.message));
