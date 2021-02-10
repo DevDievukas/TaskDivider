@@ -12,16 +12,33 @@ import { useSelector } from 'react-redux';
 const Rooms = () => {
   const houseParam = useParams().houseId;
   const { userId, token } = useSelector((state) => ({ ...state.auth }));
-  const { data, setData } = useLoadData(
+  const { data, postData, deleteData } = useLoadData(
     `${process.env.REACT_APP_BACKEND_URL}/person/allByHouse/${houseParam}`
   );
   let people;
 
-  const PersonDeleteHandler = (deletedPersonId) => {
-    const filteredData = data.filter(
-      (person) => person._id !== deletedPersonId
+  const PersonDeleteHandler = (personId) => {
+    deleteData(
+      `${process.env.REACT_APP_BACKEND_URL}/person/`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      },
+      personId
     );
-    setData(filteredData);
+  };
+
+  const createPersonHandler = (person) => {
+    postData(
+      `${process.env.REACT_APP_BACKEND_URL}/person/`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      },
+      person
+    );
   };
 
   if (data) {
@@ -36,6 +53,8 @@ const Rooms = () => {
                 name={person.name}
                 rooms={person.rooms}
                 onDelete={PersonDeleteHandler}
+                token={token}
+                userId={userId}
               />
             );
           }
@@ -48,7 +67,9 @@ const Rooms = () => {
 
   return (
     <div className={styles.mainDiv}>
-      {userId ? <PeopleControl onCreate={'getPeople'} token={token} /> : null}{' '}
+      {userId ? (
+        <PeopleControl createPerson={createPersonHandler} token={token} />
+      ) : null}
       {people}
     </div>
   );

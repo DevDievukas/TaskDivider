@@ -26,7 +26,7 @@ const SharedItems = () => {
   }));
   const dispatch = useDispatch();
   const [showModalClear, setShowModalClear] = useState(false);
-  const { data, setData } = useLoadData(
+  const { data, setData, postData, deleteData } = useLoadData(
     `${process.env.REACT_APP_BACKEND_URL}/request/allByHouseId/${
       houseParam || houseId
     }`
@@ -40,35 +40,20 @@ const SharedItems = () => {
     setShowModalClear(true);
   };
 
-  const deleteRequest = (requestId) => {
-    dispatch(startLoading());
-    axios
-      .delete(`${process.env.REACT_APP_BACKEND_URL}/request/${requestId}`, {
+  const deleteRequestHandler = (requestId) => {
+    deleteData(
+      `${process.env.REACT_APP_BACKEND_URL}/request/`,
+      {
         headers: {
           authorization: `Bearer ${token}`,
         },
-      })
-      .then((response) => {
-        dispatch(stopLoading());
-        setData((prevData) => prevData.filter((req) => req._id !== requestId));
-      })
-      .catch((err) => {
-        dispatch(createError(err.response.data.message));
-      });
+      },
+      requestId
+    );
   };
 
-  const postRequest = (request) => {
-    dispatch(startLoading());
-    axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/request`, request)
-      .then((res) => {
-        dispatch(stopLoading());
-        console.log(res.data);
-        setData((prevData) => [...prevData, res.data]);
-      })
-      .catch((err) => {
-        dispatch(createError(err.response.data.message));
-      });
+  const postRequestHandler = (request) => {
+    postData(`${process.env.REACT_APP_BACKEND_URL}/request`, null, request);
   };
 
   const clearRequestsSubmitHandler = () => {
@@ -84,11 +69,12 @@ const SharedItems = () => {
         }
       )
       .then((res) => {
+        setShowModalClear(false);
         dispatch(stopLoading());
         setData(null);
       })
       .catch((err) => {
-        dispatch(createError(err.response.data.message));
+        dispatch(createError(err.message));
       });
   };
 
@@ -109,20 +95,20 @@ const SharedItems = () => {
         <Form
           houseId={houseId}
           houseParam={houseParam}
-          postRequest={postRequest}
+          postRequest={postRequestHandler}
         />
         {userId ? (
-          <Button
-            danger
-            onClick={openClearRequestsModal}
-            className={styles.clearBtn}
-          >
-            Delete Requests
+          <Button onClick={openClearRequestsModal} className={styles.clearBtn}>
+            DELETE REQUESTS
           </Button>
         ) : null}
       </div>
       {data ? (
-        <ItemsList data={data} deleteRequest={deleteRequest} userId={userId} />
+        <ItemsList
+          data={data}
+          deleteRequest={deleteRequestHandler}
+          userId={userId}
+        />
       ) : (
         <EmptyData header="NO REQUEST ACTIVE" />
       )}

@@ -6,7 +6,7 @@ import ExpandedPerson from './ExpandedPerson';
 
 const PersonElement = (props) => {
   const [expanded, setExpanded] = useState(false);
-  const { userId, token } = props;
+  const { userId, token, name, rooms, id, onDelete } = props;
 
   const setExpandedHandler = () => {
     setExpanded(!expanded);
@@ -15,17 +15,17 @@ const PersonElement = (props) => {
   if (!expanded) {
     return (
       <button className={styles.personCard} onClick={setExpandedHandler}>
-        <h4 className={styles.title}>{props.name}</h4>
+        <h4 className={styles.title}>{name}</h4>
       </button>
     );
   } else {
     return (
       <ExpandedPerson
-        name={props.name}
-        rooms={props.rooms}
-        id={props.id}
+        name={name}
+        rooms={rooms}
+        id={id}
         close={setExpandedHandler}
-        onDelete={props.onDelete}
+        onDelete={onDelete}
         userId={userId}
         token={token}
       />

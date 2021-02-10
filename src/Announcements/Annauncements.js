@@ -10,7 +10,7 @@ import EmptyData from '../shared/UIElements//EmptyData/EmptyData';
 
 const Announcements = () => {
   const houseParam = useParams().houseId;
-  const { data, setData } = useLoadData(
+  const { data } = useLoadData(
     `${process.env.REACT_APP_BACKEND_URL}/announcement/allByHouse/${houseParam}`
   );
   let announcements;

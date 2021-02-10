@@ -16,16 +16,35 @@ const Rooms = () => {
   const { userId, houseId, token } = useSelector((state) => ({
     ...state.auth,
   }));
-  const { data, setData } = useLoadData(
+  const { data, setData, postData, deleteData } = useLoadData(
     `${process.env.REACT_APP_BACKEND_URL}/room/allByHouse/${
       houseId || houseParam
     }`
   );
   let rooms;
 
-  const roomDeleteHandler = (deletedRoomId) => {
-    const filteredData = data.filter((room) => room._id !== deletedRoomId);
-    setData(filteredData);
+  const createRoomhandler = (createdRoom) => {
+    postData(
+      `${process.env.REACT_APP_BACKEND_URL}/room/`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      },
+      createdRoom
+    );
+  };
+
+  const deleteRoomHandler = (id) => {
+    deleteData(
+      `${process.env.REACT_APP_BACKEND_URL}/room/`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      },
+      id
+    );
   };
 
   if (data) {
@@ -39,7 +58,7 @@ const Rooms = () => {
               roomName={room.roomName}
               images={room.images}
               people={room.cleaners}
-              onDelete={roomDeleteHandler}
+              onDelete={deleteRoomHandler}
               userId={userId}
               token={token}
             />
@@ -53,7 +72,7 @@ const Rooms = () => {
   return (
     <div className={styles.mainDiv}>
       {/* <ImageUpload /> */}
-      {userId ? <RoomsControl token={token} /> : null}
+      {userId ? <RoomsControl createRoom={createRoomhandler} /> : null}
       {rooms}
     </div>
   );

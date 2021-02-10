@@ -1,7 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import axios from 'axios';
-
-import { useDispatch } from 'react-redux';
+import { useLoadData } from '../shared/hooks/loadData-hook';
 
 import Button from '../shared/FormElements/Button';
 import AssignRoom from './AssignRoom';
@@ -11,38 +9,23 @@ import Modal from '../shared/UIElements/Modal';
 import img from '../assets/DefaultProfile.png';
 
 import styles from './ExpandedPerson.module.css';
-import { createError } from '../Store/actions/Loading';
 
 const ExpandedPerson = (props) => {
   const { userId, token, id, name, close, onDelete } = props;
-  const dispatch = useDispatch();
   const [assignRoom, setAssignRoom] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [data, setData] = useState();
+  const { data, setData } = useLoadData(
+    `${process.env.REACT_APP_BACKEND_URL}/room/person/${id}`
+  );
 
   const roomFocus = useRef(null);
 
   useEffect(() => {
-    getRooms();
     window.scrollTo({
       top: roomFocus.current.offsetTop - 50,
       behavior: 'smooth',
     });
   }, []);
-
-  const getRooms = () => {
-    axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/room/person/${id}`)
-      .then((response) => {
-        const rooms = response.data.rooms.map((person) => person);
-        setData(rooms);
-      })
-      .catch((err) => {
-        if (err.response) {
-          dispatch(createError(err.response.data.message));
-        }
-      });
-  };
 
   const showAssignRoom = () => {
     setAssignRoom(true);
@@ -62,21 +45,7 @@ const ExpandedPerson = (props) => {
 
   const deletePersonHandler = async (event) => {
     event.preventDefault();
-    try {
-      axios
-        .delete(`${process.env.REACT_APP_BACKEND_URL}/person/${id}`, {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          onDelete(id);
-        });
-    } catch (error) {
-      if (error.response) {
-        dispatch(createError(error.response.data.message));
-      }
-    }
+    onDelete(id);
   };
 
   const roomRemoveHandler = (removedRoomId) => {
@@ -129,7 +98,6 @@ const ExpandedPerson = (props) => {
             ) : (
               <AssignRoom
                 close={closeAssignRoom}
-                onAsign={getRooms}
                 assignedRooms={data}
                 id={id}
                 token={token}

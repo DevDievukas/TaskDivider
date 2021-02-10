@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import RequestItem from './RequestItem';
-
-import styles from './SharedItems.module.css';
 
 const ItemsList = (props) => {
   const { data, deleteRequest, userId } = props;
 
   let table;
   if (data.length > 0) {
-    console.log('here');
     table = data.map((request) => {
       return (
         <RequestItem

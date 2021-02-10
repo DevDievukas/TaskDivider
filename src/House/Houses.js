@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useForm } from '../shared/hooks/form-hook';
 import { useLoadData } from '../shared/hooks/loadData-hook';
 
-import HouseCard from '../shared/UIElements/HouseCard';
+import HouseCard from './HouseCard';
 import pic from '../assets/house.svg';
 import styles from './Houses.module.css';
 import { useSelector, useDispatch } from 'react-redux';
@@ -20,7 +20,7 @@ const Houses = () => {
   const { token, userId } = useSelector((state) => ({ ...state.auth }));
   const dispatch = useDispatch();
   const [houseCreation, setHouseCreation] = useState(false);
-  const { data } = useLoadData(
+  const { data, setData, deleteData, postData } = useLoadData(
     `${process.env.REACT_APP_BACKEND_URL}/house/user/${userId}`,
     {
       headers: {
@@ -28,6 +28,7 @@ const Houses = () => {
       },
     }
   );
+
   let houses;
   const [formState, inputHandler] = useForm(
     {
@@ -56,47 +57,33 @@ const Houses = () => {
             pic={pic}
             key={house._id}
             houseId={house._id}
+            token={token}
+            deleteHouse={deleteData}
           />
         );
       }
     });
   } else {
-    houses = (
-      <div>
-        <h2>There are no houes. Would you like to create one?</h2>
-        <Button onClick={() => setHouseCreation(true)}>Create</Button>
-      </div>
-    );
+    houses = <h2>There are no houses. Would you like to create one?</h2>;
   }
 
   const createHouseHandler = (event) => {
-    dispatch(startLoading());
-    try {
-      axios
-        .post(
-          `${process.env.REACT_APP_BACKEND_URL}/house/`,
-          {
-            houseName: formState.inputs.houseName.value,
-            password: formState.inputs.password.value,
-            // frequency: formState.inputs.frequency.value,
-          },
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((res) => {
-          dispatch(stopLoading());
-        })
-        .catch((error) => {
-          if (error.response) {
-            dispatch(clearError(error.response.data.message));
-          }
-        });
-    } catch (err) {
-      dispatch(clearError(err.message));
-    }
+    event.preventDefault();
+    const createdHouse = {
+      houseName: formState.inputs.houseName.value,
+      password: formState.inputs.password.value,
+      // frequency: formState.inputs.frequency.value,
+    };
+    postData(
+      `${process.env.REACT_APP_BACKEND_URL}/house/`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      },
+      createdHouse
+    );
+    setHouseCreation(false);
   };
 
   return (

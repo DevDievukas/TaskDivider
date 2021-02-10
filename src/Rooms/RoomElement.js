@@ -8,15 +8,17 @@ import ExpandedRoom from './ExpandedRoom';
 import styles from './RoomElement.module.css';
 
 const RoomElement = (props) => {
-  const { userId, token } = props;
+  const { userId, token, onDelete } = props;
   const [expanded, setExpanded] = useState(false);
   const [roomData, setRoomData] = useState();
   let imgSrc =
     'https://image.freepik.com/free-vector/lovely-living-room-interior_23-2147517931.jpg';
 
   useEffect(() => {
-    if (props.images[0]) {
-      imgSrc = props.images[0];
+    if (props.images) {
+      if (props.images[0]) {
+        imgSrc = props.images[0];
+      }
     }
 
     const peopleArr = props.people.map((person) => person);
@@ -59,7 +61,7 @@ const RoomElement = (props) => {
           people={roomData}
           id={props.id}
           close={setExpandedHandler}
-          onDelete={props.onDelete}
+          onDelete={onDelete}
           userId={userId}
           token={token}
         />

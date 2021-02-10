@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
 
 import Button from '../shared/FormElements/Button';
 import Input from '../shared/FormElements/Input';
@@ -13,16 +11,10 @@ import { useForm } from '../shared/hooks/form-hook';
 import { VALIDATOR_REQUIRE } from '../shared/validators/validators';
 
 import styles from './RoomsControl.module.css';
-import {
-  createError,
-  startLoading,
-  stopLoading,
-} from '../Store/actions/Loading';
 
 const RoomsControl = (props) => {
   const [showModal, setShowModal] = useState(false);
-  const { token } = props;
-  const dispatch = useDispatch();
+  const { createRoom } = props;
   const houseParam = useParams().houseId;
   const [formState, inputHandler] = useForm(
     {
@@ -48,36 +40,13 @@ const RoomsControl = (props) => {
 
   const addRoomSubmitHandler = (event) => {
     event.preventDefault();
-    dispatch(startLoading());
-    // const formData = new FormData();
-    // formData.append('roomName', formState.inputs.roomName.value);
-    // formData.append('house', houseId);
-    // formData.append('image', formState.inputs.image.value);
 
-    try {
-      axios
-        .post(
-          `${process.env.REACT_APP_BACKEND_URL}/room/`,
-          { roomName: formState.inputs.roomName.value, house: houseParam },
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((res) => {
-          dispatch(stopLoading());
-          // props.onCreate();
-          closeAddRoomModal();
-        })
-        .catch((error) => {
-          if (error.response) {
-            dispatch(createError(error.response.data.message));
-          }
-        });
-    } catch (err) {
-      dispatch(createError(err.message));
-    }
+    const createdRoom = {
+      roomName: formState.inputs.roomName.value,
+      house: houseParam,
+    };
+    createRoom(createdRoom);
+    setShowModal(false);
   };
 
   return (

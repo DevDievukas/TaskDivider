@@ -1,7 +1,4 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
-
 import Modal from '../shared/UIElements/Modal';
 
 import Button from '../shared/FormElements/Button';
@@ -11,15 +8,9 @@ import PersonName from './PersonName';
 
 import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
-import {
-  createError,
-  startLoading,
-  stopLoading,
-} from '../Store/actions/Loading';
 
 const ExpandedRoom = (props) => {
-  const { id, img, room, people, close, onDelete, userId, token } = props;
-  const dispatch = useDispatch();
+  const { id, img, room, people, close, onDelete, userId } = props;
   const [showModal, setShowModal] = useState(false);
 
   const roomFocus = useRef(null);
@@ -31,24 +22,10 @@ const ExpandedRoom = (props) => {
     });
   }, []);
 
-  const deleteRoomHandler = async () => {
-    dispatch(startLoading());
-    try {
-      axios
-        .delete(`${process.env.REACT_APP_BACKEND_URL}/room/${id}`, {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          dispatch(stopLoading());
-          onDelete(id);
-        });
-    } catch (error) {
-      if (error.response) {
-        dispatch(createError(error.response.data.message));
-      }
-    }
+  const deleteRoomHandler = (event) => {
+    event.preventDefault();
+    onDelete(id);
+    setShowModal(false);
   };
 
   const showDeleteRoomModal = () => {

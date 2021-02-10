@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 
 import Button from '../shared/FormElements/Button';
 import Input from '../shared/FormElements/Input';
@@ -9,17 +8,10 @@ import AddButton from '../shared/UIElements/AddButton/AddButton';
 
 import { useForm } from '../shared/hooks/form-hook';
 import { VALIDATOR_REQUIRE } from '../shared/validators/validators';
-import { useDispatch } from 'react-redux';
-import {
-  createError,
-  startLoading,
-  stopLoading,
-} from '../Store/actions/Loading';
 
-const RoomsControl = (props) => {
+const PeopleControl = (props) => {
   const [showModal, setShowModal] = useState(false);
-  const dispatch = useDispatch();
-  const { token } = props;
+  const { createPerson } = props;
   const houseParam = useParams().houseId;
   const [formState, inputHandler] = useForm(
     {
@@ -41,31 +33,13 @@ const RoomsControl = (props) => {
 
   const addPersonSubmitHandler = (event) => {
     event.preventDefault();
-    dispatch(startLoading());
     const person = {
       name: formState.inputs.name.value,
       house: houseParam,
     };
-    try {
-      axios
-        .post(`${process.env.REACT_APP_BACKEND_URL}/person/`, person, {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          dispatch(stopLoading());
-          props.onCreate();
-          closeAddPersonModal();
-        })
-        .catch((error) => {
-          if (error.response) {
-            dispatch(createError(error.response.data.message));
-          }
-        });
-    } catch (err) {
-      dispatch(createError(err.message));
-    }
+
+    createPerson(person);
+    setShowModal(false);
   };
 
   return (
@@ -97,4 +71,4 @@ const RoomsControl = (props) => {
   );
 };
 
-export default RoomsControl;
+export default PeopleControl;
