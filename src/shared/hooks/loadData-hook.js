@@ -8,34 +8,31 @@ import {
 } from '../../Store/actions/Loading';
 
 export const useLoadData = (url, headers) => {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
+  const [nonArrayData, setNonArrayData] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (data) {
-      if (data.length < 1) {
-        if (data[0] == undefined) {
-          setData(null);
-        }
-      }
-    }
-  }, [data]);
+    getData(url, headers);
+  }, []);
 
-  useEffect(() => {
+  const getData = (url, headers) => {
     dispatch(startLoading());
     axios
       .get(url, headers)
       .then((response) => {
         dispatch(stopLoading());
-        // console.log(response.data);
+        console.log(response.data);
         if (response.data.length > 0) {
           setData(response.data);
+        } else {
+          setNonArrayData(response.data);
         }
       })
       .catch((err) => {
-        dispatch(createError(err.message));
+        dispatch(createError(err.response.data.message));
       });
-  }, [url, dispatch]);
+  };
 
   const deleteData = (url, headers, id) => {
     axios
@@ -44,7 +41,7 @@ export const useLoadData = (url, headers) => {
         setData((prevData) => prevData.filter((element) => element._id !== id));
       })
       .catch((err) => {
-        dispatch(createError(err.message));
+        dispatch(createError(err.response.data.message));
       });
   };
 
@@ -61,9 +58,9 @@ export const useLoadData = (url, headers) => {
         }
       })
       .catch((err) => {
-        dispatch(createError(err.message));
+        dispatch(createError(err.response.data.message));
       });
   };
 
-  return { data, setData, deleteData, postData };
+  return { data, nonArrayData, setData, deleteData, postData };
 };

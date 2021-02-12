@@ -1,5 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useLoadData } from '../shared/hooks/loadData-hook';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 import Button from '../shared/FormElements/Button';
 import AssignRoom from './AssignRoom';
@@ -9,14 +12,44 @@ import Modal from '../shared/UIElements/Modal';
 import img from '../assets/DefaultProfile.png';
 
 import styles from './ExpandedPerson.module.css';
+import {
+  createError,
+  startLoading,
+  stopLoading,
+} from '../Store/actions/Loading';
 
 const ExpandedPerson = (props) => {
   const { userId, token, id, name, close, onDelete } = props;
+  const dispatch = useDispatch();
   const [assignRoom, setAssignRoom] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const houseParam = useParams().houseId;
+  const [notAssignedRooms, setNotAssignedRooms] = useState([]);
   const { data, setData } = useLoadData(
     `${process.env.REACT_APP_BACKEND_URL}/room/person/${id}`
   );
+
+  let rooms;
+
+  useEffect(() => {
+    dispatch(startLoading());
+    axios
+      .get(
+        `${process.env.REACT_APP_BACKEND_URL}/room/person/unassigned/${id}/${houseParam}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        dispatch(stopLoading());
+        setNotAssignedRooms(res.data);
+      })
+      .catch((err) => {
+        dispatch(createError(err.message));
+      });
+  }, []);
 
   const roomFocus = useRef(null);
 
@@ -31,7 +64,15 @@ const ExpandedPerson = (props) => {
     setAssignRoom(true);
   };
 
-  const closeAssignRoom = () => {
+  const closeAssignRoom = (assignedData) => {
+    setNotAssignedRooms(
+      notAssignedRooms.filter((room) => room._id !== assignedData._id)
+    );
+    if (data) {
+      setData((prevData) => [...prevData, assignedData]);
+    } else {
+      setData([assignedData]);
+    }
     setAssignRoom(false);
   };
 
@@ -49,9 +90,33 @@ const ExpandedPerson = (props) => {
   };
 
   const roomRemoveHandler = (removedRoomId) => {
-    const filteredData = data.filter((room) => room._id !== removedRoomId);
-    setData(filteredData);
+    setData(data.filter((room) => room._id !== removedRoomId._id));
+    if (notAssignedRooms) {
+      setNotAssignedRooms((prev) => [...prev, removedRoomId]);
+    } else {
+      setNotAssignedRooms([removedRoomId]);
+    }
   };
+
+  if (data) {
+    rooms = (
+      <ul className={styles.roomsList}>
+        {data.map((room) => {
+          return (
+            <RoomElement
+              room={room}
+              personId={id}
+              key={room._id}
+              onRemove={roomRemoveHandler}
+              token={token}
+            />
+          );
+        })}
+      </ul>
+    );
+  } else {
+    rooms = null;
+  }
 
   return (
     <React.Fragment>
@@ -71,36 +136,24 @@ const ExpandedPerson = (props) => {
           <img src={img} alt="profile" className={styles.profilePic} />
           <h2 className={styles.roomTitle}>{name}</h2>
         </div>
-        {data ? (
-          <ul className={styles.roomsList}>
-            {data.map((room) => {
-              return (
-                <RoomElement
-                  valid={room}
-                  personId={id}
-                  roomName={room.roomName}
-                  key={room._id}
-                  id={room._id}
-                  onRemove={roomRemoveHandler}
-                  token={token}
-                />
-              );
-            })}
-          </ul>
-        ) : null}
+        {rooms}
         {userId && (
           <div className={styles.controlBtnDiv}>
             {!assignRoom ? (
               <React.Fragment>
-                <Button onClick={showAssignRoom}>ASSIGN ROOM</Button>
+                {notAssignedRooms.length > 0 ? (
+                  <Button onClick={showAssignRoom}>ASSIGN ROOM</Button>
+                ) : null}
                 <Button onClick={openDeletePersonModal}>DELETE PERSON</Button>
               </React.Fragment>
             ) : (
               <AssignRoom
-                close={closeAssignRoom}
+                close={setAssignRoom}
+                assign={closeAssignRoom}
                 assignedRooms={data}
                 id={id}
                 token={token}
+                rooms={notAssignedRooms}
               />
             )}
           </div>

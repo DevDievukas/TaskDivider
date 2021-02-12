@@ -5,17 +5,30 @@ import AnnouncementItem from './AnnouncementItem';
 import AnnouncementsControl from './AnnouncementsControl';
 import { useParams } from 'react-router';
 import { useLoadData } from '../shared/hooks/loadData-hook';
-
+import { useSelector } from 'react-redux';
 import EmptyData from '../shared/UIElements//EmptyData/EmptyData';
 
 const Announcements = () => {
   const houseParam = useParams().houseId;
-  const { data } = useLoadData(
+  const { token } = useSelector((state) => ({ ...state.auth }));
+  const { data, postData } = useLoadData(
     `${process.env.REACT_APP_BACKEND_URL}/announcement/allByHouse/${houseParam}`
   );
   let announcements;
 
-  if (data) {
+  const createAnnouncement = (announcement) => {
+    postData(
+      `${process.env.REACT_APP_BACKEND_URL}/announcement/`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      },
+      announcement
+    );
+  };
+
+  if (data.length > 0) {
     announcements = data.reverse().map((ann) => {
       return (
         <AnnouncementItem
@@ -34,7 +47,10 @@ const Announcements = () => {
 
   return (
     <ul className={styles.groupList}>
-      <AnnouncementsControl onCreate={'getGroups'} houseParam={houseParam} />
+      <AnnouncementsControl
+        onCreate={createAnnouncement}
+        houseParam={houseParam}
+      />
       {announcements}
     </ul>
   );

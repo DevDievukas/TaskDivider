@@ -19,7 +19,7 @@ const Schedule = () => {
     ...state.auth,
   }));
   const houseParam = useParams().houseId;
-  const { data, setData } = useLoadData(
+  const { nonArrayData, getData } = useLoadData(
     `${process.env.REACT_APP_BACKEND_URL}/room/Schedule/${
       houseParam || houseId
     }`
@@ -49,8 +49,14 @@ const Schedule = () => {
         )
         .then((response) => {
           closeGenerateModal();
+          getData(
+            `${process.env.REACT_APP_BACKEND_URL}/room/Schedule/${
+              houseParam || houseId
+            }`
+          );
         })
         .catch((err) => {
+          closeGenerateModal();
           if (err.response) {
             dispatch(createError(err.response.data.message));
           }
@@ -58,12 +64,12 @@ const Schedule = () => {
     }
   };
 
-  if (data) {
+  if (nonArrayData) {
     schedule = (
       <React.Fragment>
-        <h2 className={styles.date}>{data.date.split('T')[0]}</h2>
+        <h2 className={styles.date}>{nonArrayData.date.split('T')[0]}</h2>
         <ul className={styles.groupList}>
-          {data.list.map((person) => {
+          {nonArrayData.list.map((person) => {
             return (
               <GroupElement
                 key={person.name}

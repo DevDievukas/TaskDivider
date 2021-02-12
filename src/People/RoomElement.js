@@ -11,7 +11,7 @@ import { createError } from '../Store/actions/Loading';
 const RoomElement = (props) => {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
-  const { onRemove, roomName, id, personId, token } = props;
+  const { onRemove, personId, token, room } = props;
 
   const removeRoom = (event) => {
     event.preventDefault();
@@ -20,7 +20,7 @@ const RoomElement = (props) => {
       .post(
         `${process.env.REACT_APP_BACKEND_URL}/person/removeRoom/${personId}`,
         {
-          roomId: id,
+          roomId: room._id,
         },
         {
           headers: {
@@ -29,7 +29,8 @@ const RoomElement = (props) => {
         }
       )
       .then((res) => {
-        onRemove(id);
+        onRemove(room);
+        setShowModal(false);
       })
       .catch((err) => {
         if (err.response) {
@@ -62,7 +63,7 @@ const RoomElement = (props) => {
         </div>
       </Modal>
       <div className={styles.roomDiv}>
-        <h2>{roomName}</h2>
+        <h2>{room.roomName}</h2>
         <button onClick={openRemoveRoomModal} className={styles.removeBtn}>
           <Trash size={40} />
         </button>

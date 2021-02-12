@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useLoadData } from '../shared/hooks/loadData-hook';
 
 import Button from '../shared/FormElements/Button';
 import Input from '../shared/FormElements/Input';
@@ -13,19 +11,13 @@ import { useForm } from '../shared/hooks/form-hook';
 import { VALIDATOR_REQUIRE } from '../shared/validators/validators';
 
 import styles from './AnnouncementsControl.module.css';
-import { useSelector } from 'react-redux';
-import {
-  createError,
-  startLoading,
-  stopLoading,
-} from '../Store/actions/Loading';
 
 const AnnouncementsControl = (props) => {
-  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
-  const [images, setImages] = useState();
-  const { token } = useSelector((state) => ({ ...state.auth }));
-  const houseParam = props;
+  const { data } = useLoadData(
+    `${process.env.REACT_APP_BACKEND_URL}/announcement/images`
+  );
+  const { houseParam, onCreate } = props;
   let imagesRadio;
   const [formState, inputHandler] = useForm(
     {
@@ -45,17 +37,6 @@ const AnnouncementsControl = (props) => {
     false
   );
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/announcement/images`)
-      .then((response) => {
-        setImages(response.data.images);
-      })
-      .catch((err) => {
-        console.log(+err);
-      });
-  }, []);
-
   const revealAnnouncModal = () => {
     setShowModal(true);
   };
@@ -66,41 +47,19 @@ const AnnouncementsControl = (props) => {
 
   const addAnnouncSubmitHandler = (event) => {
     event.preventDefault();
-    dispatch(startLoading());
-    try {
-      axios
-        .post(
-          `${process.env.REACT_APP_BACKEND_URL}/announcement/`,
-          {
-            title: formState.inputs.title.value,
-            body: formState.inputs.body.value,
-            image: formState.inputs.image.value,
-            house: houseParam,
-          },
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((res) => {
-          dispatch(stopLoading());
-          props.onCreate();
-          closeAnnouncModal();
-        })
-        .catch((error) => {
-          if (error.response) {
-            dispatch(createError(error.response.data.message));
-          }
-        });
-    } catch (err) {
-      dispatch(createError(err.message));
-    }
+    const newAnnouncement = {
+      title: formState.inputs.title.value,
+      body: formState.inputs.body.value,
+      image: formState.inputs.image.value,
+      house: houseParam,
+    };
+    onCreate(newAnnouncement);
+    setShowModal(false);
   };
 
-  if (images) {
+  if (data.length > 0) {
     let count = 0;
-    imagesRadio = images.map((img) => {
+    imagesRadio = data.map((img) => {
       count++;
       return (
         <Input

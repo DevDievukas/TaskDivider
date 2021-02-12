@@ -1,26 +1,18 @@
 import React, { useState } from 'react';
 import Input from '../shared/FormElements/Input';
 import Button from '../shared/FormElements/Button';
-import axios from 'axios';
-
 import { useForm } from '../shared/hooks/form-hook';
 import { useLoadData } from '../shared/hooks/loadData-hook';
 
 import HouseCard from './HouseCard';
 import pic from '../assets/house.svg';
 import styles from './Houses.module.css';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  clearError,
-  startLoading,
-  stopLoading,
-} from '../Store/actions/Loading';
+import { useSelector } from 'react-redux';
 
 const Houses = () => {
   const { token, userId } = useSelector((state) => ({ ...state.auth }));
-  const dispatch = useDispatch();
   const [houseCreation, setHouseCreation] = useState(false);
-  const { data, setData, deleteData, postData } = useLoadData(
+  const { data, deleteData, postData } = useLoadData(
     `${process.env.REACT_APP_BACKEND_URL}/house/user/${userId}`,
     {
       headers: {

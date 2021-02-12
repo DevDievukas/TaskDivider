@@ -16,7 +16,7 @@ const Rooms = () => {
   const { userId, houseId, token } = useSelector((state) => ({
     ...state.auth,
   }));
-  const { data, setData, postData, deleteData } = useLoadData(
+  const { data, postData, deleteData } = useLoadData(
     `${process.env.REACT_APP_BACKEND_URL}/room/allByHouse/${
       houseId || houseParam
     }`
@@ -54,10 +54,7 @@ const Rooms = () => {
           return (
             <RoomElement
               key={room._id}
-              id={room._id}
-              roomName={room.roomName}
-              images={room.images}
-              people={room.cleaners}
+              room={room}
               onDelete={deleteRoomHandler}
               userId={userId}
               token={token}
