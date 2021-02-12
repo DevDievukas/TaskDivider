@@ -7,6 +7,8 @@ import { useForm } from '../shared/hooks/form-hook';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
+import Login from './Login';
+
 import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_EMAIL,
@@ -184,7 +186,7 @@ const Auth = () => {
             </h3>
           </div>
         ) : null}
-        <form onSubmit={authSubmitHandler} className={styles.authForm}>
+        {/* <form onSubmit={authSubmitHandler} className={styles.authForm}>
           {!houseLogin ? (
             <Input
               element="input"
@@ -215,17 +217,6 @@ const Auth = () => {
             errorText="Please enter valid password, at least 6 characters."
             onInput={inputHandler}
           />
-          {/* {isLoginMode ? (
-            <Input
-              element="checkbox"
-              id="remember"
-              type="checkbox"
-              validators={[]}
-              onInput={inputHandler}
-              initialValue="false"
-              initialValid={true}
-            />
-          ) : null} */}
           <button
             type="Submit"
             disabled={!formState.isValid}
@@ -233,7 +224,8 @@ const Auth = () => {
           >
             {isLoginMode ? 'Login' : 'SignUp'}
           </button>
-        </form>
+        </form> */}
+        <Login />;
         <button onClick={switchModeHandler} className={styles.signupBtn}>
           SWITCH TO {isLoginMode ? 'SIGNUP' : 'LOGIN'}
         </button>
