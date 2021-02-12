@@ -5,14 +5,17 @@
   height: 10em;
 }
 .loader {
-  margin: 60px auto;
   font-size: 10px;
-  position: relative;
+  position: absolute;
+  left: 50%;
+  margin-left: -5em;
+  top: 50%;
+  margin-top: -5em;
   text-indent: -9999em;
-  border-top: 1.1em solid rgba(219, 219, 219, 0.2);
-  border-right: 1.1em solid rgba(219, 219, 219, 0.2);
-  border-bottom: 1.1em solid rgba(219, 219, 219, 0.2);
-  border-left: 1.1em solid #dbdbdb;
+  border-top: 1.1em solid #dbdbdb;
+  border-right: 1.1em solid #dbdbdb;
+  border-bottom: 1.1em solid #dbdbdb;
+  border-left: 1.1em solid firebrick;
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);
   transform: translateZ(0);

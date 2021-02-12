@@ -49,7 +49,7 @@ const ExpandedPerson = (props) => {
       .catch((err) => {
         dispatch(createError(err.message));
       });
-  }, []);
+  }, [dispatch, houseParam, id, token]);
 
   const roomFocus = useRef(null);
 

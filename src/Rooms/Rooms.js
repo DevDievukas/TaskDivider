@@ -9,14 +9,14 @@ import styles from './Rooms.module.css';
 import RoomElement from './RoomElement';
 import EmptyData from '../shared/UIElements/EmptyData/EmptyData.tsx';
 
-import ImageUpload from './ImgUpload';
+// import ImageUpload from './ImgUpload';
 
 const Rooms = () => {
   const houseParam = useParams().houseId;
   const { userId, houseId, token } = useSelector((state) => ({
     ...state.auth,
   }));
-  const { data, postData, deleteData } = useLoadData(
+  const { data, dataLoaded, postData, deleteData } = useLoadData(
     `${process.env.REACT_APP_BACKEND_URL}/room/allByHouse/${
       houseId || houseParam
     }`
@@ -47,24 +47,26 @@ const Rooms = () => {
     );
   };
 
-  if (data) {
-    rooms = (
-      <ul className={styles.groupList}>
-        {data.map((room) => {
-          return (
-            <RoomElement
-              key={room._id}
-              room={room}
-              onDelete={deleteRoomHandler}
-              userId={userId}
-              token={token}
-            />
-          );
-        })}
-      </ul>
-    );
-  } else {
-    rooms = <EmptyData header="NO ROOMS FOUND" />;
+  if (dataLoaded) {
+    if (data.length > 0) {
+      rooms = (
+        <ul className={styles.groupList}>
+          {data.map((room) => {
+            return (
+              <RoomElement
+                key={room._id}
+                room={room}
+                onDelete={deleteRoomHandler}
+                userId={userId}
+                token={token}
+              />
+            );
+          })}
+        </ul>
+      );
+    } else {
+      rooms = <EmptyData header="NO ROOMS FOUND" />;
+    }
   }
   return (
     <div className={styles.mainDiv}>

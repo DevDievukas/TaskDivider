@@ -3,7 +3,7 @@ import {
   Route,
   BrowserRouter as Router,
   Switch,
-  Redirect,
+  // Redirect,
 } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -45,7 +45,7 @@ const App = () => {
         )
       );
     }
-  }, []);
+  }, [dispatch]);
 
   let routes = (
     <Switch>

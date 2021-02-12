@@ -3,7 +3,7 @@ import { useLoadData } from '../shared/hooks/loadData-hook';
 
 import Button from '../shared/FormElements/Button';
 import Input from '../shared/FormElements/Input';
-import ImageUpload from '../shared/FormElements/ImageUpload';
+// import ImageUpload from '../shared/FormElements/ImageUpload';
 import Modal from '../shared/UIElements/Modal';
 import AddButton from '../shared/UIElements/AddButton/AddButton';
 
@@ -58,9 +58,7 @@ const AnnouncementsControl = (props) => {
   };
 
   if (data.length > 0) {
-    let count = 0;
     imagesRadio = data.map((img) => {
-      count++;
       return (
         <Input
           element="radio"

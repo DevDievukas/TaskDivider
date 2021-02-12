@@ -19,7 +19,7 @@ const Schedule = () => {
     ...state.auth,
   }));
   const houseParam = useParams().houseId;
-  const { nonArrayData, getData } = useLoadData(
+  const { nonArrayData, getData, dataLoaded } = useLoadData(
     `${process.env.REACT_APP_BACKEND_URL}/room/Schedule/${
       houseParam || houseId
     }`
@@ -64,26 +64,28 @@ const Schedule = () => {
     }
   };
 
-  if (nonArrayData) {
-    schedule = (
-      <React.Fragment>
-        <h2 className={styles.date}>{nonArrayData.date.split('T')[0]}</h2>
-        <ul className={styles.groupList}>
-          {nonArrayData.list.map((person) => {
-            return (
-              <GroupElement
-                key={person.name}
-                id={person.name}
-                name={person.name}
-                rooms={person.rooms}
-              />
-            );
-          })}
-        </ul>
-      </React.Fragment>
-    );
-  } else {
-    schedule = <EmptyData header="NO SCHEDULES!" />;
+  if (dataLoaded) {
+    if (nonArrayData) {
+      schedule = (
+        <React.Fragment>
+          <h2 className={styles.date}>{nonArrayData.date.split('T')[0]}</h2>
+          <ul className={styles.groupList}>
+            {nonArrayData.list.map((person) => {
+              return (
+                <GroupElement
+                  key={person.name}
+                  id={person.name}
+                  name={person.name}
+                  rooms={person.rooms}
+                />
+              );
+            })}
+          </ul>
+        </React.Fragment>
+      );
+    } else {
+      schedule = <EmptyData header="NO SCHEDULES!" />;
+    }
   }
 
   return (

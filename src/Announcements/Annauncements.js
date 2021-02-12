@@ -10,9 +10,11 @@ import EmptyData from '../shared/UIElements//EmptyData/EmptyData';
 
 const Announcements = () => {
   const houseParam = useParams().houseId;
-  const { token } = useSelector((state) => ({ ...state.auth }));
-  const { data, postData } = useLoadData(
-    `${process.env.REACT_APP_BACKEND_URL}/announcement/allByHouse/${houseParam}`
+  const { token, houseId } = useSelector((state) => ({ ...state.auth }));
+  const { data, dataLoaded, postData } = useLoadData(
+    `${process.env.REACT_APP_BACKEND_URL}/announcement/allByHouse/${
+      houseParam || houseId
+    }`
   );
   let announcements;
 
@@ -28,21 +30,23 @@ const Announcements = () => {
     );
   };
 
-  if (data.length > 0) {
-    announcements = data.reverse().map((ann) => {
-      return (
-        <AnnouncementItem
-          key={ann._id}
-          title={ann.title}
-          text={ann.body}
-          img={ann.image}
-          link={ann.link}
-          date={ann.date}
-        />
-      );
-    });
-  } else {
-    announcements = <EmptyData header="NO ANNOUNCEMENTS!" />;
+  if (dataLoaded) {
+    if (data.length > 0) {
+      announcements = data.reverse().map((ann) => {
+        return (
+          <AnnouncementItem
+            key={ann._id}
+            title={ann.title}
+            text={ann.body}
+            img={ann.image}
+            link={ann.link}
+            date={ann.date}
+          />
+        );
+      });
+    } else {
+      announcements = <EmptyData header="NO ANNOUNCEMENTS!" />;
+    }
   }
 
   return (

@@ -8,7 +8,7 @@ import { startLogout } from '../../Store/actions/Auth';
 const Navbar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { userId, houseId, houseName, token } = useSelector((state) => ({
+  const { houseId, houseName, token } = useSelector((state) => ({
     ...state.auth,
   }));
 
@@ -32,10 +32,7 @@ const Navbar = () => {
   );
   let linkDirection = '/';
 
-  if (userId) {
-    linkDirection = '/';
-  } else if (houseId) {
-    linkDirection = `/announcements`;
+  if (houseId) {
     leftButton = <h3>{houseName}</h3>;
   }
 

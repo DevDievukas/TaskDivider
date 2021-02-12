@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import Button from '../shared/FormElements/Button';
 import Input from '../shared/FormElements/Input';
-import ImageUpload from '../shared/FormElements/ImageUpload';
+// import ImageUpload from '../shared/FormElements/ImageUpload';
 import Modal from '../shared/UIElements/Modal';
 import AddButton from '../shared/UIElements/AddButton/AddButton';
 

@@ -11,11 +11,13 @@ import { useSelector } from 'react-redux';
 
 const Rooms = () => {
   const houseParam = useParams().houseId;
-  const { userId, token } = useSelector((state) => ({ ...state.auth }));
-  const { data, postData, deleteData } = useLoadData(
+  const { userId, token } = useSelector((state) => ({
+    ...state.auth,
+  }));
+  const { data, dataLoaded, postData, deleteData } = useLoadData(
     `${process.env.REACT_APP_BACKEND_URL}/person/allByHouse/${houseParam}`
   );
-  let people;
+  let people = null;
 
   const PersonDeleteHandler = (personId) => {
     deleteData(
@@ -40,12 +42,11 @@ const Rooms = () => {
       person
     );
   };
-
-  if (data) {
-    people = (
-      <div>
-        {data.map((person) => {
-          if (person) {
+  if (dataLoaded) {
+    if (data.length > 0) {
+      people = (
+        <div>
+          {data.map((person) => {
             return (
               <PersonElement
                 key={person._id}
@@ -57,12 +58,12 @@ const Rooms = () => {
                 userId={userId}
               />
             );
-          }
-        })}
-      </div>
-    );
-  } else {
-    people = <EmptyData header="NO PEOPLE!" />;
+          })}
+        </div>
+      );
+    } else {
+      people = <EmptyData header="NO PEOPLE!" />;
+    }
   }
 
   return (

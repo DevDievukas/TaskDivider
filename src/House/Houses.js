@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 const Houses = () => {
   const { token, userId } = useSelector((state) => ({ ...state.auth }));
   const [houseCreation, setHouseCreation] = useState(false);
-  const { data, deleteData, postData } = useLoadData(
+  const { data, dataLoaded, deleteData, postData } = useLoadData(
     `${process.env.REACT_APP_BACKEND_URL}/house/user/${userId}`,
     {
       headers: {
@@ -40,9 +40,9 @@ const Houses = () => {
     false
   );
 
-  if (data) {
-    houses = data.map((house) => {
-      if (house) {
+  if (dataLoaded) {
+    if (data) {
+      houses = data.map((house) => {
         return (
           <HouseCard
             houseName={house.houseName}
@@ -53,10 +53,10 @@ const Houses = () => {
             deleteHouse={deleteData}
           />
         );
-      }
-    });
-  } else {
-    houses = <h2>There are no houses. Would you like to create one?</h2>;
+      });
+    } else {
+      houses = <h2>There are no houses. Would you like to create one?</h2>;
+    }
   }
 
   const createHouseHandler = (event) => {

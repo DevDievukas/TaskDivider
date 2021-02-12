@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import {
@@ -9,43 +9,44 @@ import {
 
 export const useLoadData = (url, headers) => {
   const [data, setData] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const [nonArrayData, setNonArrayData] = useState();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    getData(url, headers);
-  }, []);
-
-  const getData = (url, headers) => {
+  const getData = useCallback((url, headers) => {
     dispatch(startLoading());
     axios
       .get(url, headers)
       .then((response) => {
         dispatch(stopLoading());
-        console.log(response.data);
         if (response.data.length > 0) {
           setData(response.data);
         } else {
           setNonArrayData(response.data);
         }
+        setDataLoaded(true);
       })
       .catch((err) => {
-        dispatch(createError(err.response.data.message));
+        dispatch(createError(err.message));
       });
-  };
+  }, []);
 
-  const deleteData = (url, headers, id) => {
+  useEffect(() => {
+    getData(url, headers);
+  }, []);
+
+  const deleteData = useCallback((url, headers, id) => {
     axios
       .delete(url + id, headers)
       .then((res) => {
         setData((prevData) => prevData.filter((element) => element._id !== id));
       })
       .catch((err) => {
-        dispatch(createError(err.response.data.message));
+        dispatch(createError(err.message));
       });
-  };
+  }, []);
 
-  const postData = (url, headers, createdData) => {
+  const postData = useCallback((url, headers, createdData) => {
     dispatch(startLoading());
     axios
       .post(url, createdData, headers)
@@ -58,9 +59,9 @@ export const useLoadData = (url, headers) => {
         }
       })
       .catch((err) => {
-        dispatch(createError(err.response.data.message));
+        dispatch(createError(err.message));
       });
-  };
+  }, []);
 
-  return { data, nonArrayData, setData, deleteData, postData };
+  return { data, dataLoaded, nonArrayData, setData, deleteData, postData };
 };

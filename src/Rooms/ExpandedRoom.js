@@ -85,7 +85,7 @@ const ExpandedRoom = (props) => {
             src={
               'https://image.freepik.com/free-vector/lovely-living-room-interior_23-2147517931.jpg'
             }
-            alt={'room image'}
+            alt="room"
           />
         )}
         {people}

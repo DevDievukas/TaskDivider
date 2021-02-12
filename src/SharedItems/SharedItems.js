@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 
 import { useParams } from 'react-router-dom';
@@ -26,11 +26,13 @@ const SharedItems = () => {
   }));
   const dispatch = useDispatch();
   const [showModalClear, setShowModalClear] = useState(false);
-  const { data, setData, postData, deleteData } = useLoadData(
+  const { data, dataLoaded, setData, postData, deleteData } = useLoadData(
     `${process.env.REACT_APP_BACKEND_URL}/request/allByHouseId/${
       houseParam || houseId
     }`
   );
+
+  console.log('render');
 
   const closeClearRequestsModal = () => {
     setShowModalClear(false);
@@ -103,14 +105,14 @@ const SharedItems = () => {
           </Button>
         ) : null}
       </div>
-      {data ? (
+      {data.length > 0 && dataLoaded ? (
         <ItemsList
           data={data}
           deleteRequest={deleteRequestHandler}
           userId={userId}
         />
       ) : (
-        <EmptyData header="NO REQUEST ACTIVE" />
+        dataLoaded && <EmptyData header="NO REQUEST ACTIVE" />
       )}
     </div>
   );

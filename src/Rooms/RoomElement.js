@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import Card from 'react-bootstrap/Card';
 import ExpandedRoom from './ExpandedRoom';
@@ -6,18 +6,10 @@ import ExpandedRoom from './ExpandedRoom';
 import styles from './RoomElement.module.css';
 
 const RoomElement = (props) => {
-  const { userId, token, onDelete, room } = props;
+  const { userId, onDelete, room } = props;
   const [expanded, setExpanded] = useState(false);
   let imgSrc =
     'https://image.freepik.com/free-vector/lovely-living-room-interior_23-2147517931.jpg';
-
-  useEffect(() => {
-    if (room.images) {
-      if (room.images[0]) {
-        imgSrc = room.images[0];
-      }
-    }
-  }, []);
 
   const setExpandedHandler = () => {
     setExpanded(!expanded);
