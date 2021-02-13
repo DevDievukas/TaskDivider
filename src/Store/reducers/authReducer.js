@@ -7,6 +7,7 @@ const initialState = {
   token: null,
   houseName: null,
   houseId: null,
+  expiration: null,
 };
 
 const authUser = (state, action) => {
@@ -14,6 +15,7 @@ const authUser = (state, action) => {
     userId: action.userId,
     token: action.token,
     email: action.email,
+    expiration: action.expiration,
   });
 };
 
@@ -22,6 +24,7 @@ const authHouse = (state, action) => {
     token: action.token,
     houseName: action.houseName,
     houseId: action.houseId,
+    expiration: action.expiration,
   });
 };
 

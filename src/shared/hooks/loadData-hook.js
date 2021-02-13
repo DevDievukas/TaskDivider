@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import {
@@ -13,7 +13,7 @@ export const useLoadData = (url, headers) => {
   const [nonArrayData, setNonArrayData] = useState();
   const dispatch = useDispatch();
 
-  const getData = useCallback((url, headers) => {
+  const getData = (url, headers) => {
     dispatch(startLoading());
     axios
       .get(url, headers)
@@ -29,13 +29,13 @@ export const useLoadData = (url, headers) => {
       .catch((err) => {
         dispatch(createError(err.message));
       });
-  }, []);
+  };
 
   useEffect(() => {
     getData(url, headers);
   }, []);
 
-  const deleteData = useCallback((url, headers, id) => {
+  const deleteData = (url, headers, id) => {
     axios
       .delete(url + id, headers)
       .then((res) => {
@@ -44,9 +44,9 @@ export const useLoadData = (url, headers) => {
       .catch((err) => {
         dispatch(createError(err.message));
       });
-  }, []);
+  };
 
-  const postData = useCallback((url, headers, createdData) => {
+  const postData = (url, headers, createdData) => {
     dispatch(startLoading());
     axios
       .post(url, createdData, headers)
@@ -61,7 +61,7 @@ export const useLoadData = (url, headers) => {
       .catch((err) => {
         dispatch(createError(err.message));
       });
-  }, []);
+  };
 
   return { data, dataLoaded, nonArrayData, setData, deleteData, postData };
 };

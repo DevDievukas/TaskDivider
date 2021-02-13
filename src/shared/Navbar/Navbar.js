@@ -8,27 +8,31 @@ import { startLogout } from '../../Store/actions/Auth';
 const Navbar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { houseId, houseName, token } = useSelector((state) => ({
+  const { userId, houseId, houseName, token } = useSelector((state) => ({
     ...state.auth,
   }));
+
+  let leftButton;
 
   const redirectLogout = () => {
     dispatch(startLogout());
     history.push('/');
   };
 
+  if (userId) {
+    leftButton = (
+      <img
+        alt="logo"
+        className={styles.logo}
+        src="https://www.freepnglogos.com/uploads/islamic-png/abstract-arabesque-arabic-geometric-islamic-art-20.png"
+      />
+    );
+  }
   let rightButton = (
     <div className={styles.signOutDiv}>
       <SignOut size={30} />
       <p onClick={redirectLogout}>SIGN OUT</p>
     </div>
-  );
-  let leftButton = (
-    <img
-      alt="logo"
-      className={styles.logo}
-      src="https://www.freepnglogos.com/uploads/islamic-png/abstract-arabesque-arabic-geometric-islamic-art-20.png"
-    />
   );
   let linkDirection = '/';
 

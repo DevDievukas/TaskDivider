@@ -1,6 +1,7 @@
 .mainHeader {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5em;
+  margin-top: 1.5em;
 }
 
 .switchTypeDiv {
@@ -25,60 +26,118 @@
   margin-bottom: -1.8px;
 }
 
-.loginBtn {
-  width: 95%;
-  height: 3rem;
-  margin-bottom: 2rem;
-  background-color: rgb(198, 228, 255);
-  border-color: oldlace;
-  border-radius: 10px;
-}
-
-.authForm {
-  text-align: center;
-  margin: auto;
-  padding: auto;
-}
-
-.signupBtn {
-  width: 95%;
-  right: 2.5%;
-  background-color: rgb(255, 136, 136);
-  border-color: oldlace;
-  border-radius: 10px;
-  height: 3rem;
-  margin-top: 15rem;
-}
-
 .authDiv {
   text-align: center;
   margin: auto;
   padding: auto;
 }
-.formControl {
-  position: relative;
-  min-height: 3.5em;
+
+/* login css */
+
+.form {
+  display: block;
+  align-items: center;
+  justify-content: center;
 }
 
-.formControl label {
-  position: absolute;
-  font-size: 0.8em;
-  top: 0;
-  left: 5px;
-  text-transform: uppercase;
-}
-.formControl input,
-.formControl textarea {
-  height: 3em;
-  position: absolute;
-  top: 0;
-  left: 0;
+.wrapper {
+  margin: auto;
   width: 80%;
+  background: #fff;
+  /* padding: 30px; */
+  padding-top: 30px;
 }
 
-.formControl input:focus,
-.formControl textarea:focus {
+.field {
+  height: 40px;
+  width: 100%;
+  position: relative;
+}
+
+.wrapper .field input {
   outline: none;
-  background: #ebebeb;
-  border-color: #510077;
+  height: 100%;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid rgb(241, 241, 241);
+  font-size: 17px;
+}
+/* Change the white to any color ;) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  box-shadow: 0 0 0 30px white inset !important;
+}
+
+.field input:focus ~ label,
+.field input:valid ~ label {
+  transform: translateY(-25px);
+  font-style: 15px;
+  color: silver;
+}
+
+.wrapper .field label {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  color: gray;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.wrapper .field .underline {
+  position: absolute;
+  bottom: 0;
+  left: -50%;
+  height: 2px;
+  width: 100%;
+}
+
+.field .underline:before {
+  position: absolute;
+  content: '';
+  height: 100%;
+  background: silver;
+  width: 100%;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.field input:focus ~ .underline:before,
+.field input:valid ~ .underline::before {
+  transform: scaleX(1);
+}
+
+.button {
+  width: 70%;
+  margin-top: 1.2em;
+}
+
+.rememberDiv {
+  margin: auto;
+  margin-top: 1em;
+  text-align: right;
+  width: 75%;
+}
+
+.rememberDiv label {
+  margin-left: 5px;
+  margin-top: -1em;
+}
+
+.signUpDiv {
+  margin: auto;
+  width: 80%;
+  margin-top: 1.2em;
+}
+
+.signUpText {
+  color: blue;
+  text-decoration: underline;
+}
+.rememberDiv:hover label,
+.signUpText:hover {
+  cursor: pointer;
 }

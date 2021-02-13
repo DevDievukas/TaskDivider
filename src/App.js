@@ -19,33 +19,91 @@ import SharedItems from './SharedItems/SharedItems';
 import Announcements from './Announcements/Annauncements';
 import Houses from './House/Houses';
 import Auth from './Auth/Auth';
-import { startHouseAuth, startUserAuth } from './Store/actions/Auth';
+import {
+  startHouseAuth,
+  startLogout,
+  startUserAuth,
+} from './Store/actions/Auth';
 import { clearError } from './Store/actions/Loading';
 
 const App = () => {
-  const { userId, houseId } = useSelector((state) => ({ ...state.auth }));
+  const { userId, houseId, expiration } = useSelector((state) => ({
+    ...state.auth,
+  }));
   const { isLoading, error } = useSelector((state) => ({ ...state.load }));
   const dispatch = useDispatch();
+  let logoutTimer;
+
+  const loggingOut = () => {
+    dispatch(startLogout());
+  };
+
+  const startTimer = (expirationDate) => {
+    if (expirationDate) {
+      const remainingTime = expirationDate.getTime() - new Date().getTime();
+      logoutTimer = setTimeout(loggingOut, remainingTime);
+    } else {
+      clearTimeout(logoutTimer);
+    }
+  };
+
   useEffect(() => {
     const storedUserData = JSON.parse(localStorage.getItem('userData'));
-    if (storedUserData && storedUserData.userId) {
-      dispatch(
-        startUserAuth(
-          storedUserData.userId,
-          storedUserData.token,
-          storedUserData.email
-        )
-      );
-    } else if (storedUserData && storedUserData.houseId) {
-      dispatch(
-        startHouseAuth(
-          storedUserData.houseId,
-          storedUserData.token,
-          storedUserData.houseName
-        )
-      );
+    if (storedUserData) {
+      if (
+        storedUserData.expiration &&
+        new Date(storedUserData.expiration) > new Date()
+      ) {
+        if (storedUserData.userId) {
+          dispatch(
+            startUserAuth(
+              storedUserData.userId,
+              storedUserData.token,
+              storedUserData.email,
+              storedUserData.remember,
+              new Date(storedUserData.expiration)
+            )
+          );
+        } else if (storedUserData.houseId) {
+          dispatch(
+            startHouseAuth(
+              storedUserData.houseId,
+              storedUserData.token,
+              storedUserData.houseName,
+              storedUserData.remember,
+              new Date(storedUserData.expiration)
+            )
+          );
+        }
+      } else if (!storedUserData.expiration) {
+        if (storedUserData.userId) {
+          dispatch(
+            startUserAuth(
+              storedUserData.userId,
+              storedUserData.token,
+              storedUserData.email,
+              storedUserData.remember
+            )
+          );
+        } else if (storedUserData.houseId) {
+          dispatch(
+            startHouseAuth(
+              storedUserData.houseId,
+              storedUserData.token,
+              storedUserData.houseName,
+              storedUserData.remember
+            )
+          );
+        }
+      } else {
+        dispatch(startLogout());
+      }
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    startTimer(expiration);
+  }, [expiration]);
 
   let routes = (
     <Switch>
