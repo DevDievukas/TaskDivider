@@ -1,3 +1,8 @@
 .groupList {
   padding: 0;
 }
+.announcementsDiv {
+  text-align: center;
+  padding-right: 5px;
+  padding-left: 5px;
+}

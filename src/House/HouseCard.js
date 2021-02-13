@@ -9,7 +9,7 @@ const HouseCard = (props) => {
   const history = useHistory();
 
   const getHouse = () => {
-    history.push(`/${houseId}/Rooms`);
+    history.push(`/${houseId}/announcements`);
   };
 
   const text = '>>>>>';

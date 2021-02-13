@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import styles from './Announcements.module.css';
 import AnnouncementItem from './AnnouncementItem';
@@ -11,12 +11,16 @@ import EmptyData from '../shared/UIElements//EmptyData/EmptyData';
 const Announcements = () => {
   const houseParam = useParams().houseId;
   const { token, houseId } = useSelector((state) => ({ ...state.auth }));
-  const { data, dataLoaded, postData } = useLoadData(
-    `${process.env.REACT_APP_BACKEND_URL}/announcement/allByHouse/${
-      houseParam || houseId
-    }`
-  );
+  const { data, dataLoaded, postData, getData } = useLoadData();
   let announcements;
+
+  useEffect(() => {
+    getData(
+      `${process.env.REACT_APP_BACKEND_URL}/announcement/allByHouse/${
+        houseParam || houseId
+      }`
+    );
+  }, []);
 
   const createAnnouncement = (announcement) => {
     postData(
@@ -50,13 +54,13 @@ const Announcements = () => {
   }
 
   return (
-    <ul className={styles.groupList}>
+    <div className={styles.announcementsDiv}>
       <AnnouncementsControl
         onCreate={createAnnouncement}
         houseParam={houseParam}
       />
-      {announcements}
-    </ul>
+      <ul className={styles.groupList}>{announcements}</ul>
+    </div>
   );
 };
 

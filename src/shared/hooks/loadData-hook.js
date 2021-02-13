@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import {
@@ -7,11 +7,13 @@ import {
   stopLoading,
 } from '../../Store/actions/Loading';
 
-export const useLoadData = (url, headers) => {
+export const useLoadData = () => {
   const [data, setData] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [nonArrayData, setNonArrayData] = useState();
   const dispatch = useDispatch();
+
+  console.log('created');
 
   const getData = (url, headers) => {
     dispatch(startLoading());
@@ -30,10 +32,6 @@ export const useLoadData = (url, headers) => {
         dispatch(createError(err.message));
       });
   };
-
-  useEffect(() => {
-    getData(url, headers);
-  }, []);
 
   const deleteData = (url, headers, id) => {
     axios
@@ -63,5 +61,13 @@ export const useLoadData = (url, headers) => {
       });
   };
 
-  return { data, dataLoaded, nonArrayData, setData, deleteData, postData };
+  return {
+    data,
+    dataLoaded,
+    nonArrayData,
+    setData,
+    deleteData,
+    postData,
+    getData,
+  };
 };

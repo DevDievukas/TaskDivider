@@ -65,7 +65,8 @@ const Schedule = () => {
   };
 
   if (dataLoaded) {
-    if (nonArrayData) {
+    if (nonArrayData && !nonArrayData.message) {
+      console.log(nonArrayData);
       schedule = (
         <React.Fragment>
           <h2 className={styles.date}>{nonArrayData.date.split('T')[0]}</h2>

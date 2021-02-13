@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import Input from '../shared/FormElements/Input';
-import Button from '../shared/FormElements/Button';
-import { useForm } from '../shared/hooks/form-hook';
+import React, { useEffect, useState } from 'react';
+import { Form, Field, Formik } from 'formik';
+
 import { useLoadData } from '../shared/hooks/loadData-hook';
 
+import FormModal from '../shared/UIElements/FormModal/FormModal';
+import Button from '../shared/FormElements/Button';
 import HouseCard from './HouseCard';
 import pic from '../assets/house.svg';
 import styles from './Houses.module.css';
@@ -12,36 +13,20 @@ import { useSelector } from 'react-redux';
 const Houses = () => {
   const { token, userId } = useSelector((state) => ({ ...state.auth }));
   const [houseCreation, setHouseCreation] = useState(false);
-  const { data, dataLoaded, deleteData, postData } = useLoadData(
-    `${process.env.REACT_APP_BACKEND_URL}/house/user/${userId}`,
-    {
+  const { data, dataLoaded, deleteData, postData, getData } = useLoadData();
+
+  useEffect(() => {
+    getData(`${process.env.REACT_APP_BACKEND_URL}/house/user/${userId}`, {
       headers: {
         authorization: `Bearer ${token}`,
       },
-    }
-  );
+    });
+  }, []);
 
   let houses;
-  const [formState, inputHandler] = useForm(
-    {
-      houseName: {
-        value: '',
-        isValid: false,
-      },
-      password: {
-        value: '',
-        isValid: false,
-      },
-      // frequency: {
-      //   value: '',
-      //   isValid: false,
-      // },
-    },
-    false
-  );
 
   if (dataLoaded) {
-    if (data) {
+    if (data.length > 0) {
       houses = data.map((house) => {
         return (
           <HouseCard
@@ -59,11 +44,10 @@ const Houses = () => {
     }
   }
 
-  const createHouseHandler = (event) => {
-    event.preventDefault();
+  const createHouseHandler = (houseName, password) => {
     const createdHouse = {
-      houseName: formState.inputs.houseName.value,
-      password: formState.inputs.password.value,
+      houseName,
+      password,
       // frequency: formState.inputs.frequency.value,
     };
     postData(
@@ -78,50 +62,66 @@ const Houses = () => {
     setHouseCreation(false);
   };
 
+  const form = (
+    <Formik
+      initialValues={{
+        houseName: '',
+        password: '',
+      }}
+      onSubmit={async (values) => {
+        console.log(values);
+        createHouseHandler(values.houseName, values.password);
+      }}
+    >
+      {({}) => (
+        <Form className={styles.form}>
+          <div className={styles.wrapper}>
+            <div className={styles.field}>
+              <Field required id="houseName" name="houseName" type="input" />
+              <label htmlFor="email">NAME OF THE HOUSE</label>
+            </div>
+          </div>
+          <div className={styles.wrapper}>
+            <div className={styles.field}>
+              <Field required id="password" name="password" type="password" />
+              <label htmlFor="password">PASSWORD</label>
+            </div>
+          </div>
+          <div className={styles.buttonsDiv}>
+            <Button
+              type="button"
+              onClick={() => setHouseCreation(false)}
+              danger
+              className={styles.button}
+            >
+              CANCEL
+            </Button>
+            <Button type="submit" className={styles.button}>
+              CREATE!
+            </Button>
+          </div>
+        </Form>
+      )}
+    </Formik>
+  );
+
   return (
     <div className={styles.housesDiv}>
+      <FormModal
+        onCancel={() => setHouseCreation(false)}
+        header="CREATE HOUSE?"
+        show={houseCreation}
+        form={form}
+      />
       {houses}
-      {houseCreation ? (
-        <form onSubmit={createHouseHandler}>
-          <Input
-            element="input"
-            id="houseName"
-            type="input"
-            placeholder="House name"
-            validators={[]}
-            onInput={inputHandler}
-          />
-          <Input
-            element="input"
-            id="password"
-            type="password"
-            placeholder="password"
-            validators={[]}
-            onInput={inputHandler}
-          />
-          {/* <InputSelector
-            id="frequency"
-            label="Please select cleaning frequency: "
-            onInput={inputHandler}
-            validators={[]}
-            initialValue="1"
-          >
-            <option value="1">Every week</option>
-            <option value="2">Every 2 weeks</option>
-            <option value="3">Every 3 weeks</option>
-            <option value="4">Monthly</option>
-          </InputSelector> */}
-          <Button onClick={() => setHouseCreation(false)}>Cancel</Button>
-          <Button type="Submit">Create</Button>
-        </form>
-      ) : (
-        <button
-          onClick={() => setHouseCreation(true)}
-          className={styles.createHouseBtn}
-        >
-          Create House
-        </button>
-      )}
+
+      <Button
+        onClick={() => setHouseCreation(true)}
+        className={styles.createHouseBtn}
+        danger
+      >
+        CREATE HOUSE
+      </Button>
     </div>
   );
 };
