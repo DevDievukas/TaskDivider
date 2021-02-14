@@ -3,10 +3,8 @@ import { Form, Field, Formik } from 'formik';
 import { useLoadData } from '../shared/hooks/loadData-hook';
 
 import Button from '../shared/FormElements/Button';
-import Input from '../shared/FormElements/Input';
 import FormModal from '../shared/UIElements/FormModal/FormModal';
 // import ImageUpload from '../shared/FormElements/ImageUpload';
-import { VALIDATOR_REQUIRE } from '../shared/validators/validators';
 
 import styles from './AnnouncementsControl.module.css';
 
@@ -40,25 +38,39 @@ const AnnouncementsControl = (props) => {
   };
 
   if (data.length > 0) {
+    let checked = false;
     imagesRadio = data.map((img) => {
-      // console.log('it happened');
-      return (
-        <div className={styles.radioDiv}>
-          <label>
-            <Field type="checkbox" name="remember" /> Remember me?
-          </label>
-        </div>
-
-        // <Input
-        //   element="radio"
-        //   id="image"
-        //   type="radio"
-        //   validators={[VALIDATOR_REQUIRE()]}
-        //   src={img}
-        //   key={img}
-        //   name={img}
-        // />
-      );
+      if (checked) {
+        return (
+          <div key={img} className={styles.radioDiv}>
+            <label>
+              <Field
+                type="radio"
+                name="image"
+                value={img}
+                className={styles.radio}
+              />
+              <img src={img} className={styles.img} />
+            </label>
+          </div>
+        );
+      } else {
+        checked = true;
+        return (
+          <div key={img} className={styles.radioDiv}>
+            <label>
+              <Field
+                type="radio"
+                name="image"
+                value={img}
+                className={styles.radio}
+                checked
+              />
+              <img src={img} className={styles.img} />
+            </label>
+          </div>
+        );
+      }
     });
   }
 
@@ -71,6 +83,7 @@ const AnnouncementsControl = (props) => {
       }}
       onSubmit={async (values) => {
         console.log(values);
+        addAnnouncSubmitHandler(values.title, values.body, values.image);
       }}
     >
       {({}) => (
@@ -100,7 +113,7 @@ const AnnouncementsControl = (props) => {
               CREATE!
             </Button>
           </div>
-          {imagesRadio}
+          <div className={styles.outerRadioDiv}>{imagesRadio}</div>
         </Form>
       )}
     </Formik>

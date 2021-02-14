@@ -13,14 +13,13 @@ export const useLoadData = () => {
   const [nonArrayData, setNonArrayData] = useState();
   const dispatch = useDispatch();
 
-  console.log('created');
-
   const getData = (url, headers) => {
     dispatch(startLoading());
     axios
       .get(url, headers)
       .then((response) => {
         dispatch(stopLoading());
+        // console.log(response.data);
         if (response.data.length > 0) {
           setData(response.data);
         } else {

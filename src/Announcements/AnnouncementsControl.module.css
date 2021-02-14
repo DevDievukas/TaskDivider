@@ -1,8 +1,30 @@
-.radioDiv {
+.outerRadioDiv {
   padding-left: 0;
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  margin-bottom: 1.2em;
+  margin-top: 1.2em;
+}
+
+.radioDiv {
+  display: grid;
+  margin-bottom: 0.6em;
+  /* margin-left: 30px; */
+}
+.radio {
+  display: none;
+}
+
+.img {
+  grid-row: 1;
+  grid-column: 1;
+  width: 150px;
+  margin-top: -2;
+}
+
+.radioDiv .radio:checked ~ img {
+  border: 1px solid #830000;
 }
 
 .form {
