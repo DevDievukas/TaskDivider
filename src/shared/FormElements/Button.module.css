@@ -33,6 +33,17 @@
   border-color: #af0101;
 }
 
+.buttonCancel {
+  background: #cacaca;
+  border-color: #cacaca;
+  color: black;
+}
+
+.buttonCancel:hover,
+.buttonCancel:active {
+  background: #acacac;
+  border-color: #acacac;
+}
 .button:disabled,
 .button:hover:disabled,
 .button:active:disabled {

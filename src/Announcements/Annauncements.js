@@ -1,42 +1,50 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import usePostData from '../shared/hooks/postData-hook';
+import useFetchData from '../shared/hooks/fetchData-hook';
 
 import styles from './Announcements.module.css';
 import AnnouncementItem from './AnnouncementItem';
 import AnnouncementsControl from './AnnouncementsControl';
 import { useParams } from 'react-router';
-import { useLoadData } from '../shared/hooks/loadData-hook';
 import { useSelector } from 'react-redux';
 import EmptyData from '../shared/UIElements//EmptyData/EmptyData';
 
 const Announcements = () => {
   const houseParam = useParams().houseId;
-  const { token, houseId } = useSelector((state) => ({ ...state.auth }));
-  const { data, dataLoaded, postData, getData } = useLoadData();
+  const { token, houseId, userId } = useSelector((state) => ({
+    ...state.auth,
+  }));
+  const loadedData = useFetchData(
+    `${process.env.REACT_APP_BACKEND_URL}/announcement/allByHouse/${
+      houseParam || houseId
+    }`
+  );
+  const { post } = usePostData();
   let announcements;
 
-  useEffect(() => {
-    getData(
-      `${process.env.REACT_APP_BACKEND_URL}/announcement/allByHouse/${
-        houseParam || houseId
-      }`
-    );
-  }, []);
-
   const createAnnouncement = (announcement) => {
-    postData(
+    const addFilter = (res) => {
+      if (loadedData.data) {
+        loadedData.setData((prevData) => [...prevData, res]);
+      } else {
+        loadedData.setData([res]);
+      }
+    };
+    post(
       `${process.env.REACT_APP_BACKEND_URL}/announcement/`,
       {
         headers: {
           authorization: `Bearer ${token}`,
         },
       },
-      announcement
+      announcement,
+      addFilter
     );
   };
 
-  if (dataLoaded) {
-    if (data.length > 0) {
-      announcements = data.reverse().map((ann) => {
+  if (loadedData.dataLoaded) {
+    if (loadedData.data.length > 0) {
+      announcements = loadedData.data.reverse().map((ann) => {
         return (
           <AnnouncementItem
             key={ann._id}
@@ -55,10 +63,12 @@ const Announcements = () => {
 
   return (
     <div className={styles.announcementsDiv}>
-      <AnnouncementsControl
-        onCreate={createAnnouncement}
-        houseParam={houseParam}
-      />
+      {userId ? (
+        <AnnouncementsControl
+          onCreate={createAnnouncement}
+          houseParam={houseParam}
+        />
+      ) : null}
       <ul className={styles.groupList}>{announcements}</ul>
     </div>
   );

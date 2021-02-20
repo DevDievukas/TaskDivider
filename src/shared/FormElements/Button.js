@@ -31,9 +31,9 @@ const Button = (props) => {
   }
   return (
     <button
-      className={`${styles.button}  ${props.danger && styles.buttonDanger} ${
-        props.className
-      }`}
+      className={`${styles.button} ${props.className} ${
+        props.danger && styles.buttonDanger
+      } ${props.cancel && styles.buttonCancel} `}
       type={props.type}
       onClick={props.onClick}
       disabled={props.disabled}

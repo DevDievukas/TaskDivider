@@ -1,8 +1,9 @@
 .notValid {
-  background-color: rgb(185, 84, 84);
+  background-color: rgb(143, 31, 31);
+  color: whitesmoke;
 }
 .valid {
-  background-color: rgb(79, 148, 148);
+  background-color: rgb(204, 204, 204);
 }
 
 .both {

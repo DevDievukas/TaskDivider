@@ -10,6 +10,7 @@ import {
 } from '../Store/actions/Loading';
 import { startUserAuth } from '../Store/actions/Auth';
 
+import Input from '../shared/FormElements/Input';
 import Button from '../shared/FormElements/Button';
 import styles from './Auth.module.css';
 
@@ -50,24 +51,19 @@ const LoginUser = () => {
         remember: false,
       }}
       onSubmit={async (values) => {
-        console.log(values);
+        // console.log(values);
         login(values.email, values.password, values.remember);
       }}
     >
-      {({}) => (
+      {() => (
         <Form className={styles.form}>
-          <div className={styles.wrapper}>
-            <div className={styles.field}>
-              <Field required id="email" name="email" type="email" />
-              <label htmlFor="email">EMAIL-ADRESS</label>
-            </div>
-          </div>
-          <div className={styles.wrapper}>
-            <div className={styles.field}>
-              <Field required id="password" name="password" type="password" />
-              <label htmlFor="password">PASSWORD</label>
-            </div>
-          </div>
+          <Input id="email" name="email" type="email" title="EMAIL-ADRESS" />
+          <Input
+            id="password"
+            name="password"
+            type="password"
+            title="PASSWORD"
+          />
           <div className={styles.rememberDiv}>
             <label>
               <Field type="checkbox" name="remember" /> Remember me?

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
   Route,
   BrowserRouter as Router,
   Switch,
-  // Redirect,
+  Redirect,
 } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -38,14 +38,14 @@ const App = () => {
     dispatch(startLogout());
   };
 
-  const startTimer = (expirationDate) => {
+  const startTimer = useCallback((expirationDate) => {
     if (expirationDate) {
       const remainingTime = expirationDate.getTime() - new Date().getTime();
       logoutTimer = setTimeout(loggingOut, remainingTime);
     } else {
       clearTimeout(logoutTimer);
     }
-  };
+  }, []);
 
   useEffect(() => {
     const storedUserData = JSON.parse(localStorage.getItem('userData'));
@@ -103,16 +103,9 @@ const App = () => {
 
   useEffect(() => {
     startTimer(expiration);
-  }, [expiration]);
+  }, [expiration, startTimer]);
 
-  let routes = (
-    <Switch>
-      <Route path="/" exact>
-        <Auth />
-      </Route>
-      {/* <Redirect to="/" /> */}
-    </Switch>
-  );
+  let routes;
 
   if (userId) {
     routes = (
@@ -140,6 +133,8 @@ const App = () => {
           <HouseNavbar />
           <People />
         </Route>
+
+        <Redirect to="/" />
       </Switch>
     );
   } else if (houseId) {
@@ -165,6 +160,16 @@ const App = () => {
           <HouseNavbar />
           <People />
         </Route>
+        <Redirect to="/" />
+      </Switch>
+    );
+  } else {
+    routes = (
+      <Switch>
+        <Route path="/" exact>
+          <Auth />
+        </Route>
+        <Redirect to="/" />
       </Switch>
     );
   }

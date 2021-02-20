@@ -9,7 +9,7 @@ const ModalOverlay = (props) => {
   const content = (
     <div className={`${styles.modal} `}>
       <header className={`${styles.modalHeader} ${props.headerClass}`}>
-        <h2>{props.header}</h2>
+        <h4>{props.header}</h4>
       </header>
 
       <div className={styles.modalContent}>{props.form}</div>

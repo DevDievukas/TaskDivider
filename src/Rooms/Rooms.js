@@ -1,7 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import useFetchData from '../shared/hooks/fetchData-hook';
 import { useSelector } from 'react-redux';
-import { useLoadData } from '../shared/hooks/loadData-hook';
+import usePostData from '../shared/hooks/postData-hook';
+import useDeleteData from '../shared/hooks/deleteData-hook';
 
 import RoomsControl from './RoomsControl';
 
@@ -9,33 +11,46 @@ import styles from './Rooms.module.css';
 import RoomElement from './RoomElement';
 import EmptyData from '../shared/UIElements/EmptyData/EmptyData.tsx';
 
-// import ImageUpload from './ImgUpload';
-
 const Rooms = () => {
   const houseParam = useParams().houseId;
   const { userId, houseId, token } = useSelector((state) => ({
     ...state.auth,
   }));
-  const { data, dataLoaded, postData, deleteData } = useLoadData(
+  const loadedData = useFetchData(
     `${process.env.REACT_APP_BACKEND_URL}/room/allByHouse/${
       houseId || houseParam
     }`
   );
+  const { post } = usePostData();
+  const { deleteData } = useDeleteData();
   let rooms;
 
   const createRoomhandler = (createdRoom) => {
-    postData(
+    const addFilter = (res) => {
+      if (loadedData.data) {
+        loadedData.setData((prevData) => [...prevData, res]);
+      } else {
+        loadedData.setData([res]);
+      }
+    };
+    post(
       `${process.env.REACT_APP_BACKEND_URL}/room/`,
       {
         headers: {
           authorization: `Bearer ${token}`,
         },
       },
-      createdRoom
+      createdRoom,
+      addFilter
     );
   };
 
   const deleteRoomHandler = (id) => {
+    const deleteFilter = () => {
+      loadedData.setData((prevData) =>
+        prevData.filter((element) => element._id !== id)
+      );
+    };
     deleteData(
       `${process.env.REACT_APP_BACKEND_URL}/room/`,
       {
@@ -43,15 +58,16 @@ const Rooms = () => {
           authorization: `Bearer ${token}`,
         },
       },
-      id
+      id,
+      deleteFilter
     );
   };
 
-  if (dataLoaded) {
-    if (data.length > 0) {
+  if (loadedData.dataLoaded) {
+    if (loadedData.data.length > 0) {
       rooms = (
         <ul className={styles.groupList}>
-          {data.map((room) => {
+          {loadedData.data.map((room) => {
             return (
               <RoomElement
                 key={room._id}
@@ -70,7 +86,6 @@ const Rooms = () => {
   }
   return (
     <div className={styles.mainDiv}>
-      {/* <ImageUpload /> */}
       {userId ? <RoomsControl createRoom={createRoomhandler} /> : null}
       {rooms}
     </div>

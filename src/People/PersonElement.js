@@ -1,36 +1,72 @@
 import React, { useState } from 'react';
 
-import styles from './PersonElement.module.css';
+import { Trash } from 'phosphor-react';
+import Button from '../shared/FormElements/Button';
+import Modal from '../shared/UIElements/Modal';
 
-import ExpandedPerson from './ExpandedPerson';
+import styles from './PersonElement.module.css';
+import RoomsModal from './RoomsModal';
 
 const PersonElement = (props) => {
-  const [expanded, setExpanded] = useState(false);
-  const { userId, token, name, rooms, id, onDelete } = props;
+  const [showRoomsModal, setShowRoomsModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const { token, name, id, onDelete } = props;
 
-  const setExpandedHandler = () => {
-    setExpanded(!expanded);
+  const revealRoomsModal = () => {
+    setShowRoomsModal(true);
   };
 
-  if (!expanded) {
-    return (
-      <button className={styles.personCard} onClick={setExpandedHandler}>
-        <h4 className={styles.title}>{name}</h4>
-      </button>
-    );
-  } else {
-    return (
-      <ExpandedPerson
-        name={name}
-        rooms={rooms}
-        id={id}
-        close={setExpandedHandler}
-        onDelete={onDelete}
-        userId={userId}
-        token={token}
-      />
-    );
-  }
+  const closeRoomsModal = () => {
+    setShowRoomsModal(false);
+  };
+
+  const revealDeleteModal = () => {
+    setShowDeleteModal(true);
+  };
+
+  const closeDeleteModal = () => {
+    setShowDeleteModal(false);
+  };
+
+  const deletePersonHandler = async (event) => {
+    event.preventDefault();
+    onDelete(id);
+  };
+
+  return (
+    <React.Fragment>
+      {showRoomsModal ? (
+        <RoomsModal
+          show={showRoomsModal}
+          close={closeRoomsModal}
+          personId={id}
+          token={token}
+        />
+      ) : null}
+      <Modal
+        show={showDeleteModal}
+        onCancel={closeDeleteModal}
+        header="Delete person"
+        onSubmit={deletePersonHandler}
+      >
+        <Button onClick={closeDeleteModal} type="button">
+          CANCEL
+        </Button>
+        <Button type="submit">DELETE</Button>
+      </Modal>
+      <li className={styles.personCard}>
+        <h6 className={styles.title}>{name}</h6>
+        <p className={styles.rooms} onClick={revealRoomsModal}>
+          Rooms
+        </p>
+        <Trash
+          size={24}
+          className={styles.deleteBtn}
+          onClick={revealDeleteModal}
+        />
+      </li>
+    </React.Fragment>
+  );
 };
 
 export default PersonElement;

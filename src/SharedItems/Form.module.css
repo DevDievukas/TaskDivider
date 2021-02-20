@@ -1,4 +1,9 @@
-.submitBtn {
-  width: 100%;
-  background-color: #b42222;
+.button {
+  margin: auto;
+  margin-top: 1.2em;
+  width: 90%;
+}
+
+.form {
+  text-align: center;
 }

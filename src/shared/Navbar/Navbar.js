@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-import { SignOut } from 'phosphor-react';
+import { SignOut, House } from 'phosphor-react';
 import styles from './Navbar.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { startLogout } from '../../Store/actions/Auth';
@@ -19,25 +19,19 @@ const Navbar = () => {
     history.push('/');
   };
 
+  let linkDirection = '/';
   if (userId) {
-    leftButton = (
-      <img
-        alt="logo"
-        className={styles.logo}
-        src="https://www.freepnglogos.com/uploads/islamic-png/abstract-arabesque-arabic-geometric-islamic-art-20.png"
-      />
-    );
+    leftButton = <House className={styles.logo} size={42} />;
   }
   let rightButton = (
     <div className={styles.signOutDiv}>
-      <SignOut size={30} />
-      <p onClick={redirectLogout}>SIGN OUT</p>
+      <SignOut size={35} />
+      <h5 onClick={redirectLogout}>SIGN OUT</h5>
     </div>
   );
-  let linkDirection = '/';
 
   if (houseId) {
-    leftButton = <h3>{houseName}</h3>;
+    leftButton = <h3 className={styles.logoText}>{houseName}</h3>;
   }
 
   const navbar = (

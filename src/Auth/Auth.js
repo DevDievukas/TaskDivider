@@ -38,18 +38,22 @@ const Auth = () => {
 
   const signUp = (
     <div className={styles.signUpDiv}>
-      <p>
-        Want to manage your house?{' '}
-        <a className={styles.signUpText} onClick={switchToSignUp}>
-          Sign up instead!
-        </a>
+      <p>Want to manage your house?</p>
+      <p className={styles.signUpText} onClick={switchToSignUp}>
+        Sign up instead!
       </p>
     </div>
   );
   return (
-    <div>
-      <h1 className={styles.mainHeader}>HOME'IT</h1>
-      <div className={styles.authDiv}>
+    <div className={styles.mainDiv}>
+      <div className={styles.logoDiv}>
+        <img
+          className={styles.logo}
+          src="https://res.cloudinary.com/dgegci4ii/image/upload/v1613754032/Logo1_avumoz.png"
+          alt="logo"
+        />
+      </div>
+      <div>
         {isLoginMode ? (
           <div className={styles.switchTypeDiv}>
             <h3

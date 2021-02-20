@@ -1,9 +1,11 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
+import useFetchData from '../shared/hooks/fetchData-hook';
+import usePostData from '../shared/hooks/postData-hook';
+import useDeleteData from '../shared/hooks/deleteData-hook';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLoadData } from '../shared/hooks/loadData-hook';
 
 import Button from '../shared/FormElements/Button';
 import Modal from '../shared/UIElements/Modal';
@@ -25,14 +27,14 @@ const SharedItems = () => {
     ...state.auth,
   }));
   const dispatch = useDispatch();
-  const [showModalClear, setShowModalClear] = useState(false);
-  const { data, dataLoaded, setData, postData, deleteData } = useLoadData(
+  const loadedData = useFetchData(
     `${process.env.REACT_APP_BACKEND_URL}/request/allByHouseId/${
       houseParam || houseId
     }`
   );
-
-  console.log('render');
+  const { post } = usePostData();
+  const { deleteData } = useDeleteData();
+  const [showModalClear, setShowModalClear] = useState(false);
 
   const closeClearRequestsModal = () => {
     setShowModalClear(false);
@@ -43,6 +45,11 @@ const SharedItems = () => {
   };
 
   const deleteRequestHandler = (requestId) => {
+    const deleteFilter = () => {
+      loadedData.setData((prevData) =>
+        prevData.filter((element) => element._id !== requestId)
+      );
+    };
     deleteData(
       `${process.env.REACT_APP_BACKEND_URL}/request/`,
       {
@@ -50,12 +57,27 @@ const SharedItems = () => {
           authorization: `Bearer ${token}`,
         },
       },
-      requestId
+      requestId,
+      deleteFilter
     );
   };
 
   const postRequestHandler = (request) => {
-    postData(`${process.env.REACT_APP_BACKEND_URL}/request`, null, request);
+    const addFilter = (res) => {
+      if (loadedData.data) {
+        loadedData.setData((prevData) => [...prevData, res]);
+      } else {
+        loadedData.setData([res]);
+      }
+    };
+    post(
+      `${process.env.REACT_APP_BACKEND_URL}/request`,
+      null,
+      request,
+      addFilter
+    );
+
+    // postData(`${process.env.REACT_APP_BACKEND_URL}/request`, null, request);
   };
 
   const clearRequestsSubmitHandler = () => {
@@ -73,7 +95,7 @@ const SharedItems = () => {
       .then((res) => {
         setShowModalClear(false);
         dispatch(stopLoading());
-        setData(null);
+        loadedData.setData(null);
       })
       .catch((err) => {
         dispatch(createError(err.message));
@@ -88,7 +110,7 @@ const SharedItems = () => {
         header="DELETE ALL REQUESTS?"
         onSubmit={clearRequestsSubmitHandler}
       >
-        <Button onClick={closeClearRequestsModal} type="button">
+        <Button onClick={closeClearRequestsModal} type="button" cancel>
           CANCEL
         </Button>
         <Button type="submit">CLEAR</Button>
@@ -105,14 +127,14 @@ const SharedItems = () => {
           </Button>
         ) : null}
       </div>
-      {data.length > 0 && dataLoaded ? (
+      {loadedData.data.length > 0 && loadedData.dataLoaded ? (
         <ItemsList
-          data={data}
+          data={loadedData.data}
           deleteRequest={deleteRequestHandler}
           userId={userId}
         />
       ) : (
-        dataLoaded && <EmptyData header="NO REQUEST ACTIVE" />
+        loadedData.dataLoaded && <EmptyData header="NO REQUEST ACTIVE" />
       )}
     </div>
   );

@@ -18,7 +18,7 @@ const ExpandedElement = (props) => {
     return (
       <div ref={focus} className={styles.expandedDiv}>
         <h1>{person}</h1>
-        <h4>Šią savaite tvarkote: </h4>
+        <h4>Rooms to clean: </h4>
 
         {rooms.map((room) => {
           return (
@@ -33,11 +33,6 @@ const ExpandedElement = (props) => {
                   {room.image.map((img) => {
                     return (
                       <Carousel.Item key={img} className={styles.caroItem}>
-                        {/* <img
-                className="d-block w-100"
-                src={`${process.env.REACT_APP_ASSET_URL}/${room.image}`}
-                alt={room.image}
-              /> */}
                         <img className="d-block w-100" src={img} alt={img} />
                         <h5>{room.roomName}</h5>
                       </Carousel.Item>
@@ -53,7 +48,7 @@ const ExpandedElement = (props) => {
                       'https://image.freepik.com/free-vector/lovely-living-room-interior_23-2147517931.jpg'
                     }
                     alt="room "
-                  />{' '}
+                  />
                   <h5>{room.roomName}</h5>
                 </div>
               )}
@@ -71,7 +66,7 @@ const ExpandedElement = (props) => {
           src="https://image.freepik.com/free-vector/boy-bed-snoring_1308-5347.jpg"
           alt="resting"
         />
-        <p>Šią savaite ilsitės</p>
+        <h4>Rest week</h4>
       </div>
     );
   }

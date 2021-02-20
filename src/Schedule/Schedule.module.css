@@ -5,17 +5,18 @@
 
 .date {
   text-align: center;
+  margin-bottom: 0.6em;
 }
 
 .generateBtn {
-  width: 95%;
-  height: 3rem;
-  margin-bottom: 2rem;
-  background-color: rgb(198, 228, 255);
-  border-color: oldlace;
-  border-radius: 10px;
+  margin: auto;
+  width: 80%;
+  margin-bottom: 0.6em;
 }
 
 .scheduleDiv {
+  display: block;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }

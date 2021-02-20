@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useLoadData } from '../shared/hooks/loadData-hook';
 import axios from 'axios';
@@ -25,6 +25,14 @@ const Schedule = () => {
     }`
   );
   let schedule;
+
+  useEffect(() => {
+    getData(
+      `${process.env.REACT_APP_BACKEND_URL}/room/Schedule/${
+        houseParam || houseId
+      }`
+    );
+  }, []);
 
   const closeGenerateModal = () => {
     setShowModal(false);
@@ -66,7 +74,6 @@ const Schedule = () => {
 
   if (dataLoaded) {
     if (nonArrayData && !nonArrayData.message) {
-      console.log(nonArrayData);
       schedule = (
         <React.Fragment>
           <h2 className={styles.date}>{nonArrayData.date.split('T')[0]}</h2>
@@ -97,15 +104,15 @@ const Schedule = () => {
         header="GENERATE SCHEDULE?"
         onSubmit={generateSchedule}
       >
-        <Button type="button" onClick={closeGenerateModal}>
+        <Button type="button" onClick={closeGenerateModal} cancel>
           CANCEL
         </Button>
         <Button type="Submit">GENERATE</Button>
       </Modal>
       {userId ? (
-        <button onClick={openGenerateModal} className={styles.generateBtn}>
+        <Button onClick={openGenerateModal} className={styles.generateBtn}>
           GENERATE SCHEDULE
-        </button>
+        </Button>
       ) : null}
       {schedule}
     </div>

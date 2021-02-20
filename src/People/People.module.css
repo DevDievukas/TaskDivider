@@ -1,3 +1,10 @@
 .mainDiv {
   text-align: center;
+  margin-top: 0.6em;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+.groupList {
+  padding: 0;
+  margin-top: 0.6em;
 }

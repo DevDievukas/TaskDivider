@@ -11,6 +11,10 @@ const RoomElement = (props) => {
   let imgSrc =
     'https://image.freepik.com/free-vector/lovely-living-room-interior_23-2147517931.jpg';
 
+  if (room.images.length > 0) {
+    imgSrc = room.images[0];
+  }
+
   const setExpandedHandler = () => {
     setExpanded(!expanded);
   };

@@ -1,4 +1,31 @@
-.btnDiv {
+.form {
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonsDiv {
+  margin: auto;
+  margin-top: 1.2em;
+  margin-bottom: 0.6em;
   justify-content: space-around;
   display: flex;
+}
+
+.checkBoxDiv {
+  margin: auto;
+  display: grid;
+  width: 80%;
+  text-align: left;
+  border-bottom: 1px solid rgb(201, 201, 201);
+}
+
+.form h6 {
+  margin-top: 0.6em;
+}
+
+.btn {
+  min-width: 80%;
+  margin: auto;
+  margin-bottom: 0.6em;
 }

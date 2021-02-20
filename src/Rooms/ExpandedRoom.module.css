@@ -3,6 +3,10 @@
   margin-bottom: 1rem;
   margin-left: auto;
   margin-right: auto;
+  padding: 10px;
+  border: 1px solid rgb(201, 201, 201);
+  box-shadow: 1px 1px 1px 1px rgb(231, 231, 231);
+  z-index: 100;
 }
 
 .roomImage {
@@ -11,4 +15,12 @@
 
 .roomTitle {
   text-align: center;
+}
+
+.peopleDiv {
+  margin-top: 1.2em;
+}
+
+.btn {
+  z-index: 1;
 }

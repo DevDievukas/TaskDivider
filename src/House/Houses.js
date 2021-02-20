@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Form, Field, Formik } from 'formik';
+import React, { useState } from 'react';
+import { Form, Formik } from 'formik';
+import useFetchData from '../shared/hooks/fetchData-hook';
+import usePostData from '../shared/hooks/postData-hook';
+import useDeleteData from '../shared/hooks/deleteData-hook';
 
-import { useLoadData } from '../shared/hooks/loadData-hook';
-
+import Input from '../shared/FormElements/Input';
 import FormModal from '../shared/UIElements/FormModal/FormModal';
 import Button from '../shared/FormElements/Button';
 import HouseCard from './HouseCard';
@@ -13,29 +15,47 @@ import { useSelector } from 'react-redux';
 const Houses = () => {
   const { token, userId } = useSelector((state) => ({ ...state.auth }));
   const [houseCreation, setHouseCreation] = useState(false);
-  const { data, dataLoaded, deleteData, postData, getData } = useLoadData();
-
-  useEffect(() => {
-    getData(`${process.env.REACT_APP_BACKEND_URL}/house/user/${userId}`, {
+  const loadedData = useFetchData(
+    `${process.env.REACT_APP_BACKEND_URL}/house/user/${userId}`,
+    {
       headers: {
         authorization: `Bearer ${token}`,
       },
-    });
-  }, []);
+    }
+  );
+  const { post } = usePostData();
+  const { deleteData } = useDeleteData();
+
+  const deleteHouseHandler = (id) => {
+    const deleteFilter = () => {
+      loadedData.setData((prevData) =>
+        prevData.filter((element) => element._id !== id)
+      );
+    };
+    deleteData(
+      `${process.env.REACT_APP_BACKEND_URL}/house/`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      },
+      id,
+      deleteFilter
+    );
+  };
 
   let houses;
 
-  if (dataLoaded) {
-    if (data.length > 0) {
-      houses = data.map((house) => {
+  if (loadedData.dataLoaded) {
+    if (loadedData.data.length > 0) {
+      houses = loadedData.data.map((house) => {
         return (
           <HouseCard
             houseName={house.houseName}
             pic={pic}
             key={house._id}
             houseId={house._id}
-            token={token}
-            deleteHouse={deleteData}
+            deleteHouse={deleteHouseHandler}
           />
         );
       });
@@ -45,19 +65,28 @@ const Houses = () => {
   }
 
   const createHouseHandler = (houseName, password) => {
+    const addFilter = (res) => {
+      if (loadedData.data) {
+        loadedData.setData((prevData) => [...prevData, res]);
+      } else {
+        loadedData.setData([res]);
+      }
+    };
+
     const createdHouse = {
       houseName,
       password,
       // frequency: formState.inputs.frequency.value,
     };
-    postData(
+    post(
       `${process.env.REACT_APP_BACKEND_URL}/house/`,
       {
         headers: {
           authorization: `Bearer ${token}`,
         },
       },
-      createdHouse
+      createdHouse,
+      addFilter
     );
     setHouseCreation(false);
   };
@@ -73,25 +102,25 @@ const Houses = () => {
         createHouseHandler(values.houseName, values.password);
       }}
     >
-      {({}) => (
+      {() => (
         <Form className={styles.form}>
-          <div className={styles.wrapper}>
-            <div className={styles.field}>
-              <Field required id="houseName" name="houseName" type="input" />
-              <label htmlFor="email">NAME OF THE HOUSE</label>
-            </div>
-          </div>
-          <div className={styles.wrapper}>
-            <div className={styles.field}>
-              <Field required id="password" name="password" type="password" />
-              <label htmlFor="password">PASSWORD</label>
-            </div>
-          </div>
+          <Input
+            id="houseName"
+            name="houseName"
+            type="input"
+            title="NAME OF THE HOUSE"
+          />
+          <Input
+            id="password"
+            name="password"
+            type="password"
+            title="EMAIL-PASSWORD"
+          />
           <div className={styles.buttonsDiv}>
             <Button
               type="button"
               onClick={() => setHouseCreation(false)}
-              danger
+              cancel
               className={styles.button}
             >
               CANCEL

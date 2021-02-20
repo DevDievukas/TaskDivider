@@ -1,50 +1,68 @@
-.formControl {
-  margin: 1rem 0;
+.wrapper {
+  margin: auto;
+  width: 80%;
+  background: #fff;
+  padding-top: 30px;
 }
 
-.formControl label,
-.formControl input,
-.formControl textarea {
-  display: block;
-}
-
-.formControl label {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.formControl input,
-.formControl textarea {
+.field {
+  height: 40px;
   width: 100%;
-  font: inherit;
-  border: 1px solid #ccc;
-  background: #f8f8f8;
-  padding: 0.15rem 0.25rem;
+  position: relative;
 }
 
-.formControl input:focus,
-.formControl textarea:focus {
+.wrapper .field input {
   outline: none;
-  background: #ebebeb;
-  border-color: #510077;
+  height: 100%;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid rgb(241, 241, 241);
+  font-size: 17px;
+}
+/* Change the white to any color ;) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  box-shadow: 0 0 0 30px white inset !important;
 }
 
-.radioDiv {
-  display: grid;
+.field input:focus ~ label,
+.field input:valid ~ label {
+  transform: translateY(-25px);
+  font-style: 15px;
+  color: silver;
 }
 
-.radio {
-  z-index: 300;
-  grid-row: 1;
-  grid-column: 1;
-  padding-top: 1em;
-  margin-left: -2.2em;
+.wrapper .field label {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  color: gray;
+  pointer-events: none;
+  transition: all 0.3s ease;
 }
 
-.radioImg {
-  z-index: 200;
-  grid-row: 1;
-  grid-column: 1;
-  width: 100px;
-  margin-top: -2;
+.wrapper .field .underline {
+  position: absolute;
+  bottom: 0;
+  left: -50%;
+  height: 2px;
+  width: 100%;
+}
+
+.field .underline:before {
+  position: absolute;
+  content: '';
+  height: 100%;
+  background: silver;
+  width: 100%;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.field input:focus ~ .underline:before,
+.field input:valid ~ .underline::before {
+  transform: scaleX(1);
 }

@@ -48,6 +48,7 @@ export const useLoadData = () => {
     axios
       .post(url, createdData, headers)
       .then((res) => {
+        // console.log(res.data);
         dispatch(stopLoading());
         if (data) {
           setData((prevData) => [...prevData, res.data]);

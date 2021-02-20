@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import styles from './HouseCard.module.css';
 
 const HouseCard = (props) => {
-  const { pic, houseName, houseId, deleteHouse, token } = props;
+  const { pic, houseName, houseId, deleteHouse } = props;
   const history = useHistory();
 
   const getHouse = () => {
@@ -18,20 +18,7 @@ const HouseCard = (props) => {
       <img src={pic} width="100px" alt="house" />
       <h4>{houseName}</h4>
       <Button onClick={getHouse}>{text}</Button>
-      <Button
-        onClick={() =>
-          deleteHouse(
-            `${process.env.REACT_APP_BACKEND_URL}/house/`,
-            {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            },
-            houseId
-          )
-        }
-        danger
-      >
+      <Button onClick={() => deleteHouse(houseId)} danger>
         X
       </Button>
     </div>

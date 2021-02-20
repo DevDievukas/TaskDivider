@@ -10,9 +10,16 @@
   align-items: center;
 }
 .logo {
-  width: 50px;
+  margin: auto;
+  margin-left: 1.2em;
   color: white;
-  margin: 3px 12px;
+}
+
+.logoText {
+  margin: auto;
+  color: white;
+  margin-left: 0.6em;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .navbar p {
@@ -74,13 +81,15 @@
 }
 
 .signOutDiv {
+  margin: auto;
   margin-right: 1rem;
   display: flex;
   justify-content: space-between;
+  color: white;
 }
 
-.signOutDiv p {
-  color: black;
+.signOutDiv h5 {
+  margin: auto;
 }
 
 .signOutDiv :hover {

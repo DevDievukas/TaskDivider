@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Form, Field, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 
 import { useDispatch } from 'react-redux';
 import {
@@ -10,6 +10,7 @@ import {
 } from '../Store/actions/Loading';
 import { startUserAuth } from '../Store/actions/Auth';
 
+import Input from '../shared/FormElements/Input';
 import Button from '../shared/FormElements/Button';
 import styles from './Auth.module.css';
 
@@ -48,26 +49,17 @@ const SignUp = () => {
         createUser(values.name, values.email, values.password);
       }}
     >
-      {({}) => (
+      {() => (
         <Form className={styles.form}>
-          <div className={styles.wrapper}>
-            <div className={styles.field}>
-              <Field required id="name" name="name" type="input" />
-              <label htmlFor="name">NAME</label>
-            </div>
-          </div>
-          <div className={styles.wrapper}>
-            <div className={styles.field}>
-              <Field required id="email" name="email" type="email" />
-              <label htmlFor="email">EMAIL-ADRESS</label>
-            </div>
-          </div>
-          <div className={styles.wrapper}>
-            <div className={styles.field}>
-              <Field required id="password" name="password" type="password" />
-              <label htmlFor="password">PASSWORD</label>
-            </div>
-          </div>
+          <Input id="name" name="name" type="input" title="YOUR NAME" />
+          <Input id="email" name="email" type="email" title="EMAIL-ADRESS" />
+          <Input
+            id="password"
+            name="password"
+            type="password"
+            title="PASSWORD"
+          />
+
           <Button type="submit" className={styles.button}>
             SIGN UP!
           </Button>

@@ -1,7 +1,15 @@
 .mainHeader {
+  margin: auto;
+}
+
+.mainDiv {
   text-align: center;
-  margin-bottom: 1.5em;
-  margin-top: 1.5em;
+  margin: auto;
+  padding: auto;
+}
+
+.logoDiv {
+  margin: auto;
 }
 
 .switchTypeDiv {
@@ -12,24 +20,18 @@
 }
 
 .switchTypeDiv h3:active {
-  border-bottom: 3px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 2px solid rgb(0, 0, 0);
   margin-bottom: -1px;
 }
 
 .switchTypeDiv h3:hover {
-  border-bottom: 3px solid rgba(0, 0, 0, 0.4);
-  margin-bottom: -1.8px;
+  border-bottom: 2px solid rgb(0, 0, 0);
+  margin-bottom: -1.9px;
 }
 
 .active {
-  border-bottom: 3px solid rgba(0, 0, 0, 0.4);
-  margin-bottom: -1.8px;
-}
-
-.authDiv {
-  text-align: center;
-  margin: auto;
-  padding: auto;
+  border-bottom: 2px solid rgb(0, 0, 0);
+  margin-bottom: -1.9px;
 }
 
 /* login css */
@@ -38,75 +40,6 @@
   display: block;
   align-items: center;
   justify-content: center;
-}
-
-.wrapper {
-  margin: auto;
-  width: 80%;
-  background: #fff;
-  padding-top: 30px;
-}
-
-.field {
-  height: 40px;
-  width: 100%;
-  position: relative;
-}
-
-.wrapper .field input {
-  outline: none;
-  height: 100%;
-  width: 100%;
-  border: none;
-  border-bottom: 2px solid rgb(241, 241, 241);
-  font-size: 17px;
-}
-/* Change the white to any color ;) */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px white inset !important;
-  box-shadow: 0 0 0 30px white inset !important;
-}
-
-.field input:focus ~ label,
-.field input:valid ~ label {
-  transform: translateY(-25px);
-  font-style: 15px;
-  color: silver;
-}
-
-.wrapper .field label {
-  position: absolute;
-  bottom: 0px;
-  left: 0;
-  color: gray;
-  pointer-events: none;
-  transition: all 0.3s ease;
-}
-
-.wrapper .field .underline {
-  position: absolute;
-  bottom: 0;
-  left: -50%;
-  height: 2px;
-  width: 100%;
-}
-
-.field .underline:before {
-  position: absolute;
-  content: '';
-  height: 100%;
-  background: silver;
-  width: 100%;
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
-
-.field input:focus ~ .underline:before,
-.field input:valid ~ .underline::before {
-  transform: scaleX(1);
 }
 
 .button {

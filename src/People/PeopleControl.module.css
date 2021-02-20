@@ -1,14 +1,31 @@
-.addBtn {
-  width: 80%;
-  background-color: rgb(34, 34, 201);
-  color: white;
-  border: none;
-  height: 2.4rem;
-  border-radius: 10px;
-  margin-bottom: 0.8rem;
-  margin-top: 0.4rem;
+.form {
+  display: block;
+  align-items: center;
+  justify-content: center;
 }
 
-.addBtn:active {
-  background-color: rgb(100, 59, 250);
+.buttonsDiv {
+  margin: auto;
+  margin-top: 1.2em;
+  margin-bottom: 0.6em;
+  justify-content: space-around;
+  display: flex;
+}
+
+.checkBoxDiv {
+  margin: auto;
+  display: grid;
+  width: 80%;
+  text-align: left;
+  border-bottom: 1px solid rgb(201, 201, 201);
+}
+
+.form h6 {
+  margin-top: 0.6em;
+}
+
+.btn {
+  min-width: 80%;
+  margin: auto;
+  margin-bottom: 0.6em;
 }

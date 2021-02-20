@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Field, Formik } from 'formik';
-import { useLoadData } from '../shared/hooks/loadData-hook';
+import useFetchData from '../shared/hooks/fetchData-hook';
 
+import Input from '../shared/FormElements/Input';
 import Button from '../shared/FormElements/Button';
 import FormModal from '../shared/UIElements/FormModal/FormModal';
 // import ImageUpload from '../shared/FormElements/ImageUpload';
@@ -10,13 +11,11 @@ import styles from './AnnouncementsControl.module.css';
 
 const AnnouncementsControl = (props) => {
   const [showModal, setShowModal] = useState(false);
-  const { data, getData } = useLoadData();
+  const loadedData = useFetchData(
+    `${process.env.REACT_APP_BACKEND_URL}/announcement/images/${process.env.REACT_APP_ANOUNCEMENTS_IMAGES_ID}`
+  );
   const { houseParam, onCreate } = props;
   let imagesRadio;
-
-  useEffect(() => {
-    getData(`${process.env.REACT_APP_BACKEND_URL}/announcement/images`);
-  }, []);
 
   const revealAnnouncModal = () => {
     setShowModal(true);
@@ -37,9 +36,9 @@ const AnnouncementsControl = (props) => {
     setShowModal(false);
   };
 
-  if (data.length > 0) {
+  if (loadedData.data.length > 0) {
     let checked = false;
-    imagesRadio = data.map((img) => {
+    imagesRadio = loadedData.data.map((img) => {
       if (checked) {
         return (
           <div key={img} className={styles.radioDiv}>
@@ -50,7 +49,7 @@ const AnnouncementsControl = (props) => {
                 value={img}
                 className={styles.radio}
               />
-              <img src={img} className={styles.img} />
+              <img src={img} alt="announcement" className={styles.img} />
             </label>
           </div>
         );
@@ -66,7 +65,7 @@ const AnnouncementsControl = (props) => {
                 className={styles.radio}
                 checked
               />
-              <img src={img} className={styles.img} />
+              <img src={img} alt="announcement" className={styles.img} />
             </label>
           </div>
         );
@@ -79,31 +78,26 @@ const AnnouncementsControl = (props) => {
       initialValues={{
         title: '',
         body: '',
-        image: '',
+        image: loadedData.data[0] || '',
       }}
       onSubmit={async (values) => {
-        console.log(values);
+        // console.log(values);
         addAnnouncSubmitHandler(values.title, values.body, values.image);
       }}
     >
-      {({}) => (
+      {() => (
         <Form className={styles.form}>
-          <div className={styles.wrapper}>
-            <div className={styles.field}>
-              <Field required id="title" name="title" type="input" />
-              <label htmlFor="title">ANNOUNCEMENT TITLE</label>
-            </div>
-          </div>
-          <div className={styles.wrapper}>
-            <div className={styles.field}>
-              <Field required id="body" name="body" type="text" />
-              <label htmlFor="body">ANNOUNCEMENT</label>
-            </div>
-          </div>
+          <Input
+            id="title"
+            name="title"
+            type="input"
+            title="ANNOUNCEMENT TITLE"
+          />
+          <Input id="body" name="body" type="text" title="ANNOUNCEMENT" />
           <div className={styles.buttonsDiv}>
             <Button
               type="button"
-              danger
+              cancel
               className={styles.button}
               onClick={closeAnnouncModal}
             >
@@ -127,7 +121,9 @@ const AnnouncementsControl = (props) => {
         show={showModal}
         form={form}
       />
-      <Button onClick={revealAnnouncModal}> CREATE ANNOUNCEMENT</Button>
+      <Button onClick={revealAnnouncModal} className={styles.btn}>
+        CREATE ANNOUNCEMENT
+      </Button>
     </React.Fragment>
   );
 };

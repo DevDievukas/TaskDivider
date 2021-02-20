@@ -5,18 +5,32 @@
 }
 
 .card {
-  margin: 0;
-  margin-bottom: 1rem;
+  margin: auto;
+  margin-bottom: 1.2em;
+  border: 1px solid rgb(201, 201, 201);
+  box-shadow: 4px 2px 2px rgb(228, 228, 228);
+  width: 80%;
+  padding-bottom: 1.2em;
 }
 
 .image {
-  height: 50vh;
-  padding: 30px;
-  margin-top: -20px;
-  margin-bottom: -30px;
+  width: 80%;
+  margin: auto;
+  margin-top: 0.6em;
+  margin-bottom: 0.6em;
 }
 
-.link {
-  margin-top: 0;
-  margin-left: 60%;
+.cardBody {
+  width: 100%;
+  border-top: 1px solid rgb(201, 201, 201);
+  box-shadow: 0 -2px rgba(228, 228, 228, 0.568);
+}
+
+.cardBody h3 {
+  margin-top: 0.6em;
+}
+
+.cardBody p {
+  text-align: left;
+  margin-left: 1.2em;
 }

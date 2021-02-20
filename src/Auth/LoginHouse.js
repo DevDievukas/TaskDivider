@@ -10,6 +10,7 @@ import {
 } from '../Store/actions/Loading';
 import { startHouseAuth } from '../Store/actions/Auth';
 
+import Input from '../shared/FormElements/Input';
 import Button from '../shared/FormElements/Button';
 import styles from './Auth.module.css';
 
@@ -53,20 +54,20 @@ const LoginHouse = () => {
         login(values.houseName, values.password, values.remember);
       }}
     >
-      {({}) => (
+      {() => (
         <Form className={styles.form}>
-          <div className={styles.wrapper}>
-            <div className={styles.field}>
-              <Field required id="houseName" name="houseName" type="input" />
-              <label htmlFor="email">NAME OF THE HOUSE</label>
-            </div>
-          </div>
-          <div className={styles.wrapper}>
-            <div className={styles.field}>
-              <Field required id="password" name="password" type="password" />
-              <label htmlFor="password">PASSWORD</label>
-            </div>
-          </div>
+          <Input
+            id="houseName"
+            name="houseName"
+            type="input"
+            title="NAME OF THE HOUSE"
+          />
+          <Input
+            id="password"
+            name="password"
+            type="password"
+            title="PASSWORD"
+          />
           <div className={styles.rememberDiv}>
             <label>
               <Field type="checkbox" name="remember" /> Remember me?
