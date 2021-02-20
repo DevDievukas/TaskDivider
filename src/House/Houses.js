@@ -76,7 +76,6 @@ const Houses = () => {
     const createdHouse = {
       houseName,
       password,
-      // frequency: formState.inputs.frequency.value,
     };
     post(
       `${process.env.REACT_APP_BACKEND_URL}/house/`,
@@ -98,7 +97,7 @@ const Houses = () => {
         password: '',
       }}
       onSubmit={async (values) => {
-        console.log(values);
+        // console.log(values);
         createHouseHandler(values.houseName, values.password);
       }}
     >

@@ -6,9 +6,9 @@
 }
 
 .imageUploadPreview {
-  width: 13rem;
-  height: 13rem;
-  border: 1px solid #ccc;
+  width: 13em;
+  height: 18em;
+  border: 2px solid rgba(204, 204, 204, 0.397);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,4 +20,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.plus {
+  color: rgba(204, 204, 204, 0.397);
 }

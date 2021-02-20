@@ -29,7 +29,6 @@ const ExpandedElement = (props) => {
                   interval={3000}
                   className={styles.caro}
                 >
-                  (
                   {room.image.map((img) => {
                     return (
                       <Carousel.Item key={img} className={styles.caroItem}>
@@ -38,7 +37,6 @@ const ExpandedElement = (props) => {
                       </Carousel.Item>
                     );
                   })}
-                  )
                 </Carousel>
               ) : (
                 <div>
@@ -54,7 +52,6 @@ const ExpandedElement = (props) => {
               )}
             </div>
           );
-          // );
         })}
       </div>
     );

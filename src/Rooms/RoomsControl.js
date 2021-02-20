@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 
+import ImageUpload from '../shared/FormElements/ImageUpload';
 import Button from '../shared/FormElements/Button';
 import Input from '../shared/FormElements/Input';
 import FormModal from '../shared/UIElements/FormModal/FormModal';
@@ -21,12 +22,14 @@ const RoomsControl = (props) => {
     setShowModal(false);
   };
 
-  const addRoomSubmitHandler = (roomName) => {
-    const createdRoom = {
-      roomName,
-      house: houseParam,
-    };
-    createRoom(createdRoom);
+  const addRoomSubmitHandler = (roomName, images) => {
+    const formData = new FormData();
+    formData.append('roomName', roomName);
+    formData.append('house', houseParam);
+    Object.values(images).forEach((img) => {
+      formData.append('images', img);
+    });
+    createRoom(formData);
     setShowModal(false);
   };
 
@@ -34,16 +37,31 @@ const RoomsControl = (props) => {
     <Formik
       initialValues={{
         roomName: '',
+        image: null,
       }}
       onSubmit={async (values) => {
-        // console.log(values);
-        addRoomSubmitHandler(values.roomName);
+        addRoomSubmitHandler(values.roomName, values.image);
       }}
     >
-      {() => (
+      {({ values, setFieldValue }) => (
         <Form className={styles.form}>
           <Input id="roomName" name="roomName" type="input" title="ROOM NAME" />
-
+          <ImageUpload
+            id="image"
+            center
+            className={styles.imgUpload}
+            setFiles={(event) => {
+              setFieldValue('image', event.currentTarget.files);
+            }}
+          />
+          {/* <input
+            id="file"
+            name="file"
+            type="file"
+            onChange={(event) => {
+              setFieldValue('file', event.currentTarget.files[0]);
+            }}
+          /> */}
           <div className={styles.buttonsDiv}>
             <Button
               type="button"

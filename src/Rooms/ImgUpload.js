@@ -1,52 +1,57 @@
 import React from 'react';
 import axios from 'axios';
+import { Form, Formik } from 'formik';
 
 import ImageUpload from '../shared/FormElements/ImageUpload';
-import { useForm } from '../shared/hooks/form-hook';
-import AddButton from '../shared/UIElements/AddButton/AddButton';
 import { useSelector } from 'react-redux';
 
 const ImgUpload = () => {
   const token = useSelector((state) => state);
-  const [formState, inputHandler] = useForm({
-    image: {
-      value: null,
-      isValid: false,
-    },
-  });
 
-  const addImageSubmitHandler = (event) => {
-    event.preventDefault();
+  const addImageSubmitHandler = (image) => {
     const formData = new FormData();
-    formData.append('image', formState.inputs.image.value);
-    try {
-      axios
-        .post(`${process.env.REACT_APP_BACKEND_URL}/room/image/`, formData, {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((error) => {
-          console.log(error.response.data.message);
-        });
-    } catch (err) {
-      console.log(err.message);
-    }
+    formData.append('image', image);
+    axios
+      .post(`${process.env.REACT_APP_BACKEND_URL}/room/image/`, formData, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
-    <form onSubmit={addImageSubmitHandler}>
-      <ImageUpload
-        id="image"
-        center
-        onInput={inputHandler}
-        errorText="please provide an image"
-      />
-      <AddButton type="submit" btnText="ADD IMAGE" />
-    </form>
+    <Formik
+      initialValues={{
+        file: null,
+      }}
+      onSubmit={async (values) => {
+        // console.log(values.file);
+        addImageSubmitHandler(values.file);
+      }}
+    >
+      {({ values, setFieldValue }) => (
+        <Form>
+          <label htmlFor="file">File upload</label>
+          <ImageUpload
+            id="file"
+            center
+            setFiles={(event) => {
+              // console.log(event.currentTarget.files);
+              setFieldValue('file', event.currentTarget.files[0]);
+            }}
+          />
+          <div>
+            <button type="submit">CREATE!</button>
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 };
 
