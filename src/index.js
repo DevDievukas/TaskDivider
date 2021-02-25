@@ -7,7 +7,9 @@ import { applyMiddleware, createStore, combineReducers } from 'redux';
 import authReducer from './Store/reducers/authReducer';
 import loadingReducer from './Store/reducers/loadingReducer';
 import thunk from 'redux-thunk';
+import { ThemeProvider } from 'styled-components';
 
+import * as theme from './shared/styled-components/theme';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
@@ -20,7 +22,9 @@ const auth = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={auth}>
-    <App />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </Provider>,
   document.getElementById('root')
 );

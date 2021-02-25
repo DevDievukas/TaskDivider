@@ -8,7 +8,6 @@ import Input from '../shared/FormElements/Input';
 import FormModal from '../shared/UIElements/FormModal/FormModal';
 import Button from '../shared/FormElements/Button';
 import HouseCard from './HouseCard';
-import pic from '../assets/house.svg';
 import styles from './Houses.module.css';
 import { useSelector } from 'react-redux';
 
@@ -52,7 +51,6 @@ const Houses = () => {
         return (
           <HouseCard
             houseName={house.houseName}
-            pic={pic}
             key={house._id}
             houseId={house._id}
             deleteHouse={deleteHouseHandler}

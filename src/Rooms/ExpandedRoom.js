@@ -73,8 +73,15 @@ const ExpandedRoom = (props) => {
             <Carousel controls={false} interval={3000} className={styles.caro}>
               {room.images.map((img) => {
                 return (
-                  <Carousel.Item key={img} className={styles.caroItem}>
-                    <img className="d-block w-100" src={img} alt={img} />
+                  <Carousel.Item
+                    key={img.public_id}
+                    className={styles.caroItem}
+                  >
+                    <img
+                      className="d-block w-100"
+                      src={img.url}
+                      alt={img.public_id}
+                    />
                   </Carousel.Item>
                 );
               })}

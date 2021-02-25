@@ -1,10 +1,15 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { SignOut, House } from 'phosphor-react';
 import styles from './Navbar.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { startLogout } from '../../Store/actions/Auth';
+const Navigation = styled.header`
+  background-color: ${(props) => props.theme.charcoal};
+`;
+
 const Navbar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -35,14 +40,12 @@ const Navbar = () => {
   }
 
   const navbar = (
-    <React.Fragment>
-      <header className={styles.navbar}>
-        <Link className={styles.navbarBrand} to={`${linkDirection}`}>
-          {leftButton}
-        </Link>
-        {token ? rightButton : null}
-      </header>
-    </React.Fragment>
+    <Navigation className={styles.navbar}>
+      <Link className={styles.navbarBrand} to={`${linkDirection}`}>
+        {leftButton}
+      </Link>
+      {token ? rightButton : null}
+    </Navigation>
   );
 
   return navbar;

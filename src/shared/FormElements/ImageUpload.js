@@ -17,11 +17,18 @@ const ImageUpload = (props) => {
     fileReader.onload = () => {
       setPreviewUrl(fileReader.result);
     };
+    // fileReader.readAsDataURL(file);
     fileReader.readAsDataURL(file[0]);
   }, [file]);
 
   const pickedHandler = (event) => {
     let pickedFile;
+
+    // if (event.target.files && event.target.files.length === 1) {
+    //   pickedFile = event.target.files[0];
+    //   setFile(pickedFile);
+    // }
+
     if (event.target.files && event.target.files.length > 0) {
       pickedFile = event.target.files;
       setFile(pickedFile);

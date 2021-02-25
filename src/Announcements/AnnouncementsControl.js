@@ -12,7 +12,12 @@ import styles from './AnnouncementsControl.module.css';
 const AnnouncementsControl = (props) => {
   const [showModal, setShowModal] = useState(false);
   const loadedData = useFetchData(
-    `${process.env.REACT_APP_BACKEND_URL}/announcement/images/${process.env.REACT_APP_ANOUNCEMENTS_IMAGES_ID}`
+    `${process.env.REACT_APP_BACKEND_URL}/announcement/images/${process.env.REACT_APP_ANOUNCEMENTS_IMAGES_ID}`,
+    {
+      headers: {
+        authorization: `Bearer ${props.token}`,
+      },
+    }
   );
   const { houseParam, onCreate } = props;
   let imagesRadio;

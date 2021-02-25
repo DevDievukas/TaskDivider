@@ -8,7 +8,6 @@ import AnnouncementsControl from './AnnouncementsControl';
 import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import EmptyData from '../shared/UIElements//EmptyData/EmptyData';
-
 const Announcements = () => {
   const houseParam = useParams().houseId;
   const { token, houseId, userId } = useSelector((state) => ({
@@ -67,6 +66,7 @@ const Announcements = () => {
         <AnnouncementsControl
           onCreate={createAnnouncement}
           houseParam={houseParam}
+          token={token}
         />
       ) : null}
       <ul className={styles.groupList}>{announcements}</ul>

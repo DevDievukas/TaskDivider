@@ -12,10 +12,6 @@
   margin: auto;
 }
 
-.logo {
-  border: 1px solid rgba(127, 255, 212, 0.233);
-}
-
 .switchTypeDiv {
   display: flex;
   justify-content: space-around;
@@ -65,14 +61,12 @@
 
 .signUpDiv {
   margin: auto;
-  display: flex;
   justify-content: center;
   width: 80%;
   margin-top: 1.2em;
 }
 
 .signUpText {
-  margin-left: 3px;
   color: blue;
   text-decoration: underline;
 }
