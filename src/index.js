@@ -1,23 +1,16 @@
-import { Provider } 			from 	'react-redux'
-import {
-	applyMiddleware,
-	createStore
-} 												from 'redux'
+import { Provider } 			from 'react-redux'
 import { ThemeProvider } 	from 'styled-components'
 import React 							from 'react'
 import ReactDOM 					from 'react-dom'
-import thunk 							from 'redux-thunk'
 
 import App 								from './App'
-import rootReducer				from './Store/reducers/rootReducers'
+import store							from './Store/store.js'
 import * as serviceWorker from './serviceWorker'
 import * as theme 				from './shared/styled-components/theme'
 import												 './index.css'
 
-const auth = createStore(rootReducer, applyMiddleware(thunk))
-
 ReactDOM.render(
-	<Provider store={auth}>
+	<Provider store={store}>
 		<ThemeProvider theme={theme}>
 			<App />
 		</ThemeProvider>
