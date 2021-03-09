@@ -49,7 +49,7 @@ const PersonElement = (props) => {
         header="Delete person"
         onSubmit={deletePersonHandler}
       >
-        <Button onClick={closeDeleteModal} type="button">
+        <Button onClick={closeDeleteModal} type="button" cancel>
           CANCEL
         </Button>
         <Button type="submit">DELETE</Button>

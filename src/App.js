@@ -19,6 +19,7 @@ import SharedItems from './SharedItems/SharedItems';
 import Announcements from './Announcements/Annauncements';
 import Houses from './House/Houses';
 import Auth from './Auth/Auth';
+import Info from './Info/Info';
 import {
   startHouseAuth,
   startLogout,
@@ -27,7 +28,7 @@ import {
 import { clearError } from './Store/actions/Loading';
 
 const App = () => {
-  const { userId, houseId, expiration } = useSelector((state) => ({
+  const { userId, houseId, expiration} = useSelector((state) => ({
     ...state.auth,
   }));
   const { isLoading, error } = useSelector((state) => ({ ...state.load }));
@@ -133,7 +134,10 @@ const App = () => {
           <HouseNavbar />
           <People />
         </Route>
-
+        <Route path="/:houseId/info" exact>
+          <HouseNavbar />
+          <Info />
+        </Route>
         <Redirect to="/" />
       </Switch>
     );
@@ -141,23 +145,18 @@ const App = () => {
     routes = (
       <Switch>
         <Route path="/schedule" exact>
-          <HouseNavbar />
           <Schedule />
         </Route>
         <Route path="/" exact>
-          <HouseNavbar />
           <Announcements />
         </Route>
         <Route path="/shareditems" exact>
-          <HouseNavbar />
           <SharedItems />
         </Route>
         <Route path="/rooms" exact>
-          <HouseNavbar />
           <Rooms />
         </Route>
         <Route path="/people" exact>
-          <HouseNavbar />
           <People />
         </Route>
         <Redirect to="/" />
@@ -177,6 +176,7 @@ const App = () => {
   return (
     <Router>
       <Navbar />
+      {houseId ? <HouseNavbar /> : null}
       <ErrorModal error={error} onClear={() => dispatch(clearError())} />
       {isLoading && <Spinner asOverlay />}
       {routes}

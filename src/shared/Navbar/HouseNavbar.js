@@ -1,57 +1,57 @@
 import React from 'react';
 
-import { useParams } from 'react-router-dom';
+import Link from './Link';
+import linkDirection from './linkDirection';
 
-import HouseNavbarItem from './HouseNavbarItem';
-
-import styles from './HouseNavbar.module.css';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+
+const Section = styled.div`
+  justify-content: space-around;
+  display: flex;
+  text-align: center;
+  border-bottom: 1px solid black;
+`;
+
+const Navigation = styled.nav`
+  display: block;
+  margin-bottom: 8px;
+`;
 
 const HouseNavbar = () => {
-  const houseParam = useParams().houseId;
   const { userId } = useSelector((state) => ({ ...state.auth }));
 
-  let houseNavbar;
-  if (userId) {
-    houseNavbar = (
-      <header className={styles.navbar}>
-        <div className={styles.section}>
-          <HouseNavbarItem direction={`/${houseParam}/rooms`} title="Rooms" />
-          <HouseNavbarItem
-            direction={`/${houseParam}/schedule`}
-            title="Schedule"
-          />
+  return (
+    <Navigation>
+      <Section>
+        <Link direction={linkDirection('Rooms')}>
+          <h4>Rooms</h4>
+        </Link>
+        <Link direction={linkDirection('schedule')}>
+          <h4>Schedule</h4>
+        </Link>
 
-          <HouseNavbarItem direction={`/${houseParam}/people`} title="People" />
-        </div>
-        <div className={styles.section}>
-          <HouseNavbarItem
-            direction={`/${houseParam}/announcements`}
-            title="Announcements"
-          />
-          <HouseNavbarItem
-            direction={`/${houseParam}/sharedItems`}
-            title="Requests"
-          />
-        </div>
-      </header>
-    );
-  } else {
-    houseNavbar = (
-      <header className={styles.navbar}>
-        <div className={styles.section}>
-          <HouseNavbarItem direction={`/rooms`} title="Rooms" />
-          <HouseNavbarItem direction={`/schedule`} title="Schedule" />
-        </div>
-        <div className={styles.section}>
-          <HouseNavbarItem direction={`/`} title="Announcements" />
-          <HouseNavbarItem direction={`/sharedItems`} title="Requests" />{' '}
-        </div>
-      </header>
-    );
-  }
-
-  return houseNavbar;
+        {userId ? (
+          <Link direction={linkDirection('People')}>
+            <h4>People</h4>
+          </Link>
+        ) : null}
+      </Section>
+      <Section>
+        <Link direction={linkDirection('announcements')}>
+          <h4>Announcements</h4>
+        </Link>
+        <Link direction={linkDirection('sharedItems')}>
+          <h4>Requests</h4>
+        </Link>
+        {userId ? (
+          <Link direction={linkDirection('info')}>
+            <h4>Info</h4>
+          </Link>
+        ) : null}
+      </Section>
+    </Navigation>
+  );
 };
 
 export default HouseNavbar;

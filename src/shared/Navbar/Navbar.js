@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import Link from './Link';
 
 import { SignOut, House } from 'phosphor-react';
 import styles from './Navbar.module.css';
@@ -41,7 +42,7 @@ const Navbar = () => {
 
   const navbar = (
     <Navigation className={styles.navbar}>
-      <Link className={styles.navbarBrand} to={`${linkDirection}`}>
+      <Link styles={styles.navbarBrand} direction={`${linkDirection}`}>
         {leftButton}
       </Link>
       {token ? rightButton : null}

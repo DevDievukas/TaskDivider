@@ -9,16 +9,15 @@ type Props = {
 }
 
 const Card = styled.div`
-margin: auto;
+  margin: auto;
   display: flex;
   width: 80%;
-  border: 0.6px solid rgba(199, 199, 199, 0.473);
-  background-color: #fafafa;
-  border-radius: 5px;
+  margin-bottom: .6em;
+  border-bottom: .5px solid gray;
 
-  &:active{
-    background-color: whitesmoke;
-  }
+  &:active > * {
+    font-size: 32px;
+}
 `
 
 const House = styled.h4`

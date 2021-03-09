@@ -15,8 +15,7 @@
 .modalHeader {
   width: 100%;
   padding: 0.5em;
-  background: rgb(99, 30, 30);
-  color: white;
+  border-bottom: 0.5px solid firebrick;
 }
 
 .modalHeader h4 {
