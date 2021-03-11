@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import { useState }     from 'react';
+import React            from 'react';
 
-import ExpandedElement from './ExpandedElement';
-import styles from './GroupElement.module.css';
+import ExpandedElement  from './ExpandedElement';
+import styles           from './GroupElement.module.css';
 
 const GroupElement = (props) => {
-  const { name, rooms } = props;
   const [expanded, setExpanded] = useState(false);
-
+  
+  const { name, rooms } = props;
+  
   const setExpandedHandler = () => {
     setExpanded(!expanded);
   };

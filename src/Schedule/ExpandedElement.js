@@ -1,11 +1,16 @@
-import React, { useRef, useEffect } from 'react';
-
+import {
+  useRef,
+  useEffect,
+}               from 'react';
+import React    from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 
-import styles from './ExpandedElement.module.css';
+
+import styles    from './ExpandedElement.module.css';
 
 const ExpandedElement = (props) => {
   const { rooms, person } = props;
+  
   useEffect(() => {
     window.scrollTo({
       top: focus.current.offsetTop - 50,

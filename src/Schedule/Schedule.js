@@ -1,16 +1,23 @@
-import React, {useEffect, useState} from 'react'
-import {useParams} from 'react-router-dom'
-import {useLoadData} from '../shared/hooks/loadData-hook'
-import axios from 'axios'
+import {
+	useEffect,
+	useState,
+} 											from 'react'
+import {
+	useSelector,
+	useDispatch,
+} 											from 'react-redux'
+import { useParams } 		from 'react-router-dom'
+import axios 						from 'axios'
+import React 						from 'react'
 
-import GroupElement from './GroupElement'
-import Modal from '../shared/UIElements/Modal'
-import Button from '../shared/FormElements/Button'
-import EmptyData from '../shared/UIElements/EmptyData/EmptyData.tsx'
+import { useLoadData } 	from '../shared/hooks/loadData-hook'
+import { createError }	from '../Store/actions/Loading'
+import Button 					from '../shared/FormElements/Button'
+import EmptyData 				from '../shared/UIElements/EmptyData/EmptyData.tsx'
+import Modal 						from '../shared/UIElements/Modal'
 
-import styles from './Schedule.module.css'
-import {useSelector, useDispatch} from 'react-redux'
-import {createError} from '../Store/actions/Loading'
+import GroupElement 		from './GroupElement'
+import styles 					from './Schedule.module.css'
 
 const Schedule = () => {
 	const [showModal, setShowModal] = useState(false)
@@ -18,12 +25,13 @@ const Schedule = () => {
 	const {token, userId, houseId} = useSelector((state) => ({
 		...state.auth,
 	}))
-	const houseParam = useParams().houseId
 	const {nonArrayData, getData, dataLoaded} = useLoadData(
 		`${process.env.REACT_APP_BACKEND_URL}/room/Schedule/${
 			houseParam || houseId
 		}`
 	)
+
+	const houseParam = useParams().houseId
 	let schedule
 
 	useEffect(() => {
