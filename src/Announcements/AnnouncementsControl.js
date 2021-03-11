@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
-import { Form, Field, Formik } from 'formik';
-import useFetchData from '../shared/hooks/fetchData-hook';
+import {
+  Field,
+  Form,
+  Formik
+}                     from 'formik';
+import  { useState }  from 'react'
+import React          from 'react';
 
-import Input from '../shared/FormElements/Input';
-import Button from '../shared/FormElements/Button';
-import FormModal from '../shared/UIElements/FormModal/FormModal';
-// import ImageUpload from '../shared/FormElements/ImageUpload';
+import Input          from '../shared/FormElements/Input';
+import Button         from '../shared/FormElements/Button';
+import useFetchData   from '../shared/hooks/fetchData-hook';
+import FormModal      from '../shared/UIElements/FormModal/FormModal';
 
-import styles from './AnnouncementsControl.module.css';
+import styles         from './AnnouncementsControl.module.css';
 
 const AnnouncementsControl = (props) => {
   const [showModal, setShowModal] = useState(false);
@@ -19,6 +23,7 @@ const AnnouncementsControl = (props) => {
       },
     }
   );
+  
   const { houseParam, onCreate } = props;
   let imagesRadio;
 

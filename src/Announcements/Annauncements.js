@@ -1,24 +1,28 @@
-import React from 'react';
-import usePostData from '../shared/hooks/postData-hook';
-import useFetchData from '../shared/hooks/fetchData-hook';
+import { useSelector }      from 'react-redux';
+import { useParams }        from 'react-router';
+import React                from 'react';
 
-import styles from './Announcements.module.css';
-import AnnouncementItem from './AnnouncementItem';
+import useFetchData         from '../shared/hooks/fetchData-hook';
+import usePostData          from '../shared/hooks/postData-hook';
+import EmptyData            from '../shared/UIElements//EmptyData/EmptyData';
+
 import AnnouncementsControl from './AnnouncementsControl';
-import { useParams } from 'react-router';
-import { useSelector } from 'react-redux';
-import EmptyData from '../shared/UIElements//EmptyData/EmptyData';
+import AnnouncementItem     from './AnnouncementItem';
+import styles               from './Announcements.module.css';
+
+
 const Announcements = () => {
-  const houseParam = useParams().houseId;
   const { token, houseId, userId } = useSelector((state) => ({
     ...state.auth,
   }));
+  const { post } = usePostData();
+  const houseParam = useParams().houseId;
   const loadedData = useFetchData(
     `${process.env.REACT_APP_BACKEND_URL}/announcement/allByHouse/${
       houseParam || houseId
     }`
   );
-  const { post } = usePostData();
+  
   let announcements;
 
   const createAnnouncement = (announcement) => {

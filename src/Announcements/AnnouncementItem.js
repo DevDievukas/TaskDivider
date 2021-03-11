@@ -1,7 +1,7 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import React    from 'react';
 
-import styles from './AnnouncementItem.module.css';
+import styles   from './AnnouncementItem.module.css';
 
 const AnnouncementItem = (props) => {
   const { img, title, text, date, link } = props;
