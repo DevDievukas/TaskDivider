@@ -1,30 +1,30 @@
-import React from 'react'
-import {useParams} from 'react-router-dom'
-import usePostData from '../shared/hooks/postData-hook'
-import useFetchData from '../shared/hooks/fetchData-hook'
-import useDeleteData from '../shared/hooks/deleteData-hook'
+import { useSelector } 	from 'react-redux'
+import { useParams } 		from 'react-router-dom'
+import React 						from 'react'
 
-import PeopleControl from './PeopleControl'
-import EmptyData from '../shared/UIElements/EmptyData/EmptyData.tsx'
+import useDeleteData 		from '../shared/hooks/deleteData-hook'
+import useFetchData 		from '../shared/hooks/fetchData-hook'
+import usePostData 			from '../shared/hooks/postData-hook'
+import EmptyData 				from '../shared/UIElements/EmptyData/EmptyData.tsx'
 
-import styles from './People.module.css'
-import PersonElement from './PersonElement'
-import {useSelector} from 'react-redux'
+import PeopleControl 		from './PeopleControl'
+import PersonElement 		from './PersonElement'
+import styles						from './People.module.css'
 
 const People = () => {
-	const houseParam = useParams().houseId
 	const {userId, token} = useSelector((state) => ({
 		...state.auth,
 	}))
 	const loadedData = useFetchData(
 		`${process.env.REACT_APP_BACKEND_URL}/person/allByHouse/${houseParam}`
-	)
+		)
 	const roomsData = useFetchData(
 		`${process.env.REACT_APP_BACKEND_URL}/room/allByHouse/${houseParam}`
-	)
-
-	const {post} = usePostData()
-	const {deleteData} = useDeleteData()
+		)
+	const { post } = usePostData()
+	const { deleteData } = useDeleteData()
+			
+	const houseParam = useParams().houseId
 	let people = null
 
 	const PersonDeleteHandler = (personId) => {

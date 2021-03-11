@@ -1,22 +1,33 @@
-import React, {useEffect, useState} from 'react'
-import {Formik, Field, Form} from 'formik'
-import axios from 'axios'
-import usePostData from '../shared/hooks/postData-hook'
-import {useParams} from 'react-router-dom'
+import {
+	Formik,
+	Field,
+	Form
+} 										from 'formik'
+import {
+	useEffect,
+	useState
+}											from 'react'
+import { useParams } 	from 'react-router-dom'
+import axios 					from 'axios'
+import React 					from 'react'
 
-import RoomElement from './RoomElement'
-import Button from '../shared/FormElements/Button'
-import FormModal from '../shared/UIElements/FormModal/FormModal'
-import styles from './PersonElement.module.css'
+import Button 				from '../shared/FormElements/Button'
+import usePostData 		from '../shared/hooks/postData-hook'
+import FormModal 			from '../shared/UIElements/FormModal/FormModal'
+
+import styles 				from './PersonElement.module.css'
+import RoomElement 		from './RoomElement'
 
 const RoomsModal = (props) => {
-	const {personId, close, token} = props
 	const [assigned, setAssigned] = useState([])
 	const [unassigned, setUnassigned] = useState([])
+	const { post } = usePostData()
+
 	const houseParam = useParams().houseId
-	const {post} = usePostData()
+	const { personId, close, token } = props
 	let assignedElements
 	let unassignedElements
+	
 	useEffect(() => {
 		axios
 			.get(`${process.env.REACT_APP_BACKEND_URL}/room/person/${personId}`)

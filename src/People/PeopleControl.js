@@ -1,16 +1,23 @@
-import React, {useState} from 'react'
-import {useParams} from 'react-router-dom'
-import {Form, Field, Formik} from 'formik'
+import {
+	Form,
+	Field,
+	Formik
+} 										from 'formik'
+import { useState } 	from 'react'
+import { useParams } 	from 'react-router-dom'
+import React 					from 'react'
 
-import Button from '../shared/FormElements/Button'
-import Input from '../shared/FormElements/Input'
-import FormModal from '../shared/UIElements/FormModal/FormModal'
-import styles from './PeopleControl.module.css'
+import Button 				from '../shared/FormElements/Button'
+import Input 					from '../shared/FormElements/Input'
+import FormModal 			from '../shared/UIElements/FormModal/FormModal'
+
+import styles 				from './PeopleControl.module.css'
 
 const PeopleControl = (props) => {
-	const houseParam = useParams().houseId
 	const [showModal, setShowModal] = useState(false)
-	const {createPerson} = props
+	
+	const { createPerson } = props
+	const houseParam = useParams().houseId
 	let roomsCheckbox
 
 	const revealAddPersonModal = () => {

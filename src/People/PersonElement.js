@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import { Trash }    from 'phosphor-react';
+import { useState } from 'react';
+import React        from 'react';
 
-import { Trash } from 'phosphor-react';
-import Button from '../shared/FormElements/Button';
-import Modal from '../shared/UIElements/Modal';
+import Button       from '../shared/FormElements/Button';
+import Modal        from '../shared/UIElements/Modal';
 
-import styles from './PersonElement.module.css';
-import RoomsModal from './RoomsModal';
+import styles       from './PersonElement.module.css';
+import RoomsModal   from './RoomsModal';
 
 const PersonElement = (props) => {
   const [showRoomsModal, setShowRoomsModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  
   const { token, name, id, onDelete } = props;
 
   const revealRoomsModal = () => {
