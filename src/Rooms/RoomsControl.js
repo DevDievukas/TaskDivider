@@ -1,18 +1,23 @@
-import React, {useState} from 'react'
-import {useParams} from 'react-router-dom'
-import {Form, Formik} from 'formik'
+import {
+	Form,
+	Formik,
+} 										from 'formik'
+import { useState }  	from 'react'
+import { useParams } 	from 'react-router-dom'
+import React 					from 'react'
 
-import ImageUpload from '../shared/FormElements/ImageUpload'
-import Button from '../shared/FormElements/Button'
-import Input from '../shared/FormElements/Input'
-import FormModal from '../shared/UIElements/FormModal/FormModal'
+import Button 				from '../shared/FormElements/Button'
+import FormModal 			from '../shared/UIElements/FormModal/FormModal'
+import ImageUpload 		from '../shared/FormElements/ImageUpload'
+import Input 					from '../shared/FormElements/Input'
 
-import styles from './RoomsControl.module.css'
+import styles 				from './RoomsControl.module.css'
 
 const RoomsControl = (props) => {
 	const [showModal, setShowModal] = useState(false)
-	const {createRoom} = props
+	
 	const houseParam = useParams().houseId
+	const { createRoom } = props
 
 	const revealAddRoomModal = () => {
 		setShowModal(true)

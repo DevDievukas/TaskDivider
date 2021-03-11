@@ -1,19 +1,18 @@
-import React from 'react'
-import {useParams} from 'react-router-dom'
-import useFetchData from '../shared/hooks/fetchData-hook'
-import {useSelector} from 'react-redux'
-import usePostData from '../shared/hooks/postData-hook'
-import useDeleteData from '../shared/hooks/deleteData-hook'
+import { useSelector } 	from 'react-redux'
+import { useParams } 		from 'react-router-dom'
+import React 						from 'react'
 
-import RoomsControl from './RoomsControl'
+import EmptyData 				from '../shared/UIElements/EmptyData/EmptyData.tsx'
+import useDeleteData 		from '../shared/hooks/deleteData-hook'
+import useFetchData 		from '../shared/hooks/fetchData-hook'
+import usePostData 			from '../shared/hooks/postData-hook'
 
-import styles from './Rooms.module.css'
-import RoomElement from './RoomElement'
-import EmptyData from '../shared/UIElements/EmptyData/EmptyData.tsx'
-import {create} from 'domain'
+
+import RoomsControl 		from './RoomsControl'
+import RoomElement 			from './RoomElement'
+import styles 					from './Rooms.module.css'
 
 const Rooms = () => {
-	const houseParam = useParams().houseId
 	const {userId, houseId, token} = useSelector((state) => ({
 		...state.auth,
 	}))
@@ -21,10 +20,11 @@ const Rooms = () => {
 		`${process.env.REACT_APP_BACKEND_URL}/room/allByHouse/${
 			houseId || houseParam
 		}`
-	)
-	const {post} = usePostData()
-	const {deleteData} = useDeleteData()
-	let rooms
+		)
+		const { post } = usePostData()
+		const { deleteData } = useDeleteData()
+		const houseParam = useParams().houseId
+		let rooms
 
 	const createRoomHandler = (createdRoom) => {
 		const addFilter = (res) => {

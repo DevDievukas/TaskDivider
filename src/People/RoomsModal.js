@@ -18,7 +18,7 @@ import FormModal 			from '../shared/UIElements/FormModal/FormModal'
 import styles 				from './PersonElement.module.css'
 import RoomElement 		from './RoomElement'
 
-const RoomsModal = (props) => {
+const RoomsModal = ( props ) => {
 	const [assigned, setAssigned] = useState([])
 	const [unassigned, setUnassigned] = useState([])
 	const { post } = usePostData()

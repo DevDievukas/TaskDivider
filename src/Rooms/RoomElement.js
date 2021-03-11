@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import React        from 'react';
+import Card         from 'react-bootstrap/Card';
 
-import Card from 'react-bootstrap/Card';
+
 import ExpandedRoom from './ExpandedRoom';
+import styles       from './RoomElement.module.css';
 
-import styles from './RoomElement.module.css';
-
-const RoomElement = (props) => {
-  const { userId, onDelete, room } = props;
+const RoomElement = ( props ) => {
   const [expanded, setExpanded] = useState(false);
+  
   let imgSrc =
-    'https://image.freepik.com/free-vector/lovely-living-room-interior_23-2147517931.jpg';
-
+  'https://image.freepik.com/free-vector/lovely-living-room-interior_23-2147517931.jpg';
+  const { userId, onDelete, room } = props;
   if (room.images.length > 0) {
     imgSrc = room.images[0].url;
   }

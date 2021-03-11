@@ -1,21 +1,27 @@
-import React, { useRef, useEffect, useState } from 'react';
+import {
+   useRef,
+   useEffect,
+   useState,
+} from 'react';
+import Carousel     from 'react-bootstrap/Carousel';
+import React        from 'react';
+
+import Button       from '../shared/FormElements/Button';
+import Modal        from '../shared/UIElements/Modal';
 import useFetchData from '../shared/hooks/fetchData-hook';
-import Modal from '../shared/UIElements/Modal';
 
-import Button from '../shared/FormElements/Button';
+import PersonName   from './PersonName';
+import styles       from './ExpandedRoom.module.css';
 
-import styles from './ExpandedRoom.module.css';
-import PersonName from './PersonName';
-
-import Carousel from 'react-bootstrap/Carousel';
-const ExpandedRoom = (props) => {
-  const { room, close, onDelete, userId } = props;
+const ExpandedRoom = ( props ) => {
   const loadedData = useFetchData(
     `${process.env.REACT_APP_BACKEND_URL}/person/allByRoom/${room._id}`
-  );
+    );
   const [showModal, setShowModal] = useState(false);
-  let people;
+  
   const roomFocus = useRef(null);
+  const { room, close, onDelete, userId } = props;
+  let people;
 
   useEffect(() => {
     window.scrollTo({
@@ -24,7 +30,7 @@ const ExpandedRoom = (props) => {
     });
   }, []);
 
-  const deleteRoomHandler = (event) => {
+  const deleteRoomHandler = ( event ) => {
     event.preventDefault();
     onDelete(room._id);
     setShowModal(false);
