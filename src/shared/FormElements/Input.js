@@ -1,7 +1,7 @@
-import React from 'react';
-import { Field } from 'formik';
+import { Field }  from 'formik';
+import React      from 'react';
 
-import styles from './Input.module.css';
+import styles     from './Input.module.css';
 
 const Input = (props) => {
   const { id, name, title, type } = props;

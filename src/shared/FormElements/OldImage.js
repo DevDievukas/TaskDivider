@@ -1,4 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react';
+import {
+  useRef,
+  useState,
+  useEffect
+}             from 'react';
+import React  from 'react';
 
 import Button from './Button';
 import styles from './ImageUpload.module.css';

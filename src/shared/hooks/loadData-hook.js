@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
+import { useState }     from 'react';
+import { useDispatch }  from 'react-redux';
+import axios            from 'axios';
+
 import {
   createError,
   startLoading,
   stopLoading,
-} from '../../Store/actions/Loading';
+}                       from '../../Store/actions/Loading';
 
 export const useLoadData = () => {
   const [data, setData] = useState([]);

@@ -1,12 +1,20 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
-import Link from './Link';
+import {
+  SignOut,
+  House
+}                       from 'phosphor-react';
+import {
+  useDispatch,
+  useSelector
+}                       from 'react-redux';
+import { useHistory }   from 'react-router-dom';
+import React            from 'react';
+import styled           from 'styled-components';
 
-import { SignOut, House } from 'phosphor-react';
-import styles from './Navbar.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { startLogout } from '../../Store/actions/Auth';
+import { startLogout }  from '../../Auth/thunks';
+
+import Link             from './Link';
+import styles           from './Navbar.module.css';
+
 const Navigation = styled.header`
   background-color: ${(props) => props.theme.charcoal};
 `;

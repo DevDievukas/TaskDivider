@@ -1,10 +1,10 @@
-import React from 'react';
+import React            from 'react';
+import { useSelector }  from 'react-redux';
+import styled           from 'styled-components';
 
-import Link from './Link';
-import linkDirection from './linkDirection';
+import linkDirection    from './linkDirection';
+import Link             from './Link';
 
-import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 
 const Section = styled.div`
   justify-content: space-around;

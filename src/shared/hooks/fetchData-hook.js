@@ -1,15 +1,18 @@
-import { useState, useEffect } from 'react';
-
-import axios from 'axios';
+import {
+  useState,
+  useEffect
+}                       from 'react';
+import { useDispatch }  from 'react-redux';
+import axios            from 'axios';
 
 import {
   createError,
   startLoading,
   stopLoading,
-} from '../../Store/actions/Loading';
-import { useDispatch } from 'react-redux';
+}                       from '../../Store/actions/Loading';
 
-const useFetchData = (url, headers) => {
+
+export default (url, headers) => {
   const [data, setData] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
   const dispatch = useDispatch();
@@ -30,5 +33,3 @@ const useFetchData = (url, headers) => {
 
   return { data, dataLoaded, setData };
 };
-
-export default useFetchData;

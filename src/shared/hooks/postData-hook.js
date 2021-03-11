@@ -1,12 +1,13 @@
-import {useDispatch} from 'react-redux'
-import axios from 'axios'
+import { useDispatch } 	from 'react-redux'
+import axios 						from 'axios'
+
 import {
 	stopLoading,
 	startLoading,
 	createError,
-} from '../../Store/actions/Loading'
+} 											from '../../Store/actions/Loading'
 
-const usePostData = () => {
+export default () => {
 	const dispatch = useDispatch()
 	const post = (url, headers, createdData, method) => {
 		dispatch(startLoading())
@@ -23,5 +24,3 @@ const usePostData = () => {
 	}
 	return {post}
 }
-
-export default usePostData

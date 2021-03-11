@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { CSSTransition } from 'react-transition-group';
+import { CSSTransition }  from 'react-transition-group';
+import React              from 'react';
+import ReactDOM           from 'react-dom';
 
-import Backdrop from '../Backdrop';
-import styles from '../Modal.module.css';
+import Backdrop           from '../Backdrop';
+import styles             from '../Modal.module.css';
 
 const ModalOverlay = (props) => {
   const content = (
@@ -39,16 +39,3 @@ const FormModal = (props) => {
 };
 
 export default FormModal;
-
-//   return (
-//     <Modal
-//       onCancel={props.onClear}
-//       header="An Error Occurred!"
-//       show={show}
-//       footer={<Button onClick={props.onClear}>Okay</Button>}
-//       form={form}
-//     >
-//       {/* {form} */}
-//     </Modal>
-//   );
-// };

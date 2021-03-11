@@ -1,10 +1,10 @@
-import axios from 'axios'
+import { useDispatch } 	from 'react-redux'
+import axios 						from 'axios'
 
-import {useDispatch} from 'react-redux'
+import { createError } 		from '../../Store/actions/Loading'
 
-import {createError} from '../../Store/actions/Loading'
 
-const useDeleteData = () => {
+export default () => {
 	const dispatch = useDispatch()
 	const deleteData = (url, headers, id, method) => {
 		axios
@@ -19,4 +19,3 @@ const useDeleteData = () => {
 	return {deleteData}
 }
 
-export default useDeleteData

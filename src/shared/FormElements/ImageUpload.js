@@ -1,7 +1,12 @@
-import React, { useRef, useState, useEffect } from 'react';
+import {
+  useRef,
+  useState,
+  useEffect
+}                     from 'react';
 import { PlusCircle } from 'phosphor-react';
+import React          from 'react';
 
-import styles from './ImageUpload.module.css';
+import styles         from './ImageUpload.module.css';
 
 const ImageUpload = (props) => {
   const [file, setFile] = useState();
