@@ -1,7 +1,7 @@
 import { useDispatch } 	from 'react-redux'
 import axios 						from 'axios'
 
-import { createError } 		from '../../Store/actions/Loading'
+import { createError } 		from '../../Loading/thunks'
 
 
 export default () => {

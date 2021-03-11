@@ -12,7 +12,7 @@ import {
   createError,
   startLoading,
   stopLoading,
-}                         from '../Store/actions/Loading';
+}                         from '../Loading/thunks';
 
 import Button             from '../shared/FormElements/Button';
 import Input              from '../shared/FormElements/Input';

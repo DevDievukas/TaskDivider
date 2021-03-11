@@ -25,7 +25,7 @@ import {
   startLogout,
   startUserAuth,
 } from './Auth/thunks';
-import { clearError } from './Store/actions/Loading';
+import { clearError } from './Loading/thunks';
 
 const App = () => {
   const { userId, houseId, expiration} = useSelector((state) => ({

@@ -11,7 +11,7 @@ import axios 						from 'axios'
 import React 						from 'react'
 
 import { useLoadData } 	from '../shared/hooks/loadData-hook'
-import { createError }	from '../Store/actions/Loading'
+import { createError }	from '../Loading/thunks'
 import Button 					from '../shared/FormElements/Button'
 import EmptyData 				from '../shared/UIElements/EmptyData/EmptyData.tsx'
 import Modal 						from '../shared/UIElements/Modal'

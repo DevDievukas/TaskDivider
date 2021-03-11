@@ -5,7 +5,7 @@ import {
 	stopLoading,
 	startLoading,
 	createError,
-} 											from '../../Store/actions/Loading'
+} 											from '../../Loading/thunks'
 
 export default () => {
 	const dispatch = useDispatch()

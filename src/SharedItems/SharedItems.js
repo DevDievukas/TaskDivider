@@ -11,7 +11,7 @@ import {
 	createError,
 	startLoading,
 	stopLoading,
-} 										from '../Store/actions/Loading'
+} 										from '../Loading/thunks'
 import Button 				from '../shared/FormElements/Button'
 import EmptyData 			from '../shared/UIElements/EmptyData/EmptyData'
 import Modal 					from '../shared/UIElements/Modal'

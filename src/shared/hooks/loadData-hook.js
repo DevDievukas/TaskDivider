@@ -6,7 +6,7 @@ import {
   createError,
   startLoading,
   stopLoading,
-}                       from '../../Store/actions/Loading';
+}                       from '../../Loading/thunks';
 
 export const useLoadData = () => {
   const [data, setData] = useState([]);

@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { stopLoading } from '../../Store/actions/Loading';
+import { stopLoading } from '../../Loading/thunks';
 import { JsxElement } from 'typescript';
 import React from 'react';
 import styled from 'styled-components'

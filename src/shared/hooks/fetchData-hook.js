@@ -9,7 +9,7 @@ import {
   createError,
   startLoading,
   stopLoading,
-}                       from '../../Store/actions/Loading';
+}                       from '../../Loading/thunks';
 
 
 export default (url, headers) => {
