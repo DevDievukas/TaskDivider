@@ -1,15 +1,19 @@
-import React, {useState} from 'react'
-import {Form, Formik} from 'formik'
-import useFetchData from '../shared/hooks/fetchData-hook'
-import usePostData from '../shared/hooks/postData-hook'
-import useDeleteData from '../shared/hooks/deleteData-hook'
+import { Form,
+	Formik
+}											 	from 'formik'
+import  { useState } 		from 'react'
+import { useSelector } 	from 'react-redux'
+import React 						from 'react'
 
-import Input from '../shared/FormElements/Input'
-import FormModal from '../shared/UIElements/FormModal/FormModal'
-import Button from '../shared/FormElements/Button'
-import HouseCard from './HouseCard'
-import styles from './Houses.module.css'
-import {useSelector} from 'react-redux'
+import Input 						from '../shared/FormElements/Input'
+import Button 					from '../shared/FormElements/Button'
+import useDeleteData 		from '../shared/hooks/deleteData-hook'
+import useFetchData 		from '../shared/hooks/fetchData-hook'
+import usePostData 			from '../shared/hooks/postData-hook'
+import FormModal 				from '../shared/UIElements/FormModal/FormModal'
+
+import HouseCard 				from './HouseCard'
+import styles 					from './Houses.module.css'
 
 const Houses = () => {
 	const {token, userId} = useSelector((state) => ({...state.auth}))
@@ -140,7 +144,6 @@ const Houses = () => {
 				form={form}
 			/>
 			{houses}
-
 			<Button
 				onClick={() => setHouseCreation(true)}
 				className={styles.createHouseBtn}

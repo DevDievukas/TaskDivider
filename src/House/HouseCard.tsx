@@ -1,7 +1,7 @@
-import React from 'react';
 import { useHistory } from 'react-router-dom';
-
+import React from 'react';
 import styled from 'styled-components';
+
 
 type Props = {
   houseName: string,
@@ -31,8 +31,9 @@ font-weight: bold;
 
 
 const HouseCard = (props: Props) => {
-  const {  houseName, houseId } = props;
   const history = useHistory();
+
+  const { houseName, houseId } = props;
 
   const getHouse = () => {
     history.push(`/${houseId}/announcements`);
