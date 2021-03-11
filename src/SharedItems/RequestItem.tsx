@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './RequestItem.module.css';
 
-type Props ={
+type Props = {
   date: string,
   name: string,
   id: string,
@@ -13,8 +13,8 @@ type Props ={
 
 const RequestItem = (props: Props) => {
   const { date, name, request, id, userId, deleteRequest } = props;
-
   const parsedDate = date.substr(5, 5);
+
 
   return (
     <div className={styles.requestDiv}>

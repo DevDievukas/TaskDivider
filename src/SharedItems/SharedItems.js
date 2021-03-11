@@ -1,24 +1,31 @@
-import React, {useState} from 'react'
-import axios from 'axios'
+import { useState } 	from 'react'
+import {
+	useSelector,
+	useDispatch,
+} 										from 'react-redux'
+import { useParams }	from 'react-router-dom'
+import axios 					from 'axios'
+import React 					from 'react'
 
-import useFetchData from '../shared/hooks/fetchData-hook'
-import usePostData from '../shared/hooks/postData-hook'
-import useDeleteData from '../shared/hooks/deleteData-hook'
-import {useParams} from 'react-router-dom'
-import {useSelector, useDispatch} from 'react-redux'
+import {
+	createError,
+	startLoading,
+	stopLoading,
+} 										from '../Store/actions/Loading'
+import Button 				from '../shared/FormElements/Button'
+import EmptyData 			from '../shared/UIElements/EmptyData/EmptyData'
+import Modal 					from '../shared/UIElements/Modal'
+import useDeleteData 	from '../shared/hooks/deleteData-hook'
+import useFetchData 	from '../shared/hooks/fetchData-hook'
+import usePostData 		from '../shared/hooks/postData-hook'
 
-import Button from '../shared/FormElements/Button'
-import Modal from '../shared/UIElements/Modal'
+import Form 					from './Form'
+import ItemsList 			from './ItemsList'
+import styles 				from './SharedItems.module.css'
 
-import Form from './Form'
-import ItemsList from './ItemsList'
-import EmptyData from '../shared/UIElements/EmptyData/EmptyData'
 
-import styles from './SharedItems.module.css'
-import {createError, startLoading, stopLoading} from '../Store/actions/Loading'
 
 const SharedItems = () => {
-	const houseParam = useParams().houseId
 	const {token, userId, houseId} = useSelector((state) => ({
 		...state.auth,
 	}))
@@ -27,10 +34,11 @@ const SharedItems = () => {
 		`${process.env.REACT_APP_BACKEND_URL}/request/allByHouseId/${
 			houseParam || houseId
 		}`
-	)
-	const {post} = usePostData()
-	const {deleteData} = useDeleteData()
-	const [showModalClear, setShowModalClear] = useState(false)
+		)
+		const { post } = usePostData()
+		const { deleteData } = useDeleteData()
+		const [showModalClear, setShowModalClear] = useState(false)
+		const houseParam = useParams().houseId
 
 	const closeClearRequestsModal = () => {
 		setShowModalClear(false)

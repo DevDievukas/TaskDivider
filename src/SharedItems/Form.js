@@ -1,15 +1,19 @@
-import React from 'react';
-import { Form, Formik } from 'formik';
+import {
+  Form,
+  Formik,
+}             from 'formik';
+import React  from 'react';
 
-import Input from '../shared/FormElements/Input';
+
 import Button from '../shared/FormElements/Button';
+import Input  from '../shared/FormElements/Input';
 
 import styles from './Form.module.css';
 
 const RequestForm = (props) => {
   const { houseId, houseParam, postRequest } = props;
-
   const initialAuthor = localStorage.getItem('houseItName');
+
 
   const formSubmit = (author, body) => {
     const request = {
