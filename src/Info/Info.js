@@ -1,13 +1,18 @@
-import React, {useState} from 'react'
-import {useParams, useHistory} from 'react-router-dom'
-import {useDispatch} from 'react-redux'
-import {startRefreshToken} from '../Store/actions/Auth'
-import usePostData from '../shared/hooks/postData-hook'
-import {useSelector} from 'react-redux'
-import styled from 'styled-components'
-import ChangeOwner from './ChangeOwner'
-import Button from '../shared/FormElements/Button'
-import Modal from '../shared/UIElements/Modal'
+import { useState } 					from 'react'
+import { useDispatch } 				from 'react-redux'
+import { useSelector } 				from 'react-redux'
+import {
+	useParams,
+	useHistory
+} 														from 'react-router-dom'
+import React 									from 'react'
+import styled 								from 'styled-components'
+
+import { startRefreshToken } 	from '../Auth/thunks'
+import usePostData 						from '../shared/hooks/postData-hook'
+import ChangeOwner 						from './ChangeOwner'
+import Button 								from '../shared/FormElements/Button'
+import Modal 									from '../shared/UIElements/Modal'
 
 const Main = styled.div`
 	width: 80%;
@@ -31,11 +36,12 @@ const Info = () => {
 	const [showChangeOwner, setShowChangeOwner] = useState(false)
 	const [showSuccessModal, setShowSuccessModal] = useState(false)
 	const [message, setMessage] = useState()
-	const {token} = useSelector((state) => ({...state.auth}))
+	const { token } = useSelector((state) => ({ ...state.auth }))
+	const { post } = usePostData()
 	const dispatch = useDispatch()
+
 	const houseParam = useParams().houseId
 	const history = useHistory()
-	const {post} = usePostData()
 
 	const closeSuccessModal = () => {
 		setShowSuccessModal(false)

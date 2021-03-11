@@ -1,9 +1,12 @@
-import React from 'react'
-import {Formik, Form} from 'formik'
+import {
+	Formik,
+	Form
+}								 	from 'formik'
+import React 			from 'react'
 
-import Button from '../shared/FormElements/Button'
-import FormModal from '../shared/UIElements/FormModal/FormModal'
-import Input from '../shared/FormElements/Input'
+import Button 		from '../shared/FormElements/Button'
+import Input 			from '../shared/FormElements/Input'
+import FormModal 	from '../shared/UIElements/FormModal/FormModal'
 
 export default (props) => {
 	const form = (
