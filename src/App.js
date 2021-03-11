@@ -24,7 +24,7 @@ import {
   startHouseAuth,
   startLogout,
   startUserAuth,
-} from './Store/actions/Auth';
+} from './Auth/thunks';
 import { clearError } from './Store/actions/Loading';
 
 const App = () => {

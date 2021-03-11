@@ -1,21 +1,25 @@
-import React from 'react';
-import axios from 'axios';
-import { Form, Formik } from 'formik';
+import {
+  Form,
+  Formik
+}                        from 'formik';
+import { useDispatch }   from 'react-redux';
+import axios             from 'axios';
+import React             from 'react';
 
-import { useDispatch } from 'react-redux';
+import { startUserAuth } from './thunks';
 import {
   startLoading,
   createError,
   stopLoading,
-} from '../Store/actions/Loading';
-import { startUserAuth } from '../Store/actions/Auth';
+}                        from '../Store/actions/Loading';
+import Button            from '../shared/FormElements/Button';
+import Input             from '../shared/FormElements/Input';
 
-import Input from '../shared/FormElements/Input';
-import Button from '../shared/FormElements/Button';
-import styles from './Auth.module.css';
+import styles            from './Auth.module.css';
 
 const SignUp = () => {
   const dispatch = useDispatch();
+
   const createUser = (name, email, password) => {
     dispatch(startLoading());
     axios

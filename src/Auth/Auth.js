@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react'
+import React        from 'react'
 
-import LoginUser from './LoginUser';
-import SignUp from './SignUp';
-import LoginHouse from './LoginHouse';
+import Button       from '../shared/FormElements/Button';
+import LoginHouse   from './LoginHouse';
+import LoginUser    from './LoginUser';
+import SignUp       from './SignUp';
+import styles       from './Auth.module.css';
 
-import Button from '../shared/FormElements/Button';
-import styles from './Auth.module.css';
+
 
 const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);

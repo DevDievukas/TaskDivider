@@ -1,18 +1,23 @@
-import React from 'react';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { Formik, Field, Form } from 'formik';
-
 import {
-  startLoading,
-  createError,
-  stopLoading,
-} from '../Store/actions/Loading';
-import { startHouseAuth } from '../Store/actions/Auth';
+  Formik,
+  Field,
+  Form
+}                         from 'formik';
+import { useDispatch }    from 'react-redux';
+import axios              from 'axios';
+import React              from 'react';
 
-import Input from '../shared/FormElements/Input';
-import Button from '../shared/FormElements/Button';
-import styles from './Auth.module.css';
+import { startHouseAuth } from './thunks';
+import {
+  createError,
+  startLoading,
+  stopLoading,
+}                         from '../Store/actions/Loading';
+
+import Button             from '../shared/FormElements/Button';
+import Input              from '../shared/FormElements/Input';
+
+import styles             from './Auth.module.css';
 
 const LoginHouse = () => {
   const dispatch = useDispatch();
