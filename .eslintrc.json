@@ -1,14 +1,15 @@
 {
     "env": {
         "browser": true,
-        "es2021": true
+        "es6": true,
+        "node": true
     },
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:react/recommended"
+        // "plugin:@typescript-eslint/recommended"
     ],
-    "parser": "@typescript-eslint/parser",
+    // "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -20,13 +21,32 @@
         "react",
         "@typescript-eslint"
     ],
+    "globals": {
+        "process": "writable",
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
     "rules": {
+        "no-unused-vars": [
+            1,
+            {
+                "vars": "all",
+                "args": "after-used",
+                "ignoreRestSiblings": false
+            }
+        ],
+        "react/prop-types": [
+            0
+        ],
+        "react/display-name": [
+            0
+        ],
         "indent": [
             "error",
-            "tab"
+            2
         ],
         "linebreak-style": [
-            "error",
+            1,
             "windows"
         ],
         "quotes": [
@@ -34,11 +54,27 @@
             "single"
         ],
         "semi": [
-            "error",
-            "never"
-        ],
-        "globals": {
-            "process": "readonly"
+            0
+        ]
+    },
+    "overrides": [
+        {
+            "files": [
+                "**/*.ts",
+                "**/*.tsx"
+            ],
+            "extends": [
+                "eslint:recommended",
+                "plugin:@typescript-eslint/eslint-recommended",
+                "plugin:@typescript-eslint/recommended"
+            ],
+            "parser": "@typescript-eslint/parser",
+            "plugins": [
+                "@typescript-eslint"
+            ],
+            "rules": {
+                "@typescript-eslint/no-explicit-any": 0
+            }
         }
-    }
+    ]
 }

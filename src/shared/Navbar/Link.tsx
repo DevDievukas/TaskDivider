@@ -26,10 +26,10 @@ const LinkItem = styled(Link)`
 type Props = {
   direction: string,
   children: JsxElement,
-  className: Object
+  className: unknown
 }
 
-export default (props: Props) => {
+export default (props: Props): unknown => {
   const { direction, children, className } = props;
 
   const dispatch = useDispatch();

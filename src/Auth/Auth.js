@@ -1,41 +1,41 @@
 import { useState } from 'react'
 import React        from 'react'
 
-import Button       from '../shared/FormElements/Button';
-import LoginHouse   from './LoginHouse';
-import LoginUser    from './LoginUser';
-import SignUp       from './SignUp';
-import styles       from './Auth.module.css';
+import Button       from '../shared/FormElements/Button'
+import LoginHouse   from './LoginHouse'
+import LoginUser    from './LoginUser'
+import SignUp       from './SignUp'
+import styles       from './Auth.module.css'
 
 
 
 const Auth = () => {
-  const [isLoginMode, setIsLoginMode] = useState(true);
-  const [houseLogin, setHouseLogin] = useState(true);
-  let form;
+  const [isLoginMode, setIsLoginMode] = useState(true)
+  const [houseLogin, setHouseLogin] = useState(true)
+  let form
 
   const switchToSignUp = () => {
-    setIsLoginMode(false);
-  };
+    setIsLoginMode(false)
+  }
 
   const switchToLogin = () => {
-    setIsLoginMode(true);
-  };
+    setIsLoginMode(true)
+  }
 
   const switchToHouseLogin = () => {
-    setHouseLogin(true);
-  };
+    setHouseLogin(true)
+  }
 
   const switchToUserLogin = () => {
-    setHouseLogin(false);
-  };
+    setHouseLogin(false)
+  }
 
   if (isLoginMode && houseLogin) {
-    form = <LoginHouse />;
+    form = <LoginHouse />
   } else if (isLoginMode && !houseLogin) {
-    form = <LoginUser />;
+    form = <LoginUser />
   } else {
-    form = <SignUp />;
+    form = <SignUp />
   }
 
   const signUp = (
@@ -47,7 +47,7 @@ const Auth = () => {
         </p>
       </div>
     </div>
-  );
+  )
   return (
     <div className={styles.mainDiv}>
       <div className={styles.logoDiv}>
@@ -84,7 +84,7 @@ const Auth = () => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Auth;
+export default Auth

@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom';
-import React    from 'react';
+import { Link } from 'react-router-dom'
+import React    from 'react'
 
-import styles   from './AnnouncementItem.module.css';
+import styles   from './AnnouncementItem.module.css'
 
 const AnnouncementItem = (props) => {
-  const { img, title, text, date, link } = props;
+  const { img, title, text, date, link } = props
 
-  const parsedDate = date.substr(0, 10);
+  const parsedDate = date.substr(0, 10)
 
   return (
     <div className={styles.card}>
@@ -22,7 +22,7 @@ const AnnouncementItem = (props) => {
         ) : null}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AnnouncementItem;
+export default AnnouncementItem

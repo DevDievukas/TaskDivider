@@ -1,24 +1,24 @@
-import { useState } from 'react';
-import React        from 'react';
-import Card         from 'react-bootstrap/Card';
+import { useState } from 'react'
+import React        from 'react'
+import Card         from 'react-bootstrap/Card'
 
 
-import ExpandedRoom from './ExpandedRoom';
-import styles       from './RoomElement.module.css';
+import ExpandedRoom from './ExpandedRoom'
+import styles       from './RoomElement.module.css'
 
 const RoomElement = ( props ) => {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(false)
   
   let imgSrc =
-  'https://image.freepik.com/free-vector/lovely-living-room-interior_23-2147517931.jpg';
-  const { userId, onDelete, room } = props;
+  'https://image.freepik.com/free-vector/lovely-living-room-interior_23-2147517931.jpg'
+  const { userId, onDelete, room } = props
   if (room.images.length > 0) {
-    imgSrc = room.images[0].url;
+    imgSrc = room.images[0].url
   }
 
   const setExpandedHandler = () => {
-    setExpanded(!expanded);
-  };
+    setExpanded(!expanded)
+  }
 
   if (!expanded) {
     return (
@@ -26,7 +26,7 @@ const RoomElement = ( props ) => {
         <Card.Img variant="top" src={imgSrc} className={styles.roomImage} />
         <h5 className={styles.roomTitle}>{room.roomName}</h5>
       </Card>
-    );
+    )
   } else {
     return (
       <div>
@@ -37,8 +37,8 @@ const RoomElement = ( props ) => {
           userId={userId}
         />
       </div>
-    );
+    )
   }
-};
+}
 
-export default RoomElement;
+export default RoomElement

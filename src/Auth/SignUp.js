@@ -1,27 +1,27 @@
 import {
   Form,
   Formik
-}                        from 'formik';
-import { useDispatch }   from 'react-redux';
-import axios             from 'axios';
-import React             from 'react';
+}                        from 'formik'
+import { useDispatch }   from 'react-redux'
+import axios             from 'axios'
+import React             from 'react'
 
-import { startUserAuth } from './thunks';
+import { startUserAuth } from './thunks'
 import {
   startLoading,
   createError,
   stopLoading,
-}                        from '../Loading/thunks';
-import Button            from '../shared/FormElements/Button';
-import Input             from '../shared/FormElements/Input';
+}                        from '../Loading/thunks'
+import Button            from '../shared/FormElements/Button'
+import Input             from '../shared/FormElements/Input'
 
-import styles            from './Auth.module.css';
+import styles            from './Auth.module.css'
 
 const SignUp = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const createUser = (name, email, password) => {
-    dispatch(startLoading());
+    dispatch(startLoading())
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/users/signup`, {
         name,
@@ -30,17 +30,17 @@ const SignUp = () => {
         rememeber: false,
       })
       .then((res) => {
-        dispatch(stopLoading());
+        dispatch(stopLoading())
         dispatch(
           startUserAuth(res.data.userId, res.data.token, res.data.email, false)
-        );
+        )
       })
       .catch((error) => {
         if (error.response) {
-          dispatch(createError(error.response.data.message));
+          dispatch(createError(error.response.data.message))
         }
-      });
-  };
+      })
+  }
 
   return (
     <Formik
@@ -50,7 +50,7 @@ const SignUp = () => {
         password: '',
       }}
       onSubmit={async (values) => {
-        createUser(values.name, values.email, values.password);
+        createUser(values.name, values.email, values.password)
       }}
     >
       {() => (
@@ -70,7 +70,7 @@ const SignUp = () => {
         </Form>
       )}
     </Formik>
-  );
-};
+  )
+}
 
-export default SignUp;
+export default SignUp

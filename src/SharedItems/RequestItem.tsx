@@ -8,12 +8,12 @@ type Props = {
   id: string,
   userId: string,
   request: string,
-  deleteRequest(id: string): VoidFunction
+  deleteRequest(id: string): VoidFunction,
 }
 
 const RequestItem = (props: Props) => {
-  const { date, name, request, id, userId, deleteRequest } = props;
-  const parsedDate = date.substr(5, 5);
+  const { date, name, request, id, userId, deleteRequest } = props
+  const parsedDate = date.substr(5, 5)
 
 
   return (

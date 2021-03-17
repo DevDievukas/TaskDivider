@@ -2,28 +2,28 @@ import {
   Formik,
   Field,
   Form
-}                         from 'formik';
-import { useDispatch }    from 'react-redux';
-import axios              from 'axios';
-import React              from 'react';
+}                         from 'formik'
+import { useDispatch }    from 'react-redux'
+import axios              from 'axios'
+import React              from 'react'
 
-import { startHouseAuth } from './thunks';
+import { startHouseAuth } from './thunks'
 import {
   createError,
   startLoading,
   stopLoading,
-}                         from '../Loading/thunks';
+}                         from '../Loading/thunks'
 
-import Button             from '../shared/FormElements/Button';
-import Input              from '../shared/FormElements/Input';
+import Button             from '../shared/FormElements/Button'
+import Input              from '../shared/FormElements/Input'
 
-import styles             from './Auth.module.css';
+import styles             from './Auth.module.css'
 
 const LoginHouse = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const login = (houseName, password, remember) => {
-    dispatch(startLoading());
+    dispatch(startLoading())
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/house/login`, {
         houseName,
@@ -31,7 +31,7 @@ const LoginHouse = () => {
         remember,
       })
       .then((res) => {
-        dispatch(stopLoading());
+        dispatch(stopLoading())
         dispatch(
           startHouseAuth(
             res.data.houseId,
@@ -39,14 +39,14 @@ const LoginHouse = () => {
             res.data.houseName,
             res.data.remember
           )
-        );
+        )
       })
       .catch((error) => {
         if (error.response) {
-          dispatch(createError(error.response.data.message));
+          dispatch(createError(error.response.data.message))
         }
-      });
-  };
+      })
+  }
 
   return (
     <Formik
@@ -56,7 +56,7 @@ const LoginHouse = () => {
         remember: false,
       }}
       onSubmit={async (values) => {
-        login(values.houseName, values.password, values.remember);
+        login(values.houseName, values.password, values.remember)
       }}
     >
       {() => (
@@ -84,7 +84,7 @@ const LoginHouse = () => {
         </Form>
       )}
     </Formik>
-  );
-};
+  )
+}
 
-export default LoginHouse;
+export default LoginHouse

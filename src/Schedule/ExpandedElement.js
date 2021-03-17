@@ -1,24 +1,24 @@
 import {
   useRef,
   useEffect,
-}               from 'react';
-import React    from 'react';
-import Carousel from 'react-bootstrap/Carousel';
+}               from 'react'
+import React    from 'react'
+import Carousel from 'react-bootstrap/Carousel'
 
 
-import styles    from './ExpandedElement.module.css';
+import styles    from './ExpandedElement.module.css'
 
 const ExpandedElement = (props) => {
-  const { rooms, person } = props;
+  const { rooms, person } = props
   
   useEffect(() => {
     window.scrollTo({
       top: focus.current.offsetTop - 50,
       behavior: 'smooth',
-    });
-  });
+    })
+  })
 
-  const focus = useRef(null);
+  const focus = useRef(null)
   if (rooms.length > 0) {
     return (
       <div ref={focus} className={styles.expandedDiv}>
@@ -47,7 +47,7 @@ const ExpandedElement = (props) => {
                         />
                         <h5>{room.roomName}</h5>
                       </Carousel.Item>
-                    );
+                    )
                   })}
                 </Carousel>
               ) : (
@@ -63,10 +63,10 @@ const ExpandedElement = (props) => {
                 </div>
               )}
             </div>
-          );
+          )
         })}
       </div>
-    );
+    )
   } else {
     return (
       <div ref={focus} className={styles.expandedDiv}>
@@ -77,8 +77,8 @@ const ExpandedElement = (props) => {
         />
         <h4>Rest week</h4>
       </div>
-    );
+    )
   }
-};
+}
 
-export default ExpandedElement;
+export default ExpandedElement

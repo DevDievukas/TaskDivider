@@ -1,39 +1,39 @@
-import { Trash }    from 'phosphor-react';
-import { useState } from 'react';
-import React        from 'react';
+import { Trash }    from 'phosphor-react'
+import { useState } from 'react'
+import React        from 'react'
 
-import Button       from '../shared/FormElements/Button';
-import Modal        from '../shared/UIElements/Modal';
+import Button       from '../shared/FormElements/Button'
+import Modal        from '../shared/UIElements/Modal'
 
-import styles       from './PersonElement.module.css';
-import RoomsModal   from './RoomsModal';
+import styles       from './PersonElement.module.css'
+import RoomsModal   from './RoomsModal'
 
 const PersonElement = (props) => {
-  const [showRoomsModal, setShowRoomsModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showRoomsModal, setShowRoomsModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
   
-  const { token, name, id, onDelete } = props;
+  const { token, name, id, onDelete } = props
 
   const revealRoomsModal = () => {
-    setShowRoomsModal(true);
-  };
+    setShowRoomsModal(true)
+  }
 
   const closeRoomsModal = () => {
-    setShowRoomsModal(false);
-  };
+    setShowRoomsModal(false)
+  }
 
   const revealDeleteModal = () => {
-    setShowDeleteModal(true);
-  };
+    setShowDeleteModal(true)
+  }
 
   const closeDeleteModal = () => {
-    setShowDeleteModal(false);
-  };
+    setShowDeleteModal(false)
+  }
 
   const deletePersonHandler = async (event) => {
-    event.preventDefault();
-    onDelete(id);
-  };
+    event.preventDefault()
+    onDelete(id)
+  }
 
   return (
     <React.Fragment>
@@ -68,7 +68,7 @@ const PersonElement = (props) => {
         />
       </li>
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default PersonElement;
+export default PersonElement

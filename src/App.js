@@ -1,55 +1,55 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react'
 import {
   Route,
   BrowserRouter as Router,
   Switch,
   Redirect,
-} from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+} from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
-import Navbar from './shared/Navbar/Navbar';
-import HouseNavbar from './shared/Navbar/HouseNavbar';
-import Spinner from './shared/Spinner/Spinner';
-import ErrorModal from './shared/UIElements/ErrorModal';
+import Navbar from './shared/Navbar/Navbar'
+import HouseNavbar from './shared/Navbar/HouseNavbar'
+import Spinner from './shared/Spinner/Spinner'
+import ErrorModal from './shared/UIElements/ErrorModal'
 
-import Rooms from './Rooms/Rooms';
-import People from './People/People';
-import Schedule from './Schedule/Schedule';
-import SharedItems from './SharedItems/SharedItems';
-import Announcements from './Announcements/Annauncements';
-import Houses from './House/Houses';
-import Auth from './Auth/Auth';
-import Info from './Info/Info';
+import Rooms from './Rooms/Rooms'
+import People from './People/People'
+import Schedule from './Schedule/Schedule'
+import SharedItems from './SharedItems/SharedItems'
+import Announcements from './Announcements/Annauncements'
+import Houses from './House/Houses'
+import Auth from './Auth/Auth'
+import Info from './Info/Info'
 import {
   startHouseAuth,
   startLogout,
   startUserAuth,
-} from './Auth/thunks';
-import { clearError } from './Loading/thunks';
+} from './Auth/thunks'
+import { clearError } from './Loading/thunks'
 
 const App = () => {
   const { userId, houseId, expiration} = useSelector((state) => ({
     ...state.auth,
-  }));
-  const { isLoading, error } = useSelector((state) => ({ ...state.load }));
-  const dispatch = useDispatch();
-  let logoutTimer;
+  }))
+  const { isLoading, error } = useSelector((state) => ({ ...state.load }))
+  const dispatch = useDispatch()
+  let logoutTimer
 
   const loggingOut = () => {
-    dispatch(startLogout());
-  };
+    dispatch(startLogout())
+  }
 
   const startTimer = useCallback((expirationDate) => {
     if (expirationDate) {
-      const remainingTime = expirationDate.getTime() - new Date().getTime();
-      logoutTimer = setTimeout(loggingOut, remainingTime);
+      const remainingTime = expirationDate.getTime() - new Date().getTime()
+      logoutTimer = setTimeout(loggingOut, remainingTime)
     } else {
-      clearTimeout(logoutTimer);
+      clearTimeout(logoutTimer)
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
-    const storedUserData = JSON.parse(localStorage.getItem('userData'));
+    const storedUserData = JSON.parse(localStorage.getItem('userData'))
     if (storedUserData) {
       if (
         storedUserData.expiration &&
@@ -64,7 +64,7 @@ const App = () => {
               storedUserData.remember,
               new Date(storedUserData.expiration)
             )
-          );
+          )
         } else if (storedUserData.houseId) {
           dispatch(
             startHouseAuth(
@@ -74,7 +74,7 @@ const App = () => {
               storedUserData.remember,
               new Date(storedUserData.expiration)
             )
-          );
+          )
         }
       } else if (!storedUserData.expiration) {
         if (storedUserData.userId) {
@@ -85,7 +85,7 @@ const App = () => {
               storedUserData.email,
               storedUserData.remember
             )
-          );
+          )
         } else if (storedUserData.houseId) {
           dispatch(
             startHouseAuth(
@@ -94,19 +94,19 @@ const App = () => {
               storedUserData.houseName,
               storedUserData.remember
             )
-          );
+          )
         }
       } else {
-        dispatch(startLogout());
+        dispatch(startLogout())
       }
     }
-  }, [dispatch]);
+  }, [dispatch])
 
   useEffect(() => {
-    startTimer(expiration);
-  }, [expiration, startTimer]);
+    startTimer(expiration)
+  }, [expiration, startTimer])
 
-  let routes;
+  let routes
 
   if (userId) {
     routes = (
@@ -140,7 +140,7 @@ const App = () => {
         </Route>
         <Redirect to="/" />
       </Switch>
-    );
+    )
   } else if (houseId) {
     routes = (
       <Switch>
@@ -161,7 +161,7 @@ const App = () => {
         </Route>
         <Redirect to="/" />
       </Switch>
-    );
+    )
   } else {
     routes = (
       <Switch>
@@ -170,7 +170,7 @@ const App = () => {
         </Route>
         <Redirect to="/" />
       </Switch>
-    );
+    )
   }
 
   return (
@@ -181,7 +181,7 @@ const App = () => {
       {isLoading && <Spinner asOverlay />}
       {routes}
     </Router>
-  );
-};
+  )
+}
 
-export default App;
+export default App

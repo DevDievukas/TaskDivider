@@ -2,19 +2,19 @@ import {
   Field,
   Form,
   Formik
-}                     from 'formik';
+}                     from 'formik'
 import  { useState }  from 'react'
-import React          from 'react';
+import React          from 'react'
 
-import Input          from '../shared/FormElements/Input';
-import Button         from '../shared/FormElements/Button';
-import useFetchData   from '../shared/hooks/fetchData-hook';
-import FormModal      from '../shared/UIElements/FormModal/FormModal';
+import Input          from '../shared/FormElements/Input'
+import Button         from '../shared/FormElements/Button'
+import useFetchData   from '../shared/hooks/fetchData-hook'
+import FormModal      from '../shared/UIElements/FormModal/FormModal'
 
-import styles         from './AnnouncementsControl.module.css';
+import styles         from './AnnouncementsControl.module.css'
 
 const AnnouncementsControl = (props) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false)
   const loadedData = useFetchData(
     `${process.env.REACT_APP_BACKEND_URL}/announcement/images/${process.env.REACT_APP_ANOUNCEMENTS_IMAGES_ID}`,
     {
@@ -22,18 +22,18 @@ const AnnouncementsControl = (props) => {
         authorization: `Bearer ${props.token}`,
       },
     }
-  );
+  )
   
-  const { houseParam, onCreate } = props;
-  let imagesRadio;
+  const { houseParam, onCreate } = props
+  let imagesRadio
 
   const revealAnnouncModal = () => {
-    setShowModal(true);
-  };
+    setShowModal(true)
+  }
 
   const closeAnnouncModal = () => {
-    setShowModal(false);
-  };
+    setShowModal(false)
+  }
 
   const addAnnouncSubmitHandler = (title, body, image) => {
     const newAnnouncement = {
@@ -41,13 +41,13 @@ const AnnouncementsControl = (props) => {
       body,
       image,
       house: houseParam,
-    };
-    onCreate(newAnnouncement);
-    setShowModal(false);
-  };
+    }
+    onCreate(newAnnouncement)
+    setShowModal(false)
+  }
 
   if (loadedData.data.length > 0) {
-    let checked = false;
+    let checked = false
     imagesRadio = loadedData.data.map((img) => {
       if (checked) {
         return (
@@ -62,9 +62,9 @@ const AnnouncementsControl = (props) => {
               <img src={img} alt="announcement" className={styles.img} />
             </label>
           </div>
-        );
+        )
       } else {
-        checked = true;
+        checked = true
         return (
           <div key={img} className={styles.radioDiv}>
             <label>
@@ -78,9 +78,9 @@ const AnnouncementsControl = (props) => {
               <img src={img} alt="announcement" className={styles.img} />
             </label>
           </div>
-        );
+        )
       }
-    });
+    })
   }
 
   const form = (
@@ -92,7 +92,7 @@ const AnnouncementsControl = (props) => {
       }}
       onSubmit={async (values) => {
         // console.log(values);
-        addAnnouncSubmitHandler(values.title, values.body, values.image);
+        addAnnouncSubmitHandler(values.title, values.body, values.image)
       }}
     >
       {() => (
@@ -121,7 +121,7 @@ const AnnouncementsControl = (props) => {
         </Form>
       )}
     </Formik>
-  );
+  )
 
   return (
     <React.Fragment>
@@ -135,7 +135,7 @@ const AnnouncementsControl = (props) => {
         CREATE ANNOUNCEMENT
       </Button>
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default AnnouncementsControl;
+export default AnnouncementsControl
