@@ -31,7 +31,7 @@ const ChangePassword = (props) => {
     }
 
     post(
-      `${process.env.REACT_APP_BACKEND_URL}/house/changepassword`,
+      `${process.env.REACT_APP_BACKEND_URL}/house/changepassword/`,
       {
         headers: {
           authorization: `Bearer ${token}`,

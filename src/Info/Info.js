@@ -24,17 +24,20 @@ import {
 import ChangeHouseName        from './ChangeHouseName'
 import ChangeOwner 						from './ChangeOwner'
 import ChangePassword         from './ChangePassword'
+import DeleteHouse from './DeleteHouse'
 
 
 const Info = () => {
   const [showChangeOwner, setShowChangeOwner] = useState(false)
   const [showChangeHousename, setShowChangeHousename] = useState(false)
   const [showChangePassword, setShowPassword] = useState(false)
+  const [showDeleteHouse, setShowDeleteHouse] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [houseName, setHouseName] = useState('')
   const [roomNumber, setRoomNumber] = useState('')
   const [peopleNumber, setPeopleNumber] = useState('')
   const [message, setMessage] = useState()
+  const houseParam = useParams().houseId
   const { token } = useSelector((state) => ({ ...state.auth }))
   const { post } = usePostData()
   const dispatch = useDispatch()
@@ -55,7 +58,6 @@ const Info = () => {
       })
   })
 
-  const houseParam = useParams().houseId
   const history = useHistory()
 
   const closeSuccessModal = () => {
@@ -102,6 +104,11 @@ const Info = () => {
         cancel={() => setShowPassword(false)}
         setMessage={setMessage}
       />
+      <DeleteHouse 
+        show={showDeleteHouse}
+        cancel={() => setShowDeleteHouse(false)}
+        setMessage={setMessage}
+      />
       <Modal
         show={showSuccessModal}
         onCancel={closeSuccessModal}
@@ -122,6 +129,7 @@ const Info = () => {
       <p onClick={() => setShowChangeHousename(true)}>Change house name</p>
       <p onClick={() => setShowPassword(true)}>Change password</p>
       <p onClick={() => setShowChangeOwner(true)}>Change owner</p>
+      <p onClick={() => setShowDeleteHouse(true)}>Delete house</p>
     </Main>
   )
 }
