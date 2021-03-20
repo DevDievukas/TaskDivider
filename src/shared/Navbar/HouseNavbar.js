@@ -1,25 +1,25 @@
-import React from 'react';
+import React            from 'react'
+import { useSelector }  from 'react-redux'
+import styled           from 'styled-components'
 
-import Link from './Link';
-import linkDirection from './linkDirection';
+import linkDirection    from './linkDirection'
+import Link             from './Link'
 
-import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 
 const Section = styled.div`
   justify-content: space-around;
   display: flex;
   text-align: center;
   border-bottom: 1px solid black;
-`;
+`
 
 const Navigation = styled.nav`
   display: block;
   margin-bottom: 8px;
-`;
+`
 
 const HouseNavbar = () => {
-  const { userId } = useSelector((state) => ({ ...state.auth }));
+  const { userId } = useSelector((state) => ({ ...state.auth }))
 
   return (
     <Navigation>
@@ -51,7 +51,7 @@ const HouseNavbar = () => {
         ) : null}
       </Section>
     </Navigation>
-  );
-};
+  )
+}
 
-export default HouseNavbar;
+export default HouseNavbar

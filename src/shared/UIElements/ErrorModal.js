@@ -1,7 +1,8 @@
-import React from 'react';
+import React  from 'react'
 
-import Modal from './Modal';
-import Button from '../FormElements/Button';
+import Button from '../FormElements/Button'
+
+import Modal  from './Modal'
 
 const ErrorModal = props => {
   return (
@@ -13,7 +14,7 @@ const ErrorModal = props => {
     >
       <p>{props.error}</p>
     </Modal>
-  );
-};
+  )
+}
 
-export default ErrorModal;
+export default ErrorModal

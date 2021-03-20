@@ -1,46 +1,61 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+import React    from 'react'
 
-import styles from './Button.module.css';
+import styles   from './Button.module.css'
 
 const Button = (props) => {
-  if (props.href) {
+
+  const {
+    href,
+    inverse,
+    danger,
+    children,
+    exact,
+    to,
+    className,
+    cancel,
+    type,
+    onClick,
+    disabled,
+  } = props
+  
+  if (href) {
     return (
       <a
         className={`${styles.button}  ${
-          props.inverse && styles.buttonInverse
-        } ${props.danger && styles.buttonDanger}`}
-        href={props.href}
+          inverse && styles.buttonInverse
+        } ${danger && styles.buttonDanger}`}
+        href={href}
       >
-        {props.children}
+        {children}
       </a>
-    );
+    )
   }
-  if (props.to) {
+  if (to) {
     return (
       <Link
-        to={props.to}
-        exact={props.exact}
+        to={to}
+        exact={exact}
         className={`${styles.button}  ${
-          props.inverse && styles.buttonInverse
-        } ${props.danger && styles.buttonDanger}`}
+          inverse && styles.buttonInverse
+        } ${danger && styles.buttonDanger}`}
       >
-        {props.children}
+        {children}
       </Link>
-    );
+    )
   }
   return (
     <button
-      className={`${styles.button} ${props.className} ${
-        props.danger && styles.buttonDanger
-      } ${props.cancel && styles.buttonCancel} `}
-      type={props.type}
-      onClick={props.onClick}
-      disabled={props.disabled}
+      className={`${styles.button} ${className} ${
+        danger && styles.buttonDanger
+      } ${cancel && styles.buttonCancel} `}
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
     >
-      {props.children}
+      {children}
     </button>
-  );
-};
+  )
+}
 
-export default Button;
+export default Button

@@ -1,34 +1,35 @@
-import { useState, useEffect } from 'react';
-
-import axios from 'axios';
+import {
+  useState,
+  useEffect
+}                       from 'react'
+import { useDispatch }  from 'react-redux'
+import axios            from 'axios'
 
 import {
   createError,
-  startLoading,
+  initiateLoading,
   stopLoading,
-} from '../../Store/actions/Loading';
-import { useDispatch } from 'react-redux';
+}                       from '../../Loading/thunks'
 
-const useFetchData = (url, headers) => {
-  const [data, setData] = useState([]);
-  const [dataLoaded, setDataLoaded] = useState(false);
-  const dispatch = useDispatch();
+
+export default (url, headers) => {
+  const [data, setData] = useState([])
+  const [dataLoaded, setDataLoaded] = useState(false)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(startLoading());
+    dispatch(initiateLoading())
     axios
       .get(url, headers)
       .then((response) => {
-        dispatch(stopLoading());
-        setData(response.data);
-        setDataLoaded(true);
+        dispatch(stopLoading())
+        setData(response.data)
+        setDataLoaded(true)
       })
       .catch((err) => {
-        dispatch(createError(err.message));
-      });
-  }, []);
+        dispatch(createError(err.message))
+      })
+  }, [])
 
-  return { data, dataLoaded, setData };
-};
-
-export default useFetchData;
+  return { data, dataLoaded, setData }
+}

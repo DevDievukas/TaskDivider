@@ -1,9 +1,9 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { stopLoading } from '../../Store/actions/Loading';
-import styled from 'styled-components'
+import { stopLoading } from '../../Loading/thunks';
 import { JsxElement } from 'typescript';
+import React from 'react';
+import styled from 'styled-components'
 
 
 const LinkItem = styled(Link)`
@@ -26,11 +26,11 @@ const LinkItem = styled(Link)`
 type Props = {
   direction: string,
   children: JsxElement,
-  className: Object
+  className: unknown
 }
 
-export default ( props: Props ) => {
-  const {direction, children, className} = props;
+export default (props: Props): unknown => {
+  const { direction, children, className } = props;
 
   const dispatch = useDispatch();
   return (

@@ -1,11 +1,11 @@
-import React from 'react';
+import React       from 'react'
 
-import RequestItem from './RequestItem';
+import RequestItem from './RequestItem'
 
 const ItemsList = (props) => {
-  const { data, deleteRequest, userId } = props;
+  const { data, deleteRequest, userId } = props
 
-  let table;
+  let table
   if (data.length > 0) {
     table = data.map((request) => {
       return (
@@ -18,13 +18,13 @@ const ItemsList = (props) => {
           deleteRequest={deleteRequest}
           userId={userId}
         />
-      );
-    });
+      )
+    })
   } else {
-    table = null;
+    table = null
   }
 
-  return table;
-};
+  return table
+}
 
-export default ItemsList;
+export default ItemsList

@@ -1,44 +1,49 @@
-import React, { useRef, useState, useEffect } from 'react';
+import {
+  useRef,
+  useState,
+  useEffect
+}             from 'react'
+import React  from 'react'
 
-import Button from './Button';
-import styles from './ImageUpload.module.css';
+import Button from './Button'
+import styles from './ImageUpload.module.css'
 
 const ImageUpload = (props) => {
-  const [file, setFile] = useState();
-  const [previewUrl, setPreviewUrl] = useState();
-  const [isValid, setIsValid] = useState(false);
+  const [file, setFile] = useState()
+  const [previewUrl, setPreviewUrl] = useState()
+  const [isValid, setIsValid] = useState(false)
 
-  const filePickerRef = useRef();
+  const filePickerRef = useRef()
 
   useEffect(() => {
     if (!file) {
-      return;
+      return
     }
-    const fileReader = new FileReader();
+    const fileReader = new FileReader()
     fileReader.onload = () => {
-      setPreviewUrl(fileReader.result);
-    };
-    fileReader.readAsDataURL(file);
-  }, [file]);
+      setPreviewUrl(fileReader.result)
+    }
+    fileReader.readAsDataURL(file)
+  }, [file])
 
   const pickedHandler = (event) => {
-    let pickedFile;
-    let fileIsValid = isValid;
+    let pickedFile
+    let fileIsValid = isValid
     if (event.target.files && event.target.files.length === 1) {
-      pickedFile = event.target.files[0];
-      setFile(pickedFile);
-      setIsValid(true);
-      fileIsValid = true;
+      pickedFile = event.target.files[0]
+      setFile(pickedFile)
+      setIsValid(true)
+      fileIsValid = true
     } else {
-      setIsValid(false);
-      fileIsValid = false;
+      setIsValid(false)
+      fileIsValid = false
     }
-    props.onInput(props.id, pickedFile, fileIsValid);
-  };
+    props.onInput(props.id, pickedFile, fileIsValid)
+  }
 
   const pickImageHandler = () => {
-    filePickerRef.current.click();
-  };
+    filePickerRef.current.click()
+  }
 
   return (
     <div className={styles.formControl}>
@@ -61,7 +66,7 @@ const ImageUpload = (props) => {
       </div>
       {!isValid && <p>{props.errorText}</p>}
     </div>
-  );
-};
+  )
+}
 
-export default ImageUpload;
+export default ImageUpload

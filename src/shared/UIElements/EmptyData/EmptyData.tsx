@@ -2,13 +2,13 @@ import React from 'react';
 
 import styles from './EmptyData.module.css';
 
-type Props ={
+type Props = {
   header: string
 }
 
 
 const EmptyData = (props: Props) => {
-  const {header} = props;
+  const { header } = props;
   return (
     <div className={styles.div}>
       <h3>{header}</h3>

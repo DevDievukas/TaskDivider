@@ -1,39 +1,38 @@
-import React, { useState } from 'react';
+import { useState } from 'react'
+import React        from 'react'
 
-import LoginUser from './LoginUser';
-import SignUp from './SignUp';
-import LoginHouse from './LoginHouse';
+import Button       from '../shared/FormElements/Button'
+import Login        from './Login'
+import SignUp       from './SignUp'
+import styles       from './Auth.module.css'
 
-import Button from '../shared/FormElements/Button';
-import styles from './Auth.module.css';
+
 
 const Auth = () => {
-  const [isLoginMode, setIsLoginMode] = useState(true);
-  const [houseLogin, setHouseLogin] = useState(true);
-  let form;
+  const [isLoginMode, setIsLoginMode] = useState(true)
+  const [isUserLogin, setIsUserLogin] = useState(true)
+  let form
 
   const switchToSignUp = () => {
-    setIsLoginMode(false);
-  };
+    setIsLoginMode(false)
+  }
 
   const switchToLogin = () => {
-    setIsLoginMode(true);
-  };
+    setIsLoginMode(true)
+  }
 
   const switchToHouseLogin = () => {
-    setHouseLogin(true);
-  };
+    setIsUserLogin(false)
+  }
 
   const switchToUserLogin = () => {
-    setHouseLogin(false);
-  };
+    setIsUserLogin(true)
+  }
 
-  if (isLoginMode && houseLogin) {
-    form = <LoginHouse />;
-  } else if (isLoginMode && !houseLogin) {
-    form = <LoginUser />;
+  if (isLoginMode) {
+    form = <Login isUserLogin={isUserLogin}/>
   } else {
-    form = <SignUp />;
+    form = <SignUp />
   }
 
   const signUp = (
@@ -45,7 +44,7 @@ const Auth = () => {
         </p>
       </div>
     </div>
-  );
+  )
   return (
     <div className={styles.mainDiv}>
       <div className={styles.logoDiv}>
@@ -60,13 +59,13 @@ const Auth = () => {
           <div className={styles.switchTypeDiv}>
             <h3
               onClick={switchToHouseLogin}
-              className={houseLogin ? styles.active : null}
+              className={!isUserLogin ? styles.active : null}
             >
               House Login
             </h3>
             <h3
               onClick={switchToUserLogin}
-              className={!houseLogin ? styles.active : null}
+              className={isUserLogin ? styles.active : null}
             >
               User Login
             </h3>
@@ -82,7 +81,7 @@ const Auth = () => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Auth;
+export default Auth
