@@ -20,8 +20,8 @@ import FormModal 	      from '../shared/UIElements/FormModal/FormModal'
 const ChangePassword = (props) => {
   const { post } = usePostData()
   const { token } = useSelector(state => ({ ...state.auth }))
-  const dispatch = useDispatch()
   const houseParam = useParams().houseId
+  const dispatch = useDispatch()
 
   const changePasswordHandler = (oldPassword, newPassword) => {
     const reqData = {
@@ -82,6 +82,7 @@ const ChangePassword = (props) => {
       )}
     </Formik>
   )
+  
   return (
     <FormModal
       onCancel={props.cancel}

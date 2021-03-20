@@ -38,7 +38,6 @@ const ChangeHouseName = (props) => {
         props.cancel()
       }
     )
-
   }
 
   const form = (
@@ -61,6 +60,7 @@ const ChangeHouseName = (props) => {
       )}
     </Formik>
   )
+  
   return (
     <FormModal
       onCancel={props.cancel}

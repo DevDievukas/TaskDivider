@@ -20,9 +20,9 @@ import FormModal 	      from '../shared/UIElements/FormModal/FormModal'
 
 const DeleteHouse = (props) => {
   const { token } = useSelector(state => ({ ...state.auth }))
+  const houseParam = useParams().houseId
   const dispatch = useDispatch()
   const history = useHistory()
-  const houseParam = useParams().houseId
 
   const deleteSuccess = () => {
     history.push('/')
@@ -66,6 +66,7 @@ const DeleteHouse = (props) => {
       )}
     </Formik>
   )
+
   return (
     <FormModal
       onCancel={props.cancel}

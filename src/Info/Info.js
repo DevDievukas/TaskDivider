@@ -4,17 +4,12 @@ import {
   useState,
 }                    					from 'react'
 import { useDispatch } 				from 'react-redux'
-import { useSelector } 				from 'react-redux'
 import {
   useParams,
-  useHistory
 } 														from 'react-router-dom'
 import React 									from 'react'
 
-import { startRefreshToken } 	from '../Auth/thunks'
-import usePostData 						from '../shared/hooks/postData-hook'
-import Button 								from '../shared/FormElements/Button'
-import Modal 									from '../shared/UIElements/Modal'
+import { createError }        from '../Loading/thunks'
 
 import {
   HouseName,
@@ -24,7 +19,7 @@ import {
 import ChangeHouseName        from './ChangeHouseName'
 import ChangeOwner 						from './ChangeOwner'
 import ChangePassword         from './ChangePassword'
-import DeleteHouse from './DeleteHouse'
+import DeleteHouse            from './DeleteHouse'
 
 
 const Info = () => {
@@ -32,14 +27,10 @@ const Info = () => {
   const [showChangeHousename, setShowChangeHousename] = useState(false)
   const [showChangePassword, setShowPassword] = useState(false)
   const [showDeleteHouse, setShowDeleteHouse] = useState(false)
-  const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [houseName, setHouseName] = useState('')
   const [roomNumber, setRoomNumber] = useState('')
   const [peopleNumber, setPeopleNumber] = useState('')
-  const [message, setMessage] = useState()
   const houseParam = useParams().houseId
-  const { token } = useSelector((state) => ({ ...state.auth }))
-  const { post } = usePostData()
   const dispatch = useDispatch()
 
 
@@ -53,46 +44,16 @@ const Info = () => {
       })
       .catch((error) => {
         if (error.response) {
-          // dispatch(createError(error.response.data.message))
+          dispatch(createError('COULD NOT FETCH HOUSE DATA'))
         }
       })
   })
-
-  const history = useHistory()
-
-  const closeSuccessModal = () => {
-    setShowSuccessModal(false)
-    history.push('/')
-  }
-
-  const changeOwnerHandler = (newOwner) => {
-    const reqData = {
-      email: newOwner.email,
-      houseId: houseParam,
-    }
-    post(
-      `${process.env.REACT_APP_BACKEND_URL}/house/changeowner`,
-      {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      },
-      reqData,
-      (res) => {
-        setMessage(res.message)
-        setShowChangeOwner(false)
-        setShowSuccessModal(true)
-        dispatch(startRefreshToken(res.token))
-      }
-    )
-  }
 
   return (
     <Main>
       <ChangeOwner
         show={showChangeOwner}
         cancel={() => setShowChangeOwner(false)}
-        changeOwner={changeOwnerHandler}
       />
       <ChangeHouseName 
         show={showChangeHousename}
@@ -102,21 +63,11 @@ const Info = () => {
       <ChangePassword 
         show={showChangePassword}
         cancel={() => setShowPassword(false)}
-        setMessage={setMessage}
       />
       <DeleteHouse 
         show={showDeleteHouse}
         cancel={() => setShowDeleteHouse(false)}
-        setMessage={setMessage}
       />
-      <Modal
-        show={showSuccessModal}
-        onCancel={closeSuccessModal}
-        header={message}
-        onSubmit={closeSuccessModal}
-      >
-        <Button>OK</Button>
-      </Modal>
       <HouseName>{houseName}</HouseName>
       <Inner>
         <p>Residents:</p>
