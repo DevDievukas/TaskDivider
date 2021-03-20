@@ -24,3 +24,12 @@ export const clearError = () => {
     type: actionTypes.CLEAR_ERROR,
   }
 }
+
+export const initiateLoading = () => {
+  return dispatch => {   
+    dispatch(startLoading())
+    setTimeout(() => {
+      dispatch(stopLoading())
+    }, 10000)
+  }
+}

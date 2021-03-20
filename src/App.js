@@ -1,5 +1,4 @@
 import {
-  useCallback,
   useEffect
 }                   from 'react'
 import {
@@ -13,7 +12,6 @@ import React        from 'react'
 
 import {
   authFromLocalStorage,
-  startLogout,
 }                     from './Auth/thunks'
 import { clearError } from './Loading/thunks'
 
@@ -25,33 +23,16 @@ import Spinner        from './shared/Spinner/Spinner'
 import Routes         from './Routes/Routes'
 
 const App = () => {
-  const { houseId, expiration} = useSelector((state) => ({
+  const { houseId} = useSelector((state) => ({
     ...state.auth,
   }))
   const { isLoading, error } = useSelector((state) => ({ ...state.loading }))
   const dispatch = useDispatch()
-  let logoutTimer
-
-  const loggingOut = () => {
-    dispatch(startLogout())
-  }
-
-  const startTimer = useCallback((expirationDate) => {
-    if (expirationDate) {
-      const remainingTime = expirationDate.getTime() - new Date().getTime()
-      logoutTimer = setTimeout(loggingOut, remainingTime)
-    } else {
-      clearTimeout(logoutTimer)
-    }
-  }, [])
 
   useEffect(() => {
     dispatch(authFromLocalStorage())
   }, [dispatch])
 
-  useEffect(() => {
-    startTimer(expiration)
-  }, [expiration, startTimer])
 
   return (
     <Router>
