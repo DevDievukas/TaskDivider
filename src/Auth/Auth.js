@@ -2,8 +2,7 @@ import { useState } from 'react'
 import React        from 'react'
 
 import Button       from '../shared/FormElements/Button'
-import LoginHouse   from './LoginHouse'
-import LoginUser    from './LoginUser'
+import Login        from './Login'
 import SignUp       from './SignUp'
 import styles       from './Auth.module.css'
 
@@ -11,7 +10,7 @@ import styles       from './Auth.module.css'
 
 const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(true)
-  const [houseLogin, setHouseLogin] = useState(true)
+  const [isUserLogin, setIsUserLogin] = useState(true)
   let form
 
   const switchToSignUp = () => {
@@ -23,17 +22,15 @@ const Auth = () => {
   }
 
   const switchToHouseLogin = () => {
-    setHouseLogin(true)
+    setIsUserLogin(false)
   }
 
   const switchToUserLogin = () => {
-    setHouseLogin(false)
+    setIsUserLogin(true)
   }
 
-  if (isLoginMode && houseLogin) {
-    form = <LoginHouse />
-  } else if (isLoginMode && !houseLogin) {
-    form = <LoginUser />
+  if (isLoginMode) {
+    form = <Login isUserLogin={isUserLogin}/>
   } else {
     form = <SignUp />
   }
@@ -62,13 +59,13 @@ const Auth = () => {
           <div className={styles.switchTypeDiv}>
             <h3
               onClick={switchToHouseLogin}
-              className={houseLogin ? styles.active : null}
+              className={!isUserLogin ? styles.active : null}
             >
               House Login
             </h3>
             <h3
               onClick={switchToUserLogin}
-              className={!houseLogin ? styles.active : null}
+              className={isUserLogin ? styles.active : null}
             >
               User Login
             </h3>

@@ -4,25 +4,54 @@ import {
   Form
 }                         from 'formik'
 import { useDispatch }    from 'react-redux'
-import axios              from 'axios'
 import React              from 'react'
+import axios              from 'axios'
 
-import { startHouseAuth } from './thunks'
 import {
-  createError,
   startLoading,
+  createError,
   stopLoading,
 }                         from '../Loading/thunks'
-
 import Button             from '../shared/FormElements/Button'
 import Input              from '../shared/FormElements/Input'
 
+import {
+  startUserAuth,
+  startHouseAuth,
+}                         from './thunks'
 import styles             from './Auth.module.css'
 
-const LoginHouse = () => {
+const Login = (props) => {
+  const { isUserLogin } = props
   const dispatch = useDispatch()
 
-  const login = (houseName, password, remember) => {
+  const userLogin = (email, password, remember) => {
+    dispatch(startLoading())
+    axios
+      .post(`${process.env.REACT_APP_BACKEND_URL}/users/login`, {
+        email,
+        password,
+        remember,
+      })
+      .then((res) => {
+        dispatch(stopLoading())
+        dispatch(
+          startUserAuth(
+            res.data.userId,
+            res.data.token,
+            res.data.email,
+            res.data.remember,
+          )
+        )
+      })
+      .catch((error) => {
+        if (error.response) {
+          dispatch(createError(error.response.data.message))
+        }
+      })
+  }
+
+  const houseLogin = (houseName, password, remember) => {
     dispatch(startLoading())
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/house/login`, {
@@ -51,22 +80,35 @@ const LoginHouse = () => {
   return (
     <Formik
       initialValues={{
+        email: '',
         houseName: '',
         password: '',
         remember: false,
       }}
       onSubmit={async (values) => {
-        login(values.houseName, values.password, values.remember)
+        if (isUserLogin) {
+          userLogin(values.email, values.password, values.remember)
+        } else {
+          houseLogin(values.houseName, values.password, values.remember)
+        }
       }}
     >
       {() => (
         <Form className={styles.form}>
-          <Input
-            id="houseName"
-            name="houseName"
-            type="input"
-            title="NAME OF THE HOUSE"
-          />
+          { isUserLogin ? 
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              title="EMAIL-ADRESS"
+            /> :
+            <Input
+              id="houseName"
+              name="houseName"
+              type="input"
+              title="NAME OF THE HOUSE"
+            />
+          }
           <Input
             id="password"
             name="password"
@@ -87,4 +129,5 @@ const LoginHouse = () => {
   )
 }
 
-export default LoginHouse
+
+export default Login
