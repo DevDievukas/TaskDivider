@@ -3,14 +3,14 @@ import axios 						from 'axios'
 
 import {
   stopLoading,
-  startLoading,
   createError,
+  initiateLoading,
 } 											from '../../Loading/thunks'
 
 export default () => {
   const dispatch = useDispatch()
   const post = (url, headers, createdData, method) => {
-    dispatch(startLoading())
+    dispatch(initiateLoading())
     axios
       .post(url, createdData, headers)
       .then((res) => {

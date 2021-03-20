@@ -7,7 +7,7 @@ import axios            from 'axios'
 
 import {
   createError,
-  startLoading,
+  initiateLoading,
   stopLoading,
 }                       from '../../Loading/thunks'
 
@@ -18,7 +18,7 @@ export default (url, headers) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(startLoading())
+    dispatch(initiateLoading())
     axios
       .get(url, headers)
       .then((response) => {
