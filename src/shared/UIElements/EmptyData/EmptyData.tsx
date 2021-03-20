@@ -7,7 +7,7 @@ type Props = {
 }
 
 
-const EmptyData = (props: Props) => {
+const EmptyData = (props: Props): JSX.Element => {
   const { header } = props;
   return (
     <div className={styles.div}>

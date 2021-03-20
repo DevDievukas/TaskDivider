@@ -30,8 +30,8 @@ font-weight: bold;
 
 
 
-const HouseCard = (props: Props) => {
-  const history = useHistory();
+const HouseCard = (props: Props): JSX.Element => {
+  const history = useHistory()
 
   const { houseName, houseId } = props;
 
@@ -43,7 +43,7 @@ const HouseCard = (props: Props) => {
     <Card onClick={getHouse}>
       <House >{houseName}</House>
     </Card>
-  );
-};
+  )
+}
 
 export default HouseCard;
