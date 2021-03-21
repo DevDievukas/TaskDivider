@@ -21,6 +21,7 @@ import Navbar         from './shared/Navbar/Navbar'
 import Spinner        from './shared/Spinner/Spinner'
 
 import Routes         from './Routes/Routes'
+import SuccessModal   from './Success/SuccessModal'
 
 const App = () => {
   const { houseId} = useSelector((state) => ({
@@ -38,6 +39,7 @@ const App = () => {
     <Router>
       <Navbar />
       {houseId ? <HouseNavbar /> : null}
+      <SuccessModal />
       <ErrorModal error={error} onClear={() => dispatch(clearError())} />
       {isLoading && <Spinner asOverlay />}
       <Routes />

@@ -15,6 +15,8 @@ import React 			            from 'react'
 
 import { startRefreshToken } 	from '../Auth/thunks'
 import { createError }        from '../Loading/thunks'
+import { createMessage }      from '../Success/thunks'
+import { changedPassword }    from '../Success/SuccessMessages'
 import Button 		            from '../shared/FormElements/Button'
 import Input 			            from '../shared/FormElements/Input'
 import FormModal 	            from '../shared/UIElements/FormModal/FormModal'
@@ -40,7 +42,7 @@ const ChangeOwner = (props) => {
         },
       }).
       then((res) => {
-        console.log('res success')
+        dispatch(createMessage(changedPassword))
         dispatch(startRefreshToken(res.data.token))
         history.push('/')
       }).catch(() => {

@@ -1,0 +1,1 @@
+export const changedPassword = 'PASSWORD CHANGED SUCCESSFULLY'
