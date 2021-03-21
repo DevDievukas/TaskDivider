@@ -1,7 +1,8 @@
 
 import Input 						from '../shared/FormElements/Input'
 import Button 					from '../shared/FormElements/Button'
-import { Form,
+import {
+  Form,
   Formik
 }											 	from 'formik'
 import styles 					from './Houses.module.css'
@@ -17,7 +18,6 @@ const HouseForm = (props) => {
         password: '',
       }}
       onSubmit={async (values) => {
-        // console.log(values);
         createHouseHandler(values.houseName, values.password)
       }}
     >

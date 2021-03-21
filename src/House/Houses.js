@@ -44,7 +44,6 @@ const Houses = () => {
     }
   }
 
-
   const createHouseHandler = (houseName, password) => {
     const createdHouse = {
       houseName,
