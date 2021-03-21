@@ -1,21 +1,60 @@
+import axios                  from 'axios'
 import {
   Formik,
   Form
-}								 	from 'formik'
-import React 			from 'react'
+}								 	            from 'formik'
+import {
+  useSelector,
+  useDispatch,
+}          				            from 'react-redux'
+import {
+  useParams,
+  useHistory
+} 								            from 'react-router-dom'
+import React 			            from 'react'
 
-import Button 		from '../shared/FormElements/Button'
-import Input 			from '../shared/FormElements/Input'
-import FormModal 	from '../shared/UIElements/FormModal/FormModal'
+import { startRefreshToken } 	from '../Auth/thunks'
+import { createError }        from '../Loading/thunks'
+import Button 		            from '../shared/FormElements/Button'
+import Input 			            from '../shared/FormElements/Input'
+import FormModal 	            from '../shared/UIElements/FormModal/FormModal'
 
 const ChangeOwner = (props) => {
+  const houseParam = useParams().houseId 
+  const { token } = useSelector((state) => ({ ...state.auth }))
+  const dispatch = useDispatch()
+  const history = useHistory()
+
+
+  const changeOwnerHandler = (email) => {
+    const reqData = {
+      email,
+      houseId: houseParam,
+    }
+    axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/house/changeowner`,
+      reqData,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }).
+      then((res) => {
+        console.log('res success')
+        dispatch(startRefreshToken(res.data.token))
+        history.push('/')
+      }).catch(() => {
+        dispatch(createError('Could not transfer ownership'))
+      })
+  }
+
   const form = (
     <Formik
       initialValues={{
         email: '',
       }}
       onSubmit={async (values) => {
-        props.changeOwner({email: values.email})
+        changeOwnerHandler(values.email)
       }}
     >
       {() => (

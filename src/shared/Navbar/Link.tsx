@@ -26,7 +26,7 @@ const LinkItem = styled(Link)`
 type Props = {
   direction: string,
   children: JsxElement,
-  className: unknown
+  className: string
 }
 
 export default (props: Props): unknown => {

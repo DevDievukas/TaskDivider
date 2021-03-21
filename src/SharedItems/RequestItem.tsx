@@ -11,7 +11,7 @@ type Props = {
   deleteRequest(id: string): VoidFunction,
 }
 
-const RequestItem = (props: Props) => {
+const RequestItem = (props: Props): JSX.Element => {
   const { date, name, request, id, userId, deleteRequest } = props
   const parsedDate = date.substr(5, 5)
 
