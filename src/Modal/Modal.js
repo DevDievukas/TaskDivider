@@ -35,11 +35,13 @@ export default () => {
     dispatch(clearMessage())
   }
 
-  return (
-    <React.Fragment>
-      {!!message && <Backdrop onClick={clearSuccessMessage} />}
-      {!!message && <ModalOverlay clear={clearSuccessMessage} message={message} error={messageType}/>}
-    </React.Fragment>
+  return ( 
+    message ?
+      <React.Fragment>
+        <Backdrop onClick={clearSuccessMessage} />
+        <ModalOverlay clear={clearSuccessMessage} message={message} error={messageType}/>
+      </React.Fragment> : 
+      null
   )
 }
 

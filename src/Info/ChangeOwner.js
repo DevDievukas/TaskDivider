@@ -18,7 +18,7 @@ import {
   createErrorMessage,
   createSuccessMessage
 }                               from '../Modal/thunks'
-import { transferSuccessfull }  from '../Modal/SuccessMessages'
+import { transferSuccessfull }  from '../strings/success'
 import Button 		              from '../shared/FormElements/Button'
 import Input 			              from '../shared/FormElements/Input'
 import FormModal 	              from '../shared/UIElements/FormModal/FormModal'
