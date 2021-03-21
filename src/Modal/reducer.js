@@ -4,11 +4,13 @@ import * as actionTypes from './actions'
 
 const initialState = {
   message: null,
+  messageType: null,
 }
 
 const createMessage = (state, action) => {
   return updateObject(state, {
-    message: action.message
+    message: action.message,
+    messageType: action.messageType
   })
 }
 

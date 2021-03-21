@@ -2,10 +2,10 @@ import { combineReducers } from 'redux'
 
 import authReducer         from '../Auth/Reducer'
 import loadingReducer      from '../Loading/reducer'
-import successReducer      from '../Success/reducer'
+import modalReducer        from '../Modal/reducer'
 
 export default combineReducers({
   auth:    authReducer,
   loading: loadingReducer,
-  success: successReducer,
+  modal:   modalReducer,
 })

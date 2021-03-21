@@ -11,11 +11,11 @@ import * as styled        from './styled'
 import { clearMessage }   from './thunks'
 
 const ModalOverlay = (props) => {
-  const { clear, message } = props
+  const { clear, error, message } = props
 
   const content = (
-    <styled.Modal>
-      <h2>{message}</h2>
+    <styled.Modal error={error === 'error'}>
+      <styled.Message>{message}</styled.Message>
       <styled.okButton onClick={() => clear()}>
       ✓
       </styled.okButton>
@@ -28,7 +28,7 @@ const ModalOverlay = (props) => {
 }
 
 export default () => {
-  const { message } = useSelector(state => ({ ...state.success }))
+  const { message, messageType } = useSelector(state => ({ ...state.modal }))
   const dispatch = useDispatch()
 
   const clearSuccessMessage = () => {
@@ -38,7 +38,7 @@ export default () => {
   return (
     <React.Fragment>
       {!!message && <Backdrop onClick={clearSuccessMessage} />}
-      {!!message && <ModalOverlay clear={clearSuccessMessage} message={message}/>}
+      {!!message && <ModalOverlay clear={clearSuccessMessage} message={message} error={messageType}/>}
     </React.Fragment>
   )
 }

@@ -35,6 +35,7 @@ const ChangeHouseName = (props) => {
       },
       reqData,
       () => {
+        props.setHouseName(newHouseName )
         props.cancel()
       }
     )

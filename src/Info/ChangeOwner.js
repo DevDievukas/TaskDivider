@@ -1,25 +1,27 @@
-import axios                  from 'axios'
+import axios                    from 'axios'
 import {
   Formik,
   Form
-}								 	            from 'formik'
+}								 	              from 'formik'
 import {
   useSelector,
   useDispatch,
-}          				            from 'react-redux'
+}          				              from 'react-redux'
 import {
   useParams,
   useHistory
-} 								            from 'react-router-dom'
-import React 			            from 'react'
+} 								              from 'react-router-dom'
+import React 			              from 'react'
 
-import { startRefreshToken } 	from '../Auth/thunks'
-import { createError }        from '../Loading/thunks'
-import { createMessage }      from '../Success/thunks'
-import { changedPassword }    from '../Success/SuccessMessages'
-import Button 		            from '../shared/FormElements/Button'
-import Input 			            from '../shared/FormElements/Input'
-import FormModal 	            from '../shared/UIElements/FormModal/FormModal'
+import { startRefreshToken } 	  from '../Auth/thunks'
+import {
+  createErrorMessage,
+  createSuccessMessage
+}                               from '../Modal/thunks'
+import { transferSuccessfull }  from '../Modal/SuccessMessages'
+import Button 		              from '../shared/FormElements/Button'
+import Input 			              from '../shared/FormElements/Input'
+import FormModal 	              from '../shared/UIElements/FormModal/FormModal'
 
 const ChangeOwner = (props) => {
   const houseParam = useParams().houseId 
@@ -42,11 +44,11 @@ const ChangeOwner = (props) => {
         },
       }).
       then((res) => {
-        dispatch(createMessage(changedPassword))
+        dispatch(createSuccessMessage(transferSuccessfull))
         dispatch(startRefreshToken(res.data.token))
         history.push('/')
       }).catch(() => {
-        dispatch(createError('Could not transfer ownership'))
+        dispatch(createErrorMessage('Could not transfer ownership'))
       })
   }
 

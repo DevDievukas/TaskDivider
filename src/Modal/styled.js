@@ -1,7 +1,11 @@
 import styled from 'styled-components'
 
+export const Message = styled.h2`
+  border-bottom: 1px solid black;
+`
+
 export const Modal = styled.div`
-z-index: 100;
+z-index: 150;
 position: fixed;
 top: 5em;
 left: 10%;
@@ -12,6 +16,13 @@ border-radius: 8px;
 text-align: center;
 max-height: 80vh;
 overflow: auto;
+
+${({ error }) => error && `
+    ${Message}{
+      color: red;
+    }
+  `}
+
 `
 
 export const okButton = styled.button`
