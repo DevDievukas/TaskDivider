@@ -8,6 +8,7 @@ import styles 					from './Houses.module.css'
 import React 						from 'react'
 
 const HouseForm = (props) => {
+  const { createHouseHandler } = props
 
   return (
     <Formik
@@ -17,7 +18,7 @@ const HouseForm = (props) => {
       }}
       onSubmit={async (values) => {
         // console.log(values);
-        props.createHouseHandler(values.houseName, values.password)
+        createHouseHandler(values.houseName, values.password)
       }}
     >
       {() => (

@@ -1,20 +1,27 @@
 import { 
   useSelector,
   useDispatch,
-}                      	from 'react-redux'
-import React 						from 'react'
+}                      	    from 'react-redux'
+import axios                from 'axios'
+import React 						    from 'react'
 
+import {
+  createErrorMessage,
+  createSuccessMessage
+}                           from '../Modal/thunks'
 import {
   closeForm,
   createForm
-}                       from '../Form/thunks'
-import Button 					from '../shared/FormElements/Button'
-import useFetchData 		from '../shared/hooks/fetchData-hook'
-import usePostData 			from '../shared/hooks/postData-hook'
+}                           from '../Form/thunks'
+import Button 					    from '../shared/FormElements/Button'
+import useFetchData 		    from '../shared/hooks/fetchData-hook'
+import { house }            from '../strings/form'
+import { houseCreateFail }  from '../strings/error'
+import { houseCreated }     from '../strings/success'
 
-import HouseList        from './HouseList'
-import HouseForm        from './form'
-import styles 					from './Houses.module.css'
+import HouseList            from './HouseList'
+import HouseForm            from './form'
+import styles 					    from './Houses.module.css'
 
 
 const Houses = () => {
@@ -28,39 +35,43 @@ const Houses = () => {
       },
     }
   )
-  const { post } = usePostData()
+
+  const addFilter = (res) => {
+    if (loadedData.data) {
+      loadedData.setData((prevData) => [...prevData, res])
+    } else {
+      loadedData.setData([res])
+    }
+  }
 
 
   const createHouseHandler = (houseName, password) => {
-    const addFilter = (res) => {
-      if (loadedData.data) {
-        loadedData.setData((prevData) => [...prevData, res])
-      } else {
-        loadedData.setData([res])
-      }
-    }
-
     const createdHouse = {
       houseName,
       password,
     }
-    post(
+
+    axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/house/`,
+      createdHouse,
       {
         headers: {
           authorization: `Bearer ${token}`,
         },
       },
-      createdHouse,
-      addFilter
-    )
-    dispatch(closeForm())
+    ).then(res => {
+      addFilter(res.data)
+      dispatch(createSuccessMessage(houseCreated))
+      dispatch(closeForm())
+    }).catch(() => {
+      dispatch(createErrorMessage(houseCreateFail))
+    })
   }
 
   const callForm = () => {
     dispatch(createForm(
-      HouseForm(createHouseHandler),
-      'CREATE HOUSE?'
+      <HouseForm createHouseHandler={createHouseHandler} />,
+      house
     ))
   }
 
