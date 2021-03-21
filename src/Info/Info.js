@@ -47,7 +47,7 @@ const Info = () => {
           dispatch(createError('COULD NOT FETCH HOUSE DATA'))
         }
       })
-  })
+  }, [])
 
   return (
     <Main>

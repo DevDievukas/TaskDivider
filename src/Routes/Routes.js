@@ -80,10 +80,9 @@ const Routes = () => {
   } else {
     routes = (
       <Switch>
-        <Route path="/" exact>
+        <Route path="/">
           <Auth />
         </Route>
-        <Redirect to="/" />
       </Switch>
     )
   }
