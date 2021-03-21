@@ -1,0 +1,1 @@
+export const houseCreateFail = 'COUD NOT CREATE HOUSE'
