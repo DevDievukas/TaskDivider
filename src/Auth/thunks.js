@@ -1,3 +1,7 @@
+import axios        from 'axios'
+
+import { setHouse } from '../House/actions'
+
 import {
   clearLogoutTimer,
   houseAuth,
@@ -5,7 +9,7 @@ import {
   startLogoutTimer,
   refreshToken,
   userAuth,
-}                       from './actions'
+}                   from './actions'
 
 
 export const startRefreshToken = (token) => {
@@ -74,6 +78,13 @@ export const startHouseAuth = (id, token, houseName, remember, expiration) => {
         remember: remember,
       })
     )
+
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/house/${id}`)
+      .then(res => {
+        dispatch(setHouse(res.data))
+      }).catch(error => {
+        console.log(error)
+      })
     dispatch(houseAuth(id, token, houseName, tokenExpiration))
     dispatch(initiateLogoutTimer(tokenExpiration))
   }
