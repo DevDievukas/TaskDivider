@@ -1,51 +1,12 @@
-import * as actionTypes from './actions'
+import {
+  clearLogoutTimer,
+  houseAuth,
+  logout,
+  startLogoutTimer,
+  refreshToken,
+  userAuth,
+}                       from './actions'
 
-
-const clearLogoutTimer = () => {
-  return {
-    type: actionTypes.CLEAR_TIMEOUT
-  }
-}
-
-const houseAuth = (id, token, houseName, expiration) => {
-  return {
-    type: actionTypes.AUTH_HOUSE,
-    houseId: id,
-    token: token,
-    houseName: houseName,
-    expiration: expiration,
-  }
-}
-
-const logout = () => {
-  return {
-    type: actionTypes.AUTH_LOGOUT,
-  }
-}
-
-const startLogoutTimer = (timer) => {
-  return {
-    type: actionTypes.START_TIMER,
-    timer: timer
-  }
-}
-
-const refreshToken = (token) => {
-  return {
-    type: actionTypes.REFRESH_TOKEN,
-    token: token,
-  }
-}
-
-const userAuth = (id, token, email, expiration) => {
-  return {
-    type: actionTypes.AUTH_USER,
-    userId: id,
-    token: token,
-    email: email,
-    expiration: expiration,
-  }
-}
 
 export const startRefreshToken = (token) => {
   return (dispatch) => {
