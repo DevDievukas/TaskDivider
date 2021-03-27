@@ -20,7 +20,7 @@ import { houseCreateFail }  from '../strings/error'
 import { houseCreated }     from '../strings/success'
 
 import HouseList            from './HouseList'
-import HouseForm            from './form'
+import HouseForm            from './HouseForm'
 import styles 					    from './Houses.module.css'
 
 
