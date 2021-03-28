@@ -1,79 +1,83 @@
-import { useSelector }      from 'react-redux'
-import { useParams }        from 'react-router'
-import React                from 'react'
+import {
+  useSelector,
+  shallowEqual,
+  useDispatch,
+}                               from 'react-redux'
+import { useParams }            from 'react-router'
+import axios                    from 'axios'
+import React                    from 'react'
 
-import useFetchData         from '../shared/hooks/fetchData-hook'
-import usePostData          from '../shared/hooks/postData-hook'
-import EmptyData            from '../shared/UIElements//EmptyData/EmptyData'
 
-import AnnouncementsControl from './AnnouncementsControl'
-import AnnouncementItem     from './AnnouncementItem'
-import styles               from './Announcements.module.css'
+import {
+  createForm,
+  closeForm,
+}                               from '../Form/thunks'
+import { addAnnouncement }      from '../House/actions'
+import {
+  createErrorMessage,
+  createSuccessMessage
+}                               from '../Modal/thunks'
+import { announcementFailed }   from '../strings/error'
+import { announcement }         from '../strings/form'
+import { announcementCreated }  from '../strings/success'
+import Button                   from '../shared/FormElements/Button'
 
+import AnnouncementForm         from './AnnouncementForm'
+import AnnouncementList         from './AnnouncementList'
+import styles                   from './Announcements.module.css'
 
 const Announcements = () => {
-  const { token, houseId, userId } = useSelector((state) => ({
-    ...state.auth,
-  }))
-  const { post } = usePostData()
+  const dispatch = useDispatch()
+  const userId = useSelector((state) =>
+    (state.auth.userId),
+  shallowEqual
+  );
+  const token = useSelector((state) =>
+    (state.auth.token),
+  shallowEqual
+  );
   const houseParam = useParams().houseId
-  const loadedData = useFetchData(
-    `${process.env.REACT_APP_BACKEND_URL}/announcement/allByHouse/${
-      houseParam || houseId
-    }`
-  )
-  
-  let announcements
 
-  const createAnnouncement = (announcement) => {
-    const addFilter = (res) => {
-      if (loadedData.data) {
-        loadedData.setData((prevData) => [...prevData, res])
-      } else {
-        loadedData.setData([res])
-      }
+  const createAnnouncement = (title, body, image) => {
+    const announcement = {
+      title,
+      body,
+      image,
+      house: houseParam,
     }
-    post(
+    axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/announcement/`,
+      announcement,
       {
         headers: {
           authorization: `Bearer ${token}`,
         },
       },
-      announcement,
-      addFilter
-    )
+    ).then(res => {
+      dispatch(closeForm())
+      dispatch(addAnnouncement(res.data))
+      dispatch(createSuccessMessage(announcementCreated))
+    }).catch(() => {
+      dispatch(createErrorMessage(announcementFailed))
+    })
   }
-
-  if (loadedData.dataLoaded) {
-    if (loadedData.data.length > 0) {
-      announcements = loadedData.data.reverse().map((ann) => {
-        return (
-          <AnnouncementItem
-            key={ann._id}
-            title={ann.title}
-            text={ann.body}
-            img={ann.image}
-            link={ann.link}
-            date={ann.date}
-          />
-        )
-      })
-    } else {
-      announcements = <EmptyData header="NO ANNOUNCEMENTS!" />
-    }
+  
+  const callForm = () => {
+    dispatch(createForm(
+      <AnnouncementForm 
+        createAnnouncementHandler={createAnnouncement}/>,
+      announcement,
+    ))
   }
 
   return (
     <div className={styles.announcementsDiv}>
       {userId ? (
-        <AnnouncementsControl
-          onCreate={createAnnouncement}
-          houseParam={houseParam}
-          token={token}
-        />
+        <Button onClick={callForm}>CREATE ANNOUNCEMENT</Button>
       ) : null}
-      <ul className={styles.groupList}>{announcements}</ul>
+      <ul className={styles.groupList}>
+        <AnnouncementList />  
+      </ul>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import React    from 'react'
 
 import styles   from './AnnouncementItem.module.css'
 
-const AnnouncementItem = (props) => {
+export default (props) => {
   const { img, title, text, date, link } = props
 
   const parsedDate = date.substr(0, 10)
@@ -24,5 +24,3 @@ const AnnouncementItem = (props) => {
     </div>
   )
 }
-
-export default AnnouncementItem
