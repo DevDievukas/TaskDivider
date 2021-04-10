@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const AddButton = styled.button`
   background-color: ${(props) => props.theme.background};
-  position: absolute;
+  position: fixed;
   bottom: 8%;
   right: 8%;
   border-radius: 50%;

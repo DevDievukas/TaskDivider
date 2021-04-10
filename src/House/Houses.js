@@ -82,9 +82,7 @@ const Houses = connect (({ auth: { token, userId }}) => (
           onClick={callForm}
           danger
           add
-        >
-				ADD HOUSE
-        </Button>
+        />
       </HouseListContainer>
     )
   }

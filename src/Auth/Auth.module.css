@@ -66,6 +66,12 @@
   margin-top: 1.2em;
 }
 
+.signUpTextDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .signUpText {
   color: blue;
   text-decoration: underline;

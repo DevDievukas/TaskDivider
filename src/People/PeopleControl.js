@@ -92,9 +92,7 @@ const PeopleControl = (props) => {
         show={showModal}
         form={form}
       />
-      <Button onClick={revealAddPersonModal} className={styles.btn}>
-				ADD PERSON
-      </Button>
+      <Button onClick={revealAddPersonModal} add className={styles.btn} />
     </React.Fragment>
   )
 }

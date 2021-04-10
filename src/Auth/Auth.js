@@ -37,10 +37,10 @@ const Auth = () => {
 
   const signUp = (
     <div className={styles.signUpDiv}>
-      <div>
-        Want to manage your house?
+      <div className={styles.signUpTextDiv}>
+        Want to manage your house?&nbsp;
         <p className={styles.signUpText} onClick={switchToSignUp}>
-          Sign up instead!
+        Sign up instead!
         </p>
       </div>
     </div>

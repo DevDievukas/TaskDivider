@@ -85,9 +85,7 @@ const RoomsControl = (props) => {
         show={showModal}
         form={form}
       />
-      <Button onClick={revealAddRoomModal} className={styles.btn}>
-				ADD ROOM
-      </Button>
+      <Button add onClick={revealAddRoomModal} className={styles.btn} />
     </React.Fragment>
   )
 }

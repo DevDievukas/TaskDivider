@@ -67,7 +67,7 @@ const Announcements = connect (({ auth: { userId, token }}) => (
     return (
       <div className={styles.announcementsDiv}>
         {userId ? (
-          <Button onClick={callForm}>CREATE ANNOUNCEMENT</Button>
+          <Button onClick={callForm} add>CREATE ANNOUNCEMENT</Button>
         ) : null}
         <ul className={styles.groupList}>
           <AnnouncementList />  
