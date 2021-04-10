@@ -5,7 +5,6 @@ import {
 }								 	      from 'formik'              
 import { 
   useDispatch,
-  useSelector,
 }                       from 'react-redux'
 import {
   useParams,
@@ -19,7 +18,6 @@ import Input 			      from '../shared/FormElements/Input'
 import FormModal 	      from '../shared/UIElements/FormModal/FormModal'
 
 const DeleteHouse = (props) => {
-  const { token } = useSelector(state => ({ ...state.auth }))
   const houseParam = useParams().houseId
   const dispatch = useDispatch()
   const history = useHistory()
@@ -32,7 +30,7 @@ const DeleteHouse = (props) => {
     axios.delete(`${process.env.REACT_APP_BACKEND_URL}/house/`,
       {
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${props.token}`,
         },
         data: {
           password,

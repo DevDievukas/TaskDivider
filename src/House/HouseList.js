@@ -9,12 +9,12 @@ export default (props) => {
   
   if (loadedData.dataLoaded) {
     if (loadedData.data.length > 0) {
-      return loadedData.data.map((house) => {
+      return loadedData.data.map(({houseName, _id,}) => {
         return (
           <HouseCard
-            houseName={house.houseName}
-            key={house._id}
-            houseId={house._id}
+            houseName={houseName}
+            key={_id}
+            houseId={_id}
           />
         )
       })

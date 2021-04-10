@@ -1,52 +1,56 @@
 import {
   useEffect
-}                   from 'react'
+}                             from 'react'
 import {
+  connect,
   useDispatch,
-  useSelector
-}                   from 'react-redux'
+}                             from 'react-redux'
 import {
   BrowserRouter as Router
-}                   from 'react-router-dom'
-import React        from 'react'
+}                             from 'react-router-dom'
+import React                  from 'react'
 
 import {
   authFromLocalStorage,
-}                     from './Auth/thunks'
-import { clearError } from './Loading/thunks'
+}                             from './Auth/thunks'
+import { setHouseFromLocal }  from './House/thunks'
+import { clearError }         from './Loading/thunks'
 
-import ErrorModal     from './shared/UIElements/ErrorModal'
-import HouseNavbar    from './shared/Navbar/HouseNavbar'
-import Navbar         from './shared/Navbar/Navbar'
-import Spinner        from './shared/Spinner/Spinner'
-
-import Modal          from './Modal/Modal'
-import Routes         from './Routes/Routes'
-import FormModal      from './Form/Modal'
-
-const App = () => {
-  const { houseId } = useSelector((state) => ({
-    ...state.auth,
-  }))
-  const { isLoading, error } = useSelector((state) => ({ ...state.loading }))
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(authFromLocalStorage())
-  }, [dispatch])
+import FormModal              from './Form/Modal'
+import Modal                  from './Modal/Modal'
+import Routes                 from './Routes/Routes'
+import ErrorModal             from './shared/UIElements/ErrorModal'
+import HouseNavbar            from './shared/Navbar/HouseNavbar'
+import Navbar                 from './shared/Navbar/Navbar'
+import Spinner                from './shared/Spinner/Spinner'
 
 
-  return (
-    <Router>
-      <Navbar />
-      {houseId ? <HouseNavbar /> : null}
-      <Modal />
-      <FormModal />
-      <ErrorModal error={error} onClear={() => dispatch(clearError())} />
-      {isLoading && <Spinner asOverlay />}
-      <Routes />
-    </Router>
-  )
-}
+const App = connect (({
+  auth: { houseId },
+  loading: { isLoading, error },
+}) => (
+  { error, isLoading, houseId }))(
+  ({ error, isLoading, houseId }) => {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+      dispatch(authFromLocalStorage())
+      dispatch(setHouseFromLocal())
+    }, [dispatch])
+
+
+    return (
+      <Router>
+        <Navbar />
+        {houseId ? <HouseNavbar /> : null}
+        <Modal />
+        <FormModal />
+        <ErrorModal error={error} onClear={() => dispatch(clearError())} />
+        {isLoading && <Spinner asOverlay />}
+        <Routes />
+      </Router>
+    )
+  }
+)
 
 export default App

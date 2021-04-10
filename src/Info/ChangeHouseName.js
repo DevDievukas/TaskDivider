@@ -1,10 +1,7 @@
 import {
   Formik,
   Form
-}								 	  from 'formik'  
-import { 
-  useSelector,
-}                   from 'react-redux'
+}								 	  from 'formik'
 import {
   useParams,
 }                   from 'react-router-dom'
@@ -17,7 +14,6 @@ import FormModal 	  from '../shared/UIElements/FormModal/FormModal'
 
 const ChangeHouseName = (props) => {
   const { post } = usePostData()
-  const { token } = useSelector(state => ({ ...state.auth }))
   const houseParam = useParams().houseId
 
   const changeHouseNameHandler = (newHouseName) => {
@@ -30,7 +26,7 @@ const ChangeHouseName = (props) => {
       `${process.env.REACT_APP_BACKEND_URL}/house/changehousename`,
       {
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${props.token}`,
         },
       },
       reqData,

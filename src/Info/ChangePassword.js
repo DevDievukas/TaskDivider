@@ -4,7 +4,6 @@ import {
 }								 	      from 'formik'              
 import { 
   useDispatch,
-  useSelector,
 }                       from 'react-redux'
 import {
   useParams,
@@ -19,7 +18,6 @@ import FormModal 	      from '../shared/UIElements/FormModal/FormModal'
 
 const ChangePassword = (props) => {
   const { post } = usePostData()
-  const { token } = useSelector(state => ({ ...state.auth }))
   const houseParam = useParams().houseId
   const dispatch = useDispatch()
 
@@ -34,7 +32,7 @@ const ChangePassword = (props) => {
       `${process.env.REACT_APP_BACKEND_URL}/house/changepassword/`,
       {
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${props.token}`,
         },
       },
       reqData,

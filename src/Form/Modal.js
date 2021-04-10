@@ -1,6 +1,6 @@
 import {
+  connect,
   useDispatch,
-  useSelector
 }                         from 'react-redux'
 import React              from 'react'
 import ReactDOM           from 'react-dom'
@@ -26,22 +26,22 @@ const ModalOverlay = (props) => {
   )
 }
 
-export default () => {
-  const { form, isFormValid, formTitle } = useSelector(state => ({ ...state.form }))
-  const dispatch = useDispatch()
+export default connect (( { form: { form, isFormValid, formTitle } }) => (
+  {form, isFormValid, formTitle}))(
+  ({ form, isFormValid, formTitle }) => {
+    const dispatch = useDispatch()
 
-  const closeFormModal = () => {
-    dispatch(closeForm())
+    const closeFormModal = () => {
+      dispatch(closeForm())
+    }
+
+    return (
+      form ?
+        <React.Fragment>
+          <Backdrop onClick={closeFormModal} />
+          <ModalOverlay clear={closeFormModal} form={form} title={formTitle} isFormValid={isFormValid}/>
+        </React.Fragment> :
+        null
+    )
   }
-
-  return (
-    form ?
-      <React.Fragment>
-        <Backdrop onClick={closeFormModal} />
-        <ModalOverlay clear={closeFormModal} form={form} title={formTitle} isFormValid={isFormValid}/>
-      </React.Fragment> :
-      null
-  )
-    
-}
-
+)

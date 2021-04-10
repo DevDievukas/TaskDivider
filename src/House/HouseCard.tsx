@@ -1,6 +1,10 @@
+import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom';
+import axios from 'axios'
 import React from 'react';
 import styled from 'styled-components';
+
+import { setHouse } from './actions'
 
 
 type Props = {
@@ -28,15 +32,21 @@ font-weight: bold;
   padding: .1em;
 `
 
-
-
 const HouseCard = (props: Props): JSX.Element => {
   const history = useHistory()
+  const dispatch = useDispatch()
 
   const { houseName, houseId } = props;
 
   const getHouse = () => {
-    history.push(`/${houseId}/announcements`);
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/house/${houseId}`)
+      .then(res => {
+        console.log(res.data.houseName)
+        dispatch(setHouse(res.data))
+        history.push(`/${houseId}/announcements`);
+      }).catch(error => {
+        console.log(error)
+      })
   };
 
   return (

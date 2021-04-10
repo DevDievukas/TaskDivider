@@ -1,51 +1,16 @@
-import * as actionTypes from './actions'
+import axios               from 'axios'
 
+import { setHouseHandler } from '../House/thunks'
 
-const clearLogoutTimer = () => {
-  return {
-    type: actionTypes.CLEAR_TIMEOUT
-  }
-}
+import {
+  clearLogoutTimer,
+  houseAuth,
+  logout,
+  startLogoutTimer,
+  refreshToken,
+  userAuth,
+}                           from './actions'
 
-const houseAuth = (id, token, houseName, expiration) => {
-  return {
-    type: actionTypes.AUTH_HOUSE,
-    houseId: id,
-    token: token,
-    houseName: houseName,
-    expiration: expiration,
-  }
-}
-
-const logout = () => {
-  return {
-    type: actionTypes.AUTH_LOGOUT,
-  }
-}
-
-const startLogoutTimer = (timer) => {
-  return {
-    type: actionTypes.START_TIMER,
-    timer: timer
-  }
-}
-
-const refreshToken = (token) => {
-  return {
-    type: actionTypes.REFRESH_TOKEN,
-    token: token,
-  }
-}
-
-const userAuth = (id, token, email, expiration) => {
-  return {
-    type: actionTypes.AUTH_USER,
-    userId: id,
-    token: token,
-    email: email,
-    expiration: expiration,
-  }
-}
 
 export const startRefreshToken = (token) => {
   return (dispatch) => {
@@ -113,6 +78,13 @@ export const startHouseAuth = (id, token, houseName, remember, expiration) => {
         remember: remember,
       })
     )
+
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/house/${id}`)
+      .then(res => {
+        dispatch(setHouseHandler(res.data))
+      }).catch(error => {
+        console.log(error)
+      })
     dispatch(houseAuth(id, token, houseName, tokenExpiration))
     dispatch(initiateLogoutTimer(tokenExpiration))
   }
