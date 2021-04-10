@@ -1,5 +1,5 @@
 import { 
-  useSelector,
+  connect,
   useDispatch,
 }                      	    from 'react-redux'
 import axios                from 'axios'
@@ -24,68 +24,70 @@ import HouseForm            from './HouseForm'
 import styles 					    from './Houses.module.css'
 
 
-const Houses = () => {
-  const { token, userId } = useSelector((state) => ({ ...state.auth }))
-  const dispatch = useDispatch()
-  const loadedData = useFetchData(
-    `${process.env.REACT_APP_BACKEND_URL}/house/user/${userId}`,
-    {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    }
-  )
-
-  const addFilter = (res) => {
-    if (loadedData.data) {
-      loadedData.setData((prevData) => [...prevData, res])
-    } else {
-      loadedData.setData([res])
-    }
-  }
-
-  const createHouseHandler = (houseName, password) => {
-    const createdHouse = {
-      houseName,
-      password,
-    }
-
-    axios.post(
-      `${process.env.REACT_APP_BACKEND_URL}/house/`,
-      createdHouse,
+const Houses = connect (({ auth: { token, userId }}) => (
+  { token, userId }))(
+  ({ token, userId }) => {
+    const dispatch = useDispatch()
+    const loadedData = useFetchData(
+      `${process.env.REACT_APP_BACKEND_URL}/house/user/${userId}`,
       {
         headers: {
           authorization: `Bearer ${token}`,
         },
-      },
-    ).then(res => {
-      addFilter(res.data)
-      dispatch(createSuccessMessage(houseCreated))
-      dispatch(closeForm())
-    }).catch(() => {
-      dispatch(createErrorMessage(houseCreateFail))
-    })
-  }
+      }
+    )
 
-  const callForm = () => {
-    dispatch(createForm(
-      <HouseForm createHouseHandler={createHouseHandler} />,
-      house
-    ))
-  }
+    const addFilter = (res) => {
+      if (loadedData.data) {
+        loadedData.setData((prevData) => [...prevData, res])
+      } else {
+        loadedData.setData([res])
+      }
+    }
 
-  return (
-    <div className={styles.housesDiv}>
-      <HouseList loadedData={loadedData}/>
-      <Button
-        onClick={callForm}
-        className={styles.createHouseBtn}
-        danger
-      >
+    const createHouseHandler = (houseName, password) => {
+      const createdHouse = {
+        houseName,
+        password,
+      }
+
+      axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/house/`,
+        createdHouse,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        },
+      ).then(res => {
+        addFilter(res.data)
+        dispatch(createSuccessMessage(houseCreated))
+        dispatch(closeForm())
+      }).catch(() => {
+        dispatch(createErrorMessage(houseCreateFail))
+      })
+    }
+
+    const callForm = () => {
+      dispatch(createForm(
+        <HouseForm createHouseHandler={createHouseHandler} />,
+        house
+      ))
+    }
+
+    return (
+      <div className={styles.housesDiv}>
+        <HouseList loadedData={loadedData}/>
+        <Button
+          onClick={callForm}
+          className={styles.createHouseBtn}
+          danger
+        >
 				ADD HOUSE
-      </Button>
-    </div>
-  )
-}
+        </Button>
+      </div>
+    )
+  }
+)
 
 export default Houses

@@ -4,7 +4,6 @@ import {
   Form
 }								 	              from 'formik'
 import {
-  useSelector,
   useDispatch,
 }          				              from 'react-redux'
 import {
@@ -25,7 +24,6 @@ import FormModal 	              from '../shared/UIElements/FormModal/FormModal'
 
 const ChangeOwner = (props) => {
   const houseParam = useParams().houseId 
-  const { token } = useSelector((state) => ({ ...state.auth }))
   const dispatch = useDispatch()
   const history = useHistory()
 
@@ -40,7 +38,7 @@ const ChangeOwner = (props) => {
       reqData,
       {
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${props.token}`,
         },
       }).
       then((res) => {

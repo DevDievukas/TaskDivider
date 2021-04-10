@@ -2,9 +2,8 @@ import {
   useEffect
 }                             from 'react'
 import {
+  connect,
   useDispatch,
-  useSelector,
-  shallowEqual,
 }                             from 'react-redux'
 import {
   BrowserRouter as Router
@@ -26,38 +25,32 @@ import Navbar                 from './shared/Navbar/Navbar'
 import Spinner                from './shared/Spinner/Spinner'
 
 
-const App = () => {
-  const houseId = useSelector((state) =>
-    (state.auth.houseId),
-  shallowEqual
-  );
-  const isLoading = useSelector((state) =>
-    (state.loading.isLoading),
-  shallowEqual
-  );
-  const error = useSelector((state) =>
-    (state.loading.error),
-  shallowEqual
-  );
-  const dispatch = useDispatch()
+const App = connect (({
+  auth: { houseId },
+  loading: { isLoading, error },
+}) => (
+  { error, isLoading, houseId }))(
+  ({ error, isLoading, houseId }) => {
+    const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch(authFromLocalStorage())
-    dispatch(setHouseFromLocal())
-  }, [dispatch])
+    useEffect(() => {
+      dispatch(authFromLocalStorage())
+      dispatch(setHouseFromLocal())
+    }, [dispatch])
 
 
-  return (
-    <Router>
-      <Navbar />
-      {houseId ? <HouseNavbar /> : null}
-      <Modal />
-      <FormModal />
-      <ErrorModal error={error} onClear={() => dispatch(clearError())} />
-      {isLoading && <Spinner asOverlay />}
-      <Routes />
-    </Router>
-  )
-}
+    return (
+      <Router>
+        <Navbar />
+        {houseId ? <HouseNavbar /> : null}
+        <Modal />
+        <FormModal />
+        <ErrorModal error={error} onClear={() => dispatch(clearError())} />
+        {isLoading && <Spinner asOverlay />}
+        <Routes />
+      </Router>
+    )
+  }
+)
 
 export default App

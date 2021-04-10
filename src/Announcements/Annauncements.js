@@ -1,6 +1,5 @@
 import {
-  useSelector,
-  shallowEqual,
+  connect,
   useDispatch,
 }                               from 'react-redux'
 import { useParams }            from 'react-router'
@@ -26,60 +25,56 @@ import AnnouncementForm         from './AnnouncementForm'
 import AnnouncementList         from './AnnouncementList'
 import styles                   from './Announcements.module.css'
 
-const Announcements = () => {
-  const dispatch = useDispatch()
-  const userId = useSelector((state) =>
-    (state.auth.userId),
-  shallowEqual
-  );
-  const token = useSelector((state) =>
-    (state.auth.token),
-  shallowEqual
-  );
-  const houseParam = useParams().houseId
+const Announcements = connect (({ auth: { userId, token }}) => (
+  { userId, token }))(
+  ({ userId, token }) => {
+    const dispatch = useDispatch()
+    const houseParam = useParams().houseId
 
-  const createAnnouncement = (title, body, image) => {
-    const announcement = {
-      title,
-      body,
-      image,
-      house: houseParam,
-    }
-    axios.post(
-      `${process.env.REACT_APP_BACKEND_URL}/announcement/`,
-      announcement,
-      {
-        headers: {
-          authorization: `Bearer ${token}`,
+    const createAnnouncement = (title, body, image) => {
+      const announcement = {
+        title,
+        body,
+        image,
+        house: houseParam,
+      }
+      axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/announcement/`,
+        announcement,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         },
-      },
-    ).then(res => {
-      dispatch(closeForm())
-      dispatch(addAnnouncement(res.data))
-      dispatch(createSuccessMessage(announcementCreated))
-    }).catch(() => {
-      dispatch(createErrorMessage(announcementFailed))
-    })
-  }
+      ).then(res => {
+        dispatch(closeForm())
+        dispatch(addAnnouncement(res.data))
+        dispatch(createSuccessMessage(announcementCreated))
+      }).catch(() => {
+        dispatch(createErrorMessage(announcementFailed))
+      })
+    }
   
-  const callForm = () => {
-    dispatch(createForm(
-      <AnnouncementForm 
-        createAnnouncementHandler={createAnnouncement}/>,
-      announcement,
-    ))
-  }
+    const callForm = () => {
+      dispatch(createForm(
+        <AnnouncementForm 
+          createAnnouncementHandler={createAnnouncement}/>,
+        announcement,
+        token,
+      ))
+    }
 
-  return (
-    <div className={styles.announcementsDiv}>
-      {userId ? (
-        <Button onClick={callForm}>CREATE ANNOUNCEMENT</Button>
-      ) : null}
-      <ul className={styles.groupList}>
-        <AnnouncementList />  
-      </ul>
-    </div>
-  )
-}
+    return (
+      <div className={styles.announcementsDiv}>
+        {userId ? (
+          <Button onClick={callForm}>CREATE ANNOUNCEMENT</Button>
+        ) : null}
+        <ul className={styles.groupList}>
+          <AnnouncementList />  
+        </ul>
+      </div>
+    )
+  }
+)
 
 export default Announcements

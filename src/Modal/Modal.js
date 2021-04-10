@@ -1,6 +1,6 @@
 import {
+  connect,
   useDispatch,
-  useSelector
 }                         from 'react-redux'
 import React              from 'react'
 import ReactDOM           from 'react-dom'
@@ -27,21 +27,22 @@ const ModalOverlay = (props) => {
   )
 }
 
-export default () => {
-  const { message, messageType } = useSelector(state => ({ ...state.modal }))
-  const dispatch = useDispatch()
+export default connect (({ modal: { message, messageType }}) => (
+  { message, messageType }))(
+  ({ message, messageType }) => {
+    const dispatch = useDispatch()
 
-  const clearSuccessMessage = () => {
-    dispatch(clearMessage())
+    const clearSuccessMessage = () => {
+      dispatch(clearMessage())
+    }
+
+    return ( 
+      message ?
+        <React.Fragment>
+          <Backdrop onClick={clearSuccessMessage} />
+          <ModalOverlay clear={clearSuccessMessage} message={message} error={messageType}/>
+        </React.Fragment> : 
+        null
+    )
   }
-
-  return ( 
-    message ?
-      <React.Fragment>
-        <Backdrop onClick={clearSuccessMessage} />
-        <ModalOverlay clear={clearSuccessMessage} message={message} error={messageType}/>
-      </React.Fragment> : 
-      null
-  )
-}
-
+)

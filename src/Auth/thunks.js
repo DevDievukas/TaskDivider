@@ -1,6 +1,6 @@
-import axios        from 'axios'
+import axios               from 'axios'
 
-import { setHouse } from '../House/actions'
+import { setHouseHandler } from '../House/thunks'
 
 import {
   clearLogoutTimer,
@@ -9,7 +9,7 @@ import {
   startLogoutTimer,
   refreshToken,
   userAuth,
-}                   from './actions'
+}                           from './actions'
 
 
 export const startRefreshToken = (token) => {
@@ -81,7 +81,7 @@ export const startHouseAuth = (id, token, houseName, remember, expiration) => {
 
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/house/${id}`)
       .then(res => {
-        dispatch(setHouse(res.data))
+        dispatch(setHouseHandler(res.data))
       }).catch(error => {
         console.log(error)
       })

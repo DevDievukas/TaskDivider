@@ -3,10 +3,6 @@ import {
   Form,
   Formik
 }											 	from 'formik'
-import {
-  shallowEqual,
-  useSelector
-}                       from 'react-redux'
 import React 						from 'react'
 
 import Button 					from '../shared/FormElements/Button'
@@ -16,11 +12,7 @@ import useFetchData     from '../shared/hooks/fetchData-hook'
 import styles 					from './AnnouncementsControl.module.css'
 
 const AnnouncementForm = (props) => {
-  const { createAnnouncementHandler } = props
-  const token = useSelector((state) =>
-    (state.auth.token),
-  shallowEqual
-  );
+  const { createAnnouncementHandler, token } = props
   const loadedData = useFetchData(
     `${process.env.REACT_APP_BACKEND_URL}/announcement/images/${process.env.REACT_APP_ANOUNCEMENTS_IMAGES_ID}`,
     {
@@ -75,7 +67,7 @@ const AnnouncementForm = (props) => {
         body: '',
         image: loadedData[0] || '',
       }}
-      onSubmit={async ({title, body, image}) => {
+      onSubmit={async ({ title, body, image }) => {
         createAnnouncementHandler(title, body, image)
       }}
     >
