@@ -1,2 +1,5 @@
-export const charcoal = '#494949'
-export const veryLightGray = '#C8C8C8'
+export const background = '#494949'
+export const text = 'white'
+export const border = '#C8C8C8'
+export const active = '#EFEFEF'
+export const btnActive = '#595959'

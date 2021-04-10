@@ -1,7 +1,11 @@
-import { Link } from 'react-router-dom'
-import React    from 'react'
+import { Link }      from 'react-router-dom'
+import React         from 'react'
 
-import styles   from './Button.module.css'
+import {
+  AddButton,
+  ButtonInner,
+}                    from './styled'
+import styles        from './Button.module.css'
 
 const Button = (props) => {
 
@@ -17,6 +21,7 @@ const Button = (props) => {
     type,
     onClick,
     disabled,
+    add,
   } = props
   
   if (href) {
@@ -31,7 +36,7 @@ const Button = (props) => {
       </a>
     )
   }
-  if (to) {
+  else if (to) {
     return (
       <Link
         to={to}
@@ -44,18 +49,28 @@ const Button = (props) => {
       </Link>
     )
   }
-  return (
-    <button
-      className={`${styles.button} ${className} ${
-        danger && styles.buttonDanger
-      } ${cancel && styles.buttonCancel} `}
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-    >
-      {children}
-    </button>
-  )
+  else if (add) {
+    return (
+      <AddButton
+        onClick={onClick}
+      >
+        <ButtonInner>
+        +
+        </ButtonInner>
+      </AddButton>)
+  } else
+    return (
+      <button
+        className={`${styles.button} ${className} ${
+          danger && styles.buttonDanger
+        } ${cancel && styles.buttonCancel} `}
+        type={type}
+        onClick={onClick}
+        disabled={disabled}
+      >
+        {children}
+      </button>
+    )
 }
 
 export default Button
