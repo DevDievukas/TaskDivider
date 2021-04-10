@@ -1,27 +1,27 @@
 import { 
   connect,
   useDispatch,
-}                      	    from 'react-redux'
-import axios                from 'axios'
-import React 						    from 'react'
+}                      	      from 'react-redux'
+import axios                  from 'axios'
+import React 						      from 'react'
 
 import {
   createErrorMessage,
   createSuccessMessage
-}                           from '../Modal/thunks'
+}                             from '../Modal/thunks'
 import {
   closeForm,
   createForm
-}                           from '../Form/thunks'
-import Button 					    from '../shared/FormElements/Button'
-import useFetchData 		    from '../shared/hooks/fetchData-hook'
-import { house }            from '../strings/form'
-import { houseCreateFail }  from '../strings/error'
-import { houseCreated }     from '../strings/success'
+}                             from '../Form/thunks'
+import Button 					      from '../shared/FormElements/Button'
+import useFetchData 		      from '../shared/hooks/fetchData-hook'
+import { house }              from '../strings/form'
+import { houseCreateFail }    from '../strings/error'
+import { houseCreated }       from '../strings/success'
 
-import HouseList            from './HouseList'
-import HouseForm            from './HouseForm'
-import styles 					    from './Houses.module.css'
+import { HouseListContainer } from './styled'
+import HouseList              from './HouseList'
+import HouseForm              from './HouseForm'
 
 
 const Houses = connect (({ auth: { token, userId }}) => (
@@ -76,16 +76,16 @@ const Houses = connect (({ auth: { token, userId }}) => (
     }
 
     return (
-      <div className={styles.housesDiv}>
+      <HouseListContainer>
         <HouseList loadedData={loadedData}/>
         <Button
           onClick={callForm}
-          className={styles.createHouseBtn}
           danger
+          add
         >
 				ADD HOUSE
         </Button>
-      </div>
+      </HouseListContainer>
     )
   }
 )
