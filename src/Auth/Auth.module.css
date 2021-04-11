@@ -17,6 +17,7 @@
   justify-content: space-around;
   border-bottom: 1px solid gray;
   margin-top: 0.6rem;
+  margin-bottom: 15px;
 }
 
 .switchTypeDiv h3:active {

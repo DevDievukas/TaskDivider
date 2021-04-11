@@ -15,7 +15,7 @@ const ModalOverlay = (props) => {
   const content = (
     <styled.Modal>
       <styled.Header>
-        <h4>{props.title}</h4>
+        {props.title}
       </styled.Header>
       {props.form}
     </styled.Modal>

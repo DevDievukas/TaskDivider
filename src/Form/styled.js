@@ -17,6 +17,9 @@ overflow: auto;
 export const Header = styled.header`
 text-align: center;
 border-bottom: .5px solid gray;
-margin-bottom: 0;
-padding-bottom: 0;
+margin-bottom: 10px;
+padding-bottom: 5px;
+padding-top: 5px;
+font-size: 28px;
+font-weight: bold;
 `
