@@ -1,12 +1,12 @@
 import {
-  useEffect
+  useEffect,
 }                             from 'react'
 import {
   connect,
   useDispatch,
 }                             from 'react-redux'
 import {
-  BrowserRouter as Router
+  BrowserRouter as Router,
 }                             from 'react-router-dom'
 import React                  from 'react'
 

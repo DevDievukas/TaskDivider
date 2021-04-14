@@ -7,19 +7,6 @@
   width: 80%;
   padding-bottom: 1.2em;
 }
-.date {
-  margin-right: 70%;
-  margin-bottom: -0.4rem;
-  color: rgb(214, 214, 214);
-}
-
-
-.image {
-  width: 80%;
-  margin: auto;
-  margin-top: 0.6em;
-  margin-bottom: 0.6em;
-}
 
 .cardBody {
   width: 100%;
@@ -34,4 +21,17 @@
 .cardBody p {
   text-align: left;
   margin-left: 1.2em;
+}
+
+.date {
+  margin-right: 70%;
+  margin-bottom: -0.4rem;
+  color: rgb(214, 214, 214);
+}
+
+.image {
+  width: 80%;
+  margin: auto;
+  margin-top: 0.6em;
+  margin-bottom: 0.6em;
 }

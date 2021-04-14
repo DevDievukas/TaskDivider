@@ -39,7 +39,12 @@ export default connect (( { form: { form, isFormValid, formTitle } }) => (
       form ?
         <React.Fragment>
           <Backdrop onClick={closeFormModal} />
-          <ModalOverlay clear={closeFormModal} form={form} title={formTitle} isFormValid={isFormValid}/>
+          <ModalOverlay
+            clear={closeFormModal}
+            form={form}
+            title={formTitle}
+            isFormValid={isFormValid}
+          />
         </React.Fragment> :
         null
     )

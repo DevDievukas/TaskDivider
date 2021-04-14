@@ -40,7 +40,11 @@ export default connect (({ modal: { message, messageType }}) => (
       message ?
         <React.Fragment>
           <Backdrop onClick={clearSuccessMessage} />
-          <ModalOverlay clear={clearSuccessMessage} message={message} error={messageType}/>
+          <ModalOverlay
+            clear={clearSuccessMessage}
+            message={message}
+            error={messageType}
+          />
         </React.Fragment> : 
         null
     )

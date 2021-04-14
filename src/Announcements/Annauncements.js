@@ -14,7 +14,7 @@ import {
 import { addAnnouncement }      from '../House/actions'
 import {
   createErrorMessage,
-  createSuccessMessage
+  createSuccessMessage,
 }                               from '../Modal/thunks'
 import { announcementFailed }   from '../strings/error'
 import { announcement }         from '../strings/form'
@@ -31,12 +31,22 @@ const Announcements = connect (({ auth: { userId, token }}) => (
     const dispatch = useDispatch()
     const houseParam = useParams().houseId
 
-    const createAnnouncement = (title, body, image) => {
-      const announcement = {
-        title,
-        body,
-        image,
-        house: houseParam,
+    const createAnnouncement = (title, body, image, uploadedImage) => {
+      let announcement
+      
+      if (image) {
+        announcement = {
+          title,
+          body,
+          image,
+          house: houseParam,
+        } 
+      } else {
+        announcement = new FormData()
+        FormData.append('title', title)
+        FormData.append('body', body)
+        FormData.append('house', houseParam)
+        FormData.append('image', uploadedImage)
       }
       axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/announcement/`,
@@ -54,6 +64,7 @@ const Announcements = connect (({ auth: { userId, token }}) => (
         dispatch(createErrorMessage(announcementFailed))
       })
     }
+
   
     const callForm = () => {
       dispatch(createForm(

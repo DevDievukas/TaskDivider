@@ -3,14 +3,14 @@ import { updateObject } from '../Store/utility'
 import * as actionTypes from './actions'
 
 const initialState = {
-  message: null,
+  message:     null,
   messageType: null,
 }
 
 const createMessage = (state, action) => {
   return updateObject(state, {
-    message: action.message,
-    messageType: action.messageType
+    message:     action.message,
+    messageType: action.messageType,
   })
 }
 

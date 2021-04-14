@@ -1,6 +1,6 @@
 import {
   Form,
-  Formik
+  Formik,
 }                        from 'formik'
 import { useDispatch }   from 'react-redux'
 import axios             from 'axios'
@@ -45,8 +45,8 @@ const SignUp = () => {
   return (
     <Formik
       initialValues={{
-        name: '',
-        email: '',
+        name:     '',
+        email:    '',
         password: '',
       }}
       onSubmit={async (values) => {

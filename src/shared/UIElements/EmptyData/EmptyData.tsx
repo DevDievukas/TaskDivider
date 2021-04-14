@@ -7,12 +7,14 @@ type Props = {
 }
 
 
+// eslint-disable-next-line no-undef
 const EmptyData = (props: Props): JSX.Element => {
   const { header } = props;
   return (
     <div className={styles.div}>
       <h3>{header}</h3>
       <img
+        // eslint-disable-next-line max-len
         src="https://res.cloudinary.com/dgegci4ii/image/upload/v1612861627/Empty_State_wcxslo.png"
         alt="Nothing found"
       />

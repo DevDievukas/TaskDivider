@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-
 export const Modal = styled.div`
 z-index: 100;
 position: fixed;
@@ -12,14 +11,16 @@ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 border-radius: 8px;
 text-align: center;
 max-height: 80vh;
-overflow: auto;
+overflow: none;
 `
 export const Header = styled.header`
+background-color: white;
+width: 100%;
+position: absolute;
+top: 1%;
 text-align: center;
 border-bottom: .5px solid gray;
-margin-bottom: 10px;
-padding-bottom: 5px;
-padding-top: 5px;
-font-size: 28px;
+padding: 5px;
+font-size: 26px;
 font-weight: bold;
 `

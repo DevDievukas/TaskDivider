@@ -1,7 +1,7 @@
 import {
   Form,
   Field,
-  Formik
+  Formik,
 } 										from 'formik'
 import { useState } 	from 'react'
 import { useParams } 	from 'react-router-dom'
@@ -53,7 +53,7 @@ const PeopleControl = (props) => {
   const form = (
     <Formik
       initialValues={{
-        name: '',
+        name:  '',
         rooms: [],
       }}
       onSubmit={async (values) => {

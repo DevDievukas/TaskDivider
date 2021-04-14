@@ -11,6 +11,7 @@ type Props = {
   className: string
 }
 
+// eslint-disable-next-line no-undef
 export default (props: Props): unknown => {
   const { direction, children, className } = props;
 

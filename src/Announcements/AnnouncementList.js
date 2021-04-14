@@ -1,9 +1,9 @@
+import { connect }      from 'react-redux'
 import React            from 'react'
 
 import EmptyData        from '../shared/UIElements/EmptyData/EmptyData'
 
 import AnnouncementItem from './AnnouncementItem'
-import { connect } from 'react-redux'
 
 export default connect (({ house: { announcements } }) => (
   { announcements }))(

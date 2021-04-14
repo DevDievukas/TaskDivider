@@ -1,6 +1,6 @@
 import {
   Formik,
-  Form
+  Form,
 }								 	      from 'formik'              
 import { 
   useDispatch,
@@ -42,36 +42,56 @@ const ChangePassword = (props) => {
     )
   }
 
-  const comparePasswords = (oldPassword, newPassword, newPasswordRepeat, resetForm) => {
-    if(oldPassword === newPassword) {
+  const comparePasswords = (oldPass, newPass, newPasswordRepeat, resetForm) => {
+    if(oldPass === newPass) {
       dispatch(createError('new password cant be same as old password'))
       resetForm({ values: '' })
       return
     }
-    if(newPassword !== newPasswordRepeat) {
+    if(newPass !== newPasswordRepeat) {
       dispatch(createError('New passwords does not match'))
       resetForm({ values: '' })
       return
     }
-    changePasswordHandler(oldPassword, newPassword)
+    changePasswordHandler(oldPass, newPass)
   }
 
   const form = (
     <Formik
       initialValues={{
-        oldPassword: '',
-        newPassword: '',
+        oldPassword:       '',
+        newPassword:       '',
         newPasswordRepeat: '',
       }}
       onSubmit={(values, { resetForm }) => {
-        comparePasswords(values.oldPassword, values.newPassword, values.newPasswordRepeat, resetForm)
+        comparePasswords(
+          values.oldPassword,
+          values.newPassword,
+          values.newPasswordRepeat,
+          resetForm
+        )
       }}
     >
       {() => (
         <Form>
-          <Input id='oldPassword' name='oldPassword' type='password' title='OLD PASSWORD' />
-          <Input id='newPassword' name='newPassword' type='password' title='NEW PASSWORD' />
-          <Input id='newPasswordRepeat' name='newPasswordRepeat' type='password' title='REPEAT NEW PASSWORD' />
+          <Input
+            id='oldPassword'
+            name='oldPassword'
+            type='password'
+            title='OLD PASSWORD'
+          />
+          <Input
+            id='newPassword'
+            name='newPassword'
+            type='password'
+            title='NEW PASSWORD'
+          />
+          <Input
+            id='newPasswordRepeat'
+            name='newPasswordRepeat'
+            type='password'
+            title='REPEAT NEW PASSWORD'
+          />
           <Button type='button' cancel onClick={props.cancel}>
 						CANCEL
           </Button>

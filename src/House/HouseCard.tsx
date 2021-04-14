@@ -11,6 +11,7 @@ type Props = {
   houseName: string,
   houseId: string
 }
+// eslint-disable-next-line no-undef
 const HouseCard = (props: Props): JSX.Element => {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -29,7 +30,11 @@ const HouseCard = (props: Props): JSX.Element => {
 
   return (
     <Card onClick={getHouse}>
-      <HouseImage src='https://www.freepnglogos.com/uploads/house-png/house-png-file-nuvola-filesystems-folder-home-svg-wikimedia-commons-30.png' alt='house' />
+      <HouseImage
+        // eslint-disable-next-line max-len
+        src='https://www.freepnglogos.com/uploads/house-png/house-png-file-nuvola-filesystems-folder-home-svg-wikimedia-commons-30.png'
+        alt='house'
+      />
       <House >{houseName}</House>
     </Card>
   )

@@ -1,25 +1,26 @@
 import axios                    from 'axios'
 import {
   Formik,
-  Form
+  Form,
 }								 	              from 'formik'
 import {
   useDispatch,
 }          				              from 'react-redux'
 import {
   useParams,
-  useHistory
+  useHistory,
 } 								              from 'react-router-dom'
 import React 			              from 'react'
 
 import { startRefreshToken } 	  from '../Auth/thunks'
 import {
   createErrorMessage,
-  createSuccessMessage
+  createSuccessMessage,
 }                               from '../Modal/thunks'
 import { transferSuccessfull }  from '../strings/success'
 import Button 		              from '../shared/FormElements/Button'
 import Input 			              from '../shared/FormElements/Input'
+// eslint-disable-next-line max-len
 import FormModal 	              from '../shared/UIElements/FormModal/FormModal'
 
 const ChangeOwner = (props) => {

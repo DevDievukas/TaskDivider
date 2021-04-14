@@ -14,7 +14,7 @@ export const stopLoading = () => {
 
 export const createError = (error) => {
   return {
-    type: actionTypes.CREATE_ERROR,
+    type:  actionTypes.CREATE_ERROR,
     error: error,
   }
 }

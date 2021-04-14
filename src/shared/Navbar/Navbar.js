@@ -1,6 +1,6 @@
 import {
   SignOut,
-  House
+  House,
 }                       from 'phosphor-react'
 import {
   connect,

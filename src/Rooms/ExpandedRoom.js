@@ -25,7 +25,7 @@ const ExpandedRoom = ( props ) => {
 
   useEffect(() => {
     window.scrollTo({
-      top: roomFocus.current.offsetTop - 50,
+      top:      roomFocus.current.offsetTop - 50,
       behavior: 'smooth',
     })
   }, [])
@@ -96,6 +96,7 @@ const ExpandedRoom = ( props ) => {
             <img
               className="d-block w-100"
               src={
+                // eslint-disable-next-line max-len
                 'https://image.freepik.com/free-vector/lovely-living-room-interior_23-2147517931.jpg'
               }
               alt="room"

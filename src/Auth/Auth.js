@@ -50,6 +50,7 @@ const Auth = () => {
       <div className={styles.logoDiv}>
         <img
           className={styles.logo}
+          // eslint-disable-next-line max-len
           src="https://res.cloudinary.com/dgegci4ii/image/upload/v1613754032/Logo1_avumoz.png"
           alt="logo"
         />

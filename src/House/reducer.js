@@ -3,47 +3,47 @@ import { updateObject } from '../Store/utility'
 import * as actionTypes from './actions'
 
 const initialState = {
-  houseName: null,
+  houseName:     null,
   announcements: null,
-  rooms: null,
-  people: null,
-  schedule: null,
-  requests: null,
+  rooms:         null,
+  people:        null,
+  schedule:      null,
+  requests:      null,
 }
 
 const addAnnouncement = (state, action) => {
   return updateObject(state, {
-    announcements: [...state.announcements, action.announcement]
+    announcements: [...state.announcements, action.announcement],
   })
 }
 
 const addPerson = (state, action) => {
   return updateObject(state, {
-    people: [...state.people, action.person]
+    people: [...state.people, action.person],
   })
 }
 
 const addRequest = (state, action) => {
   return updateObject(state, {
-    requests: [...state.requests, action.request]
+    requests: [...state.requests, action.request],
   })
 }
 
 const addRoom = (state, action) => {
   return updateObject(state, {
-    rooms: [...state.rooms, action.room]
+    rooms: [...state.rooms, action.room],
   })
 }
 
 const changeHouseName = (state, action) => {
   return updateObject(state, {
-    houseName: action.houseName
+    houseName: action.houseName,
   })
 }
 
 const clearHouseData = () => {
   return {
-    state: initialState
+    state: initialState,
   }
 }
 
@@ -57,7 +57,7 @@ const removeAnnouncement = (state, action) => {
   return updateObject(state, {
     announcements: state.announcements.filter(announcement =>
       announcement._id !== action.announcement
-    )
+    ),
   })
 }
 
@@ -65,7 +65,7 @@ const removePerson = (state, action) => {
   return updateObject(state, {
     people: state.people.filter(person =>
       person._id !== action.person
-    )
+    ),
   })
 }
 
@@ -73,7 +73,7 @@ const removeRequest = (state, action) => {
   return updateObject(state, {
     requests: state.requests.filter(request =>
       request._id !== action.request
-    )
+    ),
   })
 }
 
@@ -81,18 +81,18 @@ const removeRoom = (state, action) => {
   return updateObject(state, {
     rooms: state.rooms.filter(room =>
       room._id !== action.room
-    )
+    ),
   })
 }
 
 const setHouse = (state, action) => {
   return updateObject(state, {
-    houseName: action.houseName,
+    houseName:     action.houseName,
     announcements: action.announcements,
-    people: action.people,
-    requests: action.requests,
-    rooms: action.rooms,
-    schedule: action.schedule
+    people:        action.people,
+    requests:      action.requests,
+    rooms:         action.rooms,
+    schedule:      action.schedule,
   })
 }
 

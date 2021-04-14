@@ -7,11 +7,11 @@ import React 						      from 'react'
 
 import {
   createErrorMessage,
-  createSuccessMessage
+  createSuccessMessage,
 }                             from '../Modal/thunks'
 import {
   closeForm,
-  createForm
+  createForm,
 }                             from '../Form/thunks'
 import Button 					      from '../shared/FormElements/Button'
 import useFetchData 		      from '../shared/hooks/fetchData-hook'

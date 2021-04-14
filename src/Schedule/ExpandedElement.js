@@ -13,7 +13,7 @@ const ExpandedElement = (props) => {
   
   useEffect(() => {
     window.scrollTo({
-      top: focus.current.offsetTop - 50,
+      top:      focus.current.offsetTop - 50,
       behavior: 'smooth',
     })
   })
@@ -55,6 +55,7 @@ const ExpandedElement = (props) => {
                   <img
                     className="d-block w-100"
                     src={
+                      // eslint-disable-next-line max-len
                       'https://image.freepik.com/free-vector/lovely-living-room-interior_23-2147517931.jpg'
                     }
                     alt="room "
@@ -72,6 +73,7 @@ const ExpandedElement = (props) => {
       <div ref={focus} className={styles.expandedDiv}>
         <h1>{person}</h1>
         <img
+          // eslint-disable-next-line max-len
           src="https://image.freepik.com/free-vector/boy-bed-snoring_1308-5347.jpg"
           alt="resting"
         />

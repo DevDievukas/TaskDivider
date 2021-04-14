@@ -10,12 +10,12 @@ export const createForm = (form, title) => {
 
 export const closeForm = () => {
   return {
-    type: actionTypes.CLOSE_FORM
+    type: actionTypes.CLOSE_FORM,
   }
 }
 
 export const setFormInvalid = () => {
   return {
-    type: actionTypes.SET_FORM_INVALID
+    type: actionTypes.SET_FORM_INVALID,
   }
 }

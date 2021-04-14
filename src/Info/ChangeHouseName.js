@@ -1,6 +1,6 @@
 import {
   Formik,
-  Form
+  Form,
 }								 	  from 'formik'
 import {
   useParams,
@@ -48,7 +48,12 @@ const ChangeHouseName = (props) => {
     >
       {() => (
         <Form>
-          <Input id='houseName' name='houseName' type='input' title='NEW HOUSE NAME' />
+          <Input
+            id='houseName'
+            name='houseName'
+            type='input'
+            title='NEW HOUSE NAME'
+          />
           <Button type='button' cancel onClick={props.cancel}>
 						CANCEL
           </Button>

@@ -1,6 +1,6 @@
 
 import {
-  Formik
+  Formik,
 }											 	from 'formik'
 import React 						from 'react'
 
@@ -15,7 +15,7 @@ const HouseForm = (props) => {
     <Formik
       initialValues={{
         houseName: '',
-        password: '',
+        password:  '',
       }}
       onSubmit={async (values) => {
         createHouseHandler(values.houseName, values.password)

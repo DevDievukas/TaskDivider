@@ -31,7 +31,7 @@ const RequestForm = (props) => {
     <Formik
       initialValues={{
         author: initialAuthor || '',
-        body: '',
+        body:   '',
       }}
       onSubmit={async (values) => {
         // console.log(values);

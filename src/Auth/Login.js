@@ -1,7 +1,7 @@
 import {
   Formik,
   Field,
-  Form
+  Form,
 }                         from 'formik'
 import { useDispatch }    from 'react-redux'
 import React              from 'react'
@@ -80,10 +80,10 @@ const Login = (props) => {
   return (
     <Formik
       initialValues={{
-        email: '',
+        email:     '',
         houseName: '',
-        password: '',
-        remember: false,
+        password:  '',
+        remember:  false,
       }}
       onSubmit={async (values) => {
         if (isUserLogin) {

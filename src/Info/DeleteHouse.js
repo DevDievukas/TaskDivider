@@ -1,7 +1,7 @@
 import axios            from 'axios'
 import {
   Formik,
-  Form
+  Form,
 }								 	      from 'formik'              
 import { 
   useDispatch,
@@ -34,8 +34,8 @@ const DeleteHouse = (props) => {
         },
         data: {
           password,
-          houseId: houseParam
-        }
+          houseId: houseParam,
+        },
       }).then(() => {
       deleteSuccess()
     }).catch(() => {
@@ -55,7 +55,12 @@ const DeleteHouse = (props) => {
     >
       {() => (
         <Form>
-          <Input id='password' name='password' type='password' title='HOUSE PASSWORD' />
+          <Input
+            id='password'
+            name='password'
+            type='password'
+            title='HOUSE PASSWORD'
+          />
           <Button type='button' cancel onClick={props.cancel}>
 						CANCEL
           </Button>

@@ -13,7 +13,7 @@ import React 						from 'react'
 import { useLoadData } 	from '../shared/hooks/loadData-hook'
 import { createError }	from '../Loading/thunks'
 import Button 					from '../shared/FormElements/Button'
-import EmptyData 				from '../shared/UIElements/EmptyData/EmptyData.tsx'
+import EmptyData 				from '../shared/UIElements/EmptyData/EmptyData'
 import Modal 						from '../shared/UIElements/Modal'
 
 import GroupElement 		from './GroupElement'

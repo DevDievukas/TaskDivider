@@ -5,7 +5,7 @@ import React 						from 'react'
 import useDeleteData 		from '../shared/hooks/deleteData-hook'
 import useFetchData 		from '../shared/hooks/fetchData-hook'
 import usePostData 			from '../shared/hooks/postData-hook'
-import EmptyData 				from '../shared/UIElements/EmptyData/EmptyData.tsx'
+import EmptyData 				from '../shared/UIElements/EmptyData/EmptyData'
 
 import PeopleControl 		from './PeopleControl'
 import PersonElement 		from './PersonElement'

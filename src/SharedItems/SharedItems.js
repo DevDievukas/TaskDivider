@@ -128,7 +128,10 @@ const SharedItems = connect (({ auth: { houseId, token, userId }}) => (
             postRequest={postRequestHandler}
           />
           {userId ? (
-            <Button onClick={openClearRequestsModal} className={styles.clearBtn}>
+            <Button
+              onClick={openClearRequestsModal}
+              className={styles.clearBtn}
+            >
 						DELETE REQUESTS
             </Button>
           ) : null}
