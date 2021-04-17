@@ -51,7 +51,11 @@ const AnnouncementForm = (props) => {
     fileReader.readAsDataURL(uploadedImage[0])
   }, [uploadedImage])
 
-  const changeImage = (image) => {
+  const changeImage = ({ image, index }) => {
+    const newImages = [...images]
+    newImages.splice(index, 1)
+    newImages.unshift(image)
+    setImages(newImages)
     setImage(image)
     setShowImagePicker(false)
   }
@@ -82,7 +86,8 @@ const AnnouncementForm = (props) => {
               createAnnouncementHandler(title, body, null, uploadedImage)
             }
           }}
-          render={({
+        >
+          {({
             values,
             handleChange,
             handleBlur,
@@ -117,7 +122,7 @@ const AnnouncementForm = (props) => {
               </Button>
             </Form>
           )}
-        /> }
+        </Formik> }
     </React.Fragment>
   )
 }

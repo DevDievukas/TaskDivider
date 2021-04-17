@@ -3,7 +3,7 @@
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin-bottom: 1.2em;
+  margin-bottom: 30px;
   margin-top: 1.2em;
 }
 
@@ -40,4 +40,5 @@
   margin: auto;
   width: 50%;
   min-height: 175px;
+  margin-bottom: 12px;
 }

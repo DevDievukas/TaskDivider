@@ -20,7 +20,8 @@ const HouseForm = (props) => {
       onSubmit={async (values) => {
         createHouseHandler(values.houseName, values.password)
       }}
-      render={({
+    >
+      {({
         values,
         handleChange,
         handleBlur,
@@ -52,7 +53,7 @@ const HouseForm = (props) => {
           </Button>
         </Form>
       )}
-    />
+    </Formik>
   )
 }
 
