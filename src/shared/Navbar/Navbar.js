@@ -1,6 +1,6 @@
 import {
   SignOut,
-  House
+  House,
 }                       from 'phosphor-react'
 import {
   connect,
@@ -16,7 +16,7 @@ import Link             from './Link'
 import styles           from './Navbar.module.css'
 
 const Navigation = styled.header`
-  background-color: ${(props) => props.theme.charcoal};
+  background-color: ${(props) => props.theme.background};
 `
 
 const Navbar = connect (({ auth: { houseId, houseName, token, userId }}) => (

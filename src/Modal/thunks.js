@@ -2,7 +2,7 @@ import * as actionTypes from './actions'
 
 export const createSuccessMessage = (message) => {
   return {
-    type: actionTypes.SET_MESSAGE,
+    type:        actionTypes.SET_MESSAGE,
     message,
     messageType: 'success',
   }
@@ -10,7 +10,7 @@ export const createSuccessMessage = (message) => {
 
 export const createErrorMessage = (message) => {
   return {
-    type: actionTypes.SET_MESSAGE,
+    type:        actionTypes.SET_MESSAGE,
     message,
     messageType: 'error',
   }

@@ -2,7 +2,7 @@ import { connect } 	    from 'react-redux'
 import { useParams } 		from 'react-router-dom'
 import React 						from 'react'
 
-import EmptyData 				from '../shared/UIElements/EmptyData/EmptyData.tsx'
+import EmptyData 				from '../shared/UIElements/EmptyData/EmptyData'
 import useDeleteData 		from '../shared/hooks/deleteData-hook'
 import useFetchData 		from '../shared/hooks/fetchData-hook'
 import usePostData 			from '../shared/hooks/postData-hook'

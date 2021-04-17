@@ -37,10 +37,10 @@ const Auth = () => {
 
   const signUp = (
     <div className={styles.signUpDiv}>
-      <div>
-        Want to manage your house?
+      <div className={styles.signUpTextDiv}>
+        Want to manage your house?&nbsp;
         <p className={styles.signUpText} onClick={switchToSignUp}>
-          Sign up instead!
+        Sign up instead!
         </p>
       </div>
     </div>
@@ -50,6 +50,7 @@ const Auth = () => {
       <div className={styles.logoDiv}>
         <img
           className={styles.logo}
+          // eslint-disable-next-line max-len
           src="https://res.cloudinary.com/dgegci4ii/image/upload/v1613754032/Logo1_avumoz.png"
           alt="logo"
         />

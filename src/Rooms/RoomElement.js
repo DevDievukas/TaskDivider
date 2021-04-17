@@ -10,6 +10,7 @@ const RoomElement = ( props ) => {
   const [expanded, setExpanded] = useState(false)
   
   let imgSrc =
+  // eslint-disable-next-line max-len
   'https://image.freepik.com/free-vector/lovely-living-room-interior_23-2147517931.jpg'
   const { userId, onDelete, room } = props
   if (room.images.length > 0) {

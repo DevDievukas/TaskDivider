@@ -19,10 +19,10 @@ export const startRefreshToken = (token) => {
       localStorage.setItem(
         'userData',
         JSON.stringify({
-          userId: storedUserData.userId,
-          email: storedUserData.email,
-          token: token,
-          remember: storedUserData.remember,
+          userId:     storedUserData.userId,
+          email:      storedUserData.email,
+          token:      token,
+          remember:   storedUserData.remember,
           expiration: storedUserData.expiration,
         })
       )
@@ -43,10 +43,10 @@ export const startUserAuth = (id, token, email, remember, expiration) => {
     localStorage.setItem(
       'userData',
       JSON.stringify({
-        userId: id,
-        email: email,
-        token: token,
-        remember: remember,
+        userId:     id,
+        email:      email,
+        token:      token,
+        remember:   remember,
         expiration: tokenExpiration ? tokenExpiration.toISOString() : null,
       })
     )
@@ -71,11 +71,11 @@ export const startHouseAuth = (id, token, houseName, remember, expiration) => {
     localStorage.setItem(
       'userData',
       JSON.stringify({
-        houseId: id,
-        token: token,
-        houseName: houseName,
+        houseId:    id,
+        token:      token,
+        houseName:  houseName,
         expiration: tokenExpiration ? tokenExpiration.toISOString() : null,
-        remember: remember,
+        remember:   remember,
       })
     )
 
@@ -112,7 +112,9 @@ export const authFromLocalStorage = () => {
             storedUserData.token,
             storedUserData.email,
             storedUserData.remember,
-            storedUserData.expiration ?  new Date(storedUserData.expiration) : null
+            storedUserData.expiration ?
+              new Date(storedUserData.expiration) :
+              null
           )
         )
       } else if (storedUserData.houseId) {
@@ -122,7 +124,9 @@ export const authFromLocalStorage = () => {
             storedUserData.token,
             storedUserData.houseName,
             storedUserData.remember,
-            storedUserData.expiration ?  new Date(storedUserData.expiration) : null
+            storedUserData.expiration ?
+              new Date(storedUserData.expiration) :
+              null
           )
         )
       }
@@ -134,7 +138,9 @@ const initiateLogoutTimer = (expirationDate) => {
   if (expirationDate) {
     return dispatch => {
       const remainingTime = expirationDate.getTime() - new Date().getTime()
-      const countDown = (setTimeout(() => dispatch(startLogout()), remainingTime))
+      const countDown = (
+        setTimeout(() => dispatch(startLogout()),remainingTime)
+      )
       dispatch(startLogoutTimer(countDown))
     }
   } else {

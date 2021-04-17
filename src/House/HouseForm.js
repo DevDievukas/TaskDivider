@@ -1,12 +1,12 @@
 
-import Input 						from '../shared/FormElements/Input'
-import Button 					from '../shared/FormElements/Button'
 import {
-  Form,
-  Formik
+  Formik,
 }											 	from 'formik'
-import styles 					from './Houses.module.css'
 import React 						from 'react'
+
+import Button 					from '../shared/FormElements/Button'
+import Input 						from '../shared/FormElements/Input'
+import { Form }         from '../shared/styled-components/shared'
 
 const HouseForm = (props) => {
   const { createHouseHandler } = props
@@ -15,27 +15,40 @@ const HouseForm = (props) => {
     <Formik
       initialValues={{
         houseName: '',
-        password: '',
+        password:  '',
       }}
       onSubmit={async (values) => {
         createHouseHandler(values.houseName, values.password)
       }}
     >
-      {() => (
-        <Form className={styles.form}>
+      {({
+        values,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+      }) => (
+        <Form onSubmit={handleSubmit}>
           <Input
-            id='houseName'
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.houseName}
             name='houseName'
             type='input'
+            placeholder='NAME OF THE HOUSE'
+            id='houseName'
             title='NAME OF THE HOUSE'
           />
           <Input
             id='password'
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.password}
             name='password'
             type='password'
+            placeholder='EMAIL-PASSWORD'
             title='EMAIL-PASSWORD'
           />
-          <Button type='submit' className={styles.button}>
+          <Button type='submit'>
 							ADD!
           </Button>
         </Form>

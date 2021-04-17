@@ -42,7 +42,7 @@ const RoomsControl = (props) => {
     <Formik
       initialValues={{
         roomName: '',
-        image: null,
+        image:    null,
       }}
       onSubmit={async (values) => {
         addRoomSubmitHandler(values.roomName, values.image)
@@ -54,6 +54,7 @@ const RoomsControl = (props) => {
           <ImageUpload
             id='image'
             center
+            multiple
             className={styles.imgUpload}
             setFiles={(event) => {
               setFieldValue('image', event.currentTarget.files)
@@ -85,9 +86,7 @@ const RoomsControl = (props) => {
         show={showModal}
         form={form}
       />
-      <Button onClick={revealAddRoomModal} className={styles.btn}>
-				ADD ROOM
-      </Button>
+      <Button add onClick={revealAddRoomModal} className={styles.btn} />
     </React.Fragment>
   )
 }

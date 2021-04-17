@@ -27,15 +27,14 @@ const RequestForm = (props) => {
     postRequest(request)
   }
 
-  const form = (
+  return (
     <Formik
       initialValues={{
         author: initialAuthor || '',
-        body: '',
+        body:   '',
       }}
-      onSubmit={async (values) => {
-        // console.log(values);
-        formSubmit(values.author, values.body)
+      onSubmit={async ({ author, body }) => {
+        formSubmit(author, body)
       }}
     >
       {() => (
@@ -51,7 +50,6 @@ const RequestForm = (props) => {
     </Formik>
   )
 
-  return <React.Fragment> {form} </React.Fragment>
 }
 
 export default RequestForm

@@ -9,16 +9,16 @@ export const START_TIMER = 'START_TIMER'
 
 export const clearLogoutTimer = () => {
   return {
-    type: CLEAR_TIMEOUT
+    type: CLEAR_TIMEOUT,
   }
 }
 
 export const houseAuth = (id, token, houseName, expiration) => {
   return {
-    type: AUTH_HOUSE,
-    houseId: id,
-    token: token,
-    houseName: houseName,
+    type:       AUTH_HOUSE,
+    houseId:    id,
+    token:      token,
+    houseName:  houseName,
     expiration: expiration,
   }
 }
@@ -31,24 +31,24 @@ export const logout = () => {
 
 export const startLogoutTimer = (timer) => {
   return {
-    type: START_TIMER,
-    timer: timer
+    type:  START_TIMER,
+    timer: timer,
   }
 }
 
 export const refreshToken = (token) => {
   return {
-    type: REFRESH_TOKEN,
+    type:  REFRESH_TOKEN,
     token: token,
   }
 }
 
 export const userAuth = (id, token, email, expiration) => {
   return {
-    type: AUTH_USER,
-    userId: id,
-    token: token,
-    email: email,
+    type:       AUTH_USER,
+    userId:     id,
+    token:      token,
+    email:      email,
     expiration: expiration,
   }
 }

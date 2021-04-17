@@ -1,7 +1,7 @@
 import {
   useRef,
   useState,
-  useEffect
+  useEffect,
 }                     from 'react'
 import { PlusCircle } from 'phosphor-react'
 import React          from 'react'
@@ -9,6 +9,7 @@ import React          from 'react'
 import styles         from './ImageUpload.module.css'
 
 const ImageUpload = (props) => {
+  const { button, center, className, id, multiple, setFiles, single } = props
   const [file, setFile] = useState()
   const [previewUrl, setPreviewUrl] = useState()
   const filePickerRef = useRef()
@@ -22,50 +23,66 @@ const ImageUpload = (props) => {
     fileReader.onload = () => {
       setPreviewUrl(fileReader.result)
     }
-    // fileReader.readAsDataURL(file);
-    fileReader.readAsDataURL(file[0])
+    if(single){
+      fileReader.readAsDataURL(file);
+    } else {
+      fileReader.readAsDataURL(file[0])
+    } 
   }, [file])
 
   const pickedHandler = (event) => {
     let pickedFile
 
-    // if (event.target.files && event.target.files.length === 1) {
-    //   pickedFile = event.target.files[0];
-    //   setFile(pickedFile);
-    // }
-
-    if (event.target.files && event.target.files.length > 0) {
-      pickedFile = event.target.files
-      setFile(pickedFile)
+    if (single) {
+      if (event.target.files && event.target.files.length === 1) {
+        pickedFile = event.target.files[0];
+        setFile(pickedFile);
+      }
+    } else {
+      if (event.target.files && event.target.files.length > 0) {
+        pickedFile = event.target.files
+        setFile(pickedFile)
+      }
     }
-    props.setFiles(event)
+    setFiles(event)
   }
 
   const pickImageHandler = () => {
     filePickerRef.current.click()
   }
   return (
-    <div className={styles.formControl}>
+    // <div className={styles.formControl}>
+    <React.Fragment>
+      {button ?
+        <div
+          type='button'
+          className={styles.button}
+          onClick={pickImageHandler}
+        >
+          UPLOAD
+        </div> :
+        <div
+          className={`${styles.imageUpload} ${center && 'center'} ${
+            className
+          }`}
+        >
+          <div className={styles.imageUploadPreview} onClick={pickImageHandler}>
+            {previewUrl && <img src={previewUrl} alt="Preview" />}
+            {!previewUrl && <PlusCircle size={144} className={styles.plus} />}
+          </div>
+        </div> }
       <input
-        id={props.id}
+        id={id}
         ref={filePickerRef}
         style={{ display: 'none' }}
         type="file"
-        multiple
+        multiple={multiple && 'multiple'}
+        single={single && 'single'}
         accept=".jpg, .png, .jpeg"
         onChange={pickedHandler}
       />
-      <div
-        className={`${styles.imageUpload} ${props.center && 'center'} ${
-          props.className
-        }`}
-      >
-        <div className={styles.imageUploadPreview} onClick={pickImageHandler}>
-          {previewUrl && <img src={previewUrl} alt="Preview" />}
-          {!previewUrl && <PlusCircle size={144} className={styles.plus} />}
-        </div>
-      </div>
-    </div>
+    </React.Fragment>
+    // </div>
   )
 }
 

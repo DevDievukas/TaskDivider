@@ -4,7 +4,7 @@ import * as actionTypes from './actions'
 
 const initialState = {
   isLoading: false,
-  error: null,
+  error:     null,
 }
 
 const startLoading = (state) => {
@@ -20,7 +20,7 @@ const stopLoading = (state) => {
 const createError = (state, action) => {
   return updateObject(state, {
     isLoading: false,
-    error: action.error,
+    error:     action.error,
   })
 }
 

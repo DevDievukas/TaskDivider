@@ -1,11 +1,11 @@
 import {
   Formik,
   Field,
-  Form
+  Form,
 } 										from 'formik'
 import {
   useEffect,
-  useState
+  useState,
 }											from 'react'
 import { useParams } 	from 'react-router-dom'
 import axios 					from 'axios'
@@ -54,7 +54,7 @@ const RoomsModal = ( props ) => {
   const removeRoom = (roomId) => {
     const reqData = {
       roomId: roomId,
-      house: houseParam,
+      house:  houseParam,
     }
     const filterRoom = (res) => {
       setUnassigned((prevData) => [...prevData, res])
@@ -105,7 +105,11 @@ const RoomsModal = ( props ) => {
     unassignedElements = unassigned.map((room) => {
       return (
         <label key={room.id}>
-          <Field type='checkbox' name='rooms' value={room.id} /> {room.roomName}{' '}
+          <Field
+            type='checkbox'
+            name='rooms'
+            value={room.id}
+          /> {room.roomName}{' '}
         </label>
       )
     })

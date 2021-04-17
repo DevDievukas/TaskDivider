@@ -3,36 +3,36 @@ import { updateObject } 	from '../Store/utility'
 import * as actionTypes 	from './actions'
 
 const initialState = {
-  email: null,
-  expiration: null,
-  houseId: null,
-  houseName: null,
+  email:       null,
+  expiration:  null,
+  houseId:     null,
+  houseName:   null,
   logoutTimer: null,
-  token: null,
-  userId: null,
+  token:       null,
+  userId:      null,
 }
 
 const authHouse = (state, action) => {
   return updateObject(state, {
-    token: action.token,
-    houseName: action.houseName,
-    houseId: action.houseId,
+    token:      action.token,
+    houseName:  action.houseName,
+    houseId:    action.houseId,
     expiration: action.expiration,
   })
 }
 
 const authUser = (state, action) => {
   return updateObject(state, {
-    userId: action.userId,
-    token: action.token,
-    email: action.email,
+    userId:     action.userId,
+    token:      action.token,
+    email:      action.email,
     expiration: action.expiration,
   })
 }
 
 const clearTimer = (state) => {
   return updateObject(state, {
-    logoutTimer: null
+    logoutTimer: null,
   })
 }
 
@@ -48,7 +48,7 @@ const refreshToken = (state, action) => {
 
 const startTimer = (state, action) => {
   return updateObject(state, {
-    logoutTimer: action.timer
+    logoutTimer: action.timer,
   })
 }
 

@@ -3,14 +3,14 @@ import { updateObject } from '../Store/utility'
 import * as actionTypes from './actions'
 
 const initialState = {
-  form: null,
+  form:        null,
   formIsValid: null,
-  formTitle: null
+  formTitle:   null,
 }
 
 const createForm = (state, action) => {
   return updateObject(state, {
-    form: action.form,
+    form:      action.form,
     formTitle: action.title,
   })
 }

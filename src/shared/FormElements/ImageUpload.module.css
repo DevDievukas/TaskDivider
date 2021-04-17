@@ -6,9 +6,10 @@
 }
 
 .imageUploadPreview {
-  width: 13em;
-  height: 18em;
-  border: 2px solid rgba(204, 204, 204, 0.397);
+  width: 150px;
+  min-width: 150px;
+  max-width: 150px;
+  border: 2px solid #C8C8C8;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,5 +24,28 @@
 }
 
 .plus {
-  color: rgba(204, 204, 204, 0.397);
+  color: #C8C8C8;
+}
+.button {
+  font: inherit;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid rgb(100, 100, 100);
+  border-radius: 4px;
+  background: rgb(73, 73, 73);
+  color: white;
+  cursor: pointer;
+  margin: auto;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button:hover,
+.button:active {
+  background: gray;
+  border-color: rgb(100, 100, 100);
 }

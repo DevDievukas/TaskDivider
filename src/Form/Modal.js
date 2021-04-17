@@ -15,7 +15,7 @@ const ModalOverlay = (props) => {
   const content = (
     <styled.Modal>
       <styled.Header>
-        <h4>{props.title}</h4>
+        {props.title}
       </styled.Header>
       {props.form}
     </styled.Modal>
@@ -39,7 +39,12 @@ export default connect (( { form: { form, isFormValid, formTitle } }) => (
       form ?
         <React.Fragment>
           <Backdrop onClick={closeFormModal} />
-          <ModalOverlay clear={closeFormModal} form={form} title={formTitle} isFormValid={isFormValid}/>
+          <ModalOverlay
+            clear={closeFormModal}
+            form={form}
+            title={formTitle}
+            isFormValid={isFormValid}
+          />
         </React.Fragment> :
         null
     )

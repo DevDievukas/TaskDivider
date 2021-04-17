@@ -3,14 +3,13 @@
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin-bottom: 1.2em;
+  margin-bottom: 30px;
   margin-top: 1.2em;
 }
 
 .radioDiv {
   display: grid;
   margin-bottom: 0.6em;
-  /* margin-left: 30px; */
 }
 .radio {
   display: none;
@@ -30,21 +29,16 @@
   border: 1px solid #830000;
 }
 
-.form {
-  display: block;
-  align-items: center;
-  justify-content: center;
+.plus{
+  color: rgb(82, 82, 82);
+  position: absolute;
+  top: 51%;
+  right: 28%;
 }
 
-.buttonsDiv {
+.div{
   margin: auto;
-  margin-top: 1.2em;
-  margin-bottom: 0.6em;
-  justify-content: space-around;
-  display: flex;
-}
-
-.btn {
-  min-width: 80%;
-  margin: auto;
+  width: 50%;
+  min-height: 175px;
+  margin-bottom: 12px;
 }

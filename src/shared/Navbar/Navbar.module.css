@@ -3,15 +3,16 @@
   min-width: 100vw;
   min-height: 4em;
   margin-bottom: 1rem;
-  /* background-color: rgb(73, 73, 73); */
   box-shadow: 0px 2px rgba(219, 219, 219, 0.692);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .logo {
   margin: auto;
-  margin-left: 1.2em;
+  margin-right: 5px;
+  margin-top: 7px;
   color: white;
 }
 
@@ -22,63 +23,13 @@
   font-family: 'Times New Roman', Times, serif;
 }
 
-.navbar p {
-  color: rgb(218, 216, 216);
-  padding-left: 0.7rem;
-  margin: 0;
-  padding-bottom: 0.4rem;
-  font-size: 120%;
-}
-
-.bi {
-  margin-left: 0.7rem;
-  color: rgb(218, 216, 216);
-}
-
-.btn div {
-  width: 30px;
-  height: 3px;
-  background-color: rgb(218, 216, 216);
-  margin: 6px 0;
-}
-
-.mainNavigationMenuBtn {
-  width: 1.5rem;
-  height: 2.3rem;
-  background: transparent;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  margin-right: 2.2rem;
-  margin-top: 0.4rem;
-  cursor: pointer;
-}
-
-.mainNavigationMenuBtn span {
+ .mainNavigationMenuBtn span {
   display: block;
   width: 2.4rem;
   height: 3px;
   background: rgb(77, 77, 77);
-}
+} 
 
-.mainNavigationTitle {
-  color: white;
-}
-
-.mainNavigationHeaderNav {
-  display: none;
-}
-
-.mainNavigationDrawerNav {
-  height: 100%;
-}
-
-.authButton {
-  justify-content: center;
-  padding-right: 10px;
-  color: black;
-}
 
 .signOutDiv {
   margin: auto;

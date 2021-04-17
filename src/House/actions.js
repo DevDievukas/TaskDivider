@@ -92,12 +92,12 @@ export const removeRoom = (room) => {
 
 export const setHouse = (house) => {
   return {
-    type: SET_HOUSE,
-    houseName: house.houseName,
+    type:          SET_HOUSE,
+    houseName:     house.houseName,
     announcements: house.announcements,
-    people: house.people,
-    requests: house.requests,
-    rooms: house.rooms,
-    schedule: house.schedule,
+    people:        house.people,
+    requests:      house.requests,
+    rooms:         house.rooms,
+    schedule:      house.schedule,
   }
 }

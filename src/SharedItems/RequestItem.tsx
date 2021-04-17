@@ -8,9 +8,11 @@ type Props = {
   id: string,
   userId: string,
   request: string,
+  // eslint-disable-next-line no-undef
   deleteRequest(id: string): VoidFunction,
 }
 
+// eslint-disable-next-line no-undef
 const RequestItem = (props: Props): JSX.Element => {
   const { date, name, request, id, userId, deleteRequest } = props
   const parsedDate = date.substr(5, 5)

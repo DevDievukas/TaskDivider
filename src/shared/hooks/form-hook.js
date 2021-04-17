@@ -1,6 +1,6 @@
 import {
   useCallback,
-  useReducer
+  useReducer,
 } from 'react'
 
 const formReducer = (state, action) => {
@@ -27,7 +27,7 @@ const formReducer = (state, action) => {
     }
   case 'SET_DATA':
     return {
-      inputs: action.inputs,
+      inputs:  action.inputs,
       isValid: action.formIsValid,
     }
   default:
@@ -37,15 +37,15 @@ const formReducer = (state, action) => {
 
 export const useForm = (initialInputs, initialFormValidity) => {
   const [formState, dispatch] = useReducer(formReducer, {
-    inputs: initialInputs,
+    inputs:  initialInputs,
     isValid: initialFormValidity,
   })
 
   const InputHander = useCallback(
     (id, value, isValid) => {
       dispatch({
-        type: 'INPUT_CHANGE',
-        value: value,
+        type:    'INPUT_CHANGE',
+        value:   value,
         isValid: isValid,
         inputId: id,
       })
@@ -55,8 +55,8 @@ export const useForm = (initialInputs, initialFormValidity) => {
 
   const setFormData = useCallback((inputData, formValidity) => {
     dispatch({
-      type: 'SET_DATA',
-      inputs: inputData,
+      type:        'SET_DATA',
+      inputs:      inputData,
       formIsValid: formValidity,
     })
   }, [])
