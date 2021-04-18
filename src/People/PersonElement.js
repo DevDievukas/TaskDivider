@@ -1,6 +1,7 @@
 import { Trash }       from 'phosphor-react'
 import { useState }    from 'react'
 import { useDispatch } from 'react-redux'
+import { useParams }   from 'react-router'
 import React           from 'react'
 
 import { createForm }  from '../Form/thunks'
@@ -11,15 +12,16 @@ import Modal           from '../shared/UIElements/Modal'
 import styles          from './PersonElement.module.css'
 import RoomsModal      from './RoomsModal'
 
-const PersonElement = (props) => {
+const PersonElement = ({ token, name, id, onDelete }) => {
   const dispatch = useDispatch()
+  const houseParam = useParams().houseId
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   
-  const { token, name, id, onDelete } = props
 
   const callRoomsModal = () => {
     dispatch(createForm(
       <RoomsModal
+        houseParam={houseParam}
         personId={id}
         token={token}
       />,
