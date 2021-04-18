@@ -17,7 +17,9 @@ const ModalOverlay = (props) => {
       <styled.Header>
         {props.title}
       </styled.Header>
-      {props.form}
+      <styled.Body>
+        {props.form}
+      </styled.Body>
     </styled.Modal>
   )
   return ReactDOM.createPortal(

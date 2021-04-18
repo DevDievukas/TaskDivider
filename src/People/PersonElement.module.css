@@ -12,6 +12,7 @@
 .title {
   text-align: left;
   min-width: 35%;
+  font-weight: bold;
 }
 
 .rooms {
