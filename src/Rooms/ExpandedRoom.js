@@ -2,19 +2,18 @@ import {
   useRef,
   useEffect,
   useState,
-} from 'react'
-import Carousel     from 'react-bootstrap/Carousel'
-import React        from 'react'
+}                       from 'react'
+import Carousel         from 'react-bootstrap/Carousel'
+import React            from 'react'
 
-import Button       from '../shared/FormElements/Button'
-import Modal        from '../shared/UIElements/Modal'
-import useFetchData from '../shared/hooks/fetchData-hook'
+import Button           from '../shared/FormElements/Button'
+import Modal            from '../shared/UIElements/Modal'
+import useFetchData     from '../shared/hooks/fetchData-hook'
 
-import PersonName   from './PersonName'
-import styles       from './ExpandedRoom.module.css'
+import PersonName       from './PersonName'
+import styles           from './ExpandedRoom.module.css'
 
-const ExpandedRoom = ( props ) => {
-  const { room, close, onDelete, userId } = props
+const ExpandedRoom = ({ room, close, onDelete, userId }) => {
   const loadedData = useFetchData(
     `${process.env.REACT_APP_BACKEND_URL}/person/allByRoom/${room._id}`
   )
@@ -45,7 +44,6 @@ const ExpandedRoom = ( props ) => {
   }
 
   if (loadedData.data.length > 0) {
-    // console.log(data);
     people = loadedData.data.map((person) => {
       return (
         <PersonName
@@ -79,22 +77,18 @@ const ExpandedRoom = ( props ) => {
             <Carousel controls={false} interval={3000} className={styles.caro}>
               {room.images.map((img) => {
                 return (
-                  <Carousel.Item
+                  <img
+                    className={styles.roomImage}
+                    src={img.url}
+                    alt={img.public_id}
                     key={img.public_id}
-                    className={styles.caroItem}
-                  >
-                    <img
-                      className="d-block w-100"
-                      src={img.url}
-                      alt={img.public_id}
-                    />
-                  </Carousel.Item>
+                  />
                 )
               })}
             </Carousel>
           ) : (
             <img
-              className="d-block w-100"
+              className={styles.roomImage}
               src={
                 // eslint-disable-next-line max-len
                 'https://image.freepik.com/free-vector/lovely-living-room-interior_23-2147517931.jpg'

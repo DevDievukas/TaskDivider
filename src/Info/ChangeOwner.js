@@ -7,12 +7,12 @@ import {
   useDispatch,
 }          				              from 'react-redux'
 import {
-  useParams,
   useHistory,
 } 								              from 'react-router-dom'
 import React 			              from 'react'
 
 import { startRefreshToken } 	  from '../Auth/thunks'
+import { closeForm }            from '../Form/thunks'
 import {
   createErrorMessage,
   createSuccessMessage,
@@ -20,11 +20,8 @@ import {
 import { transferSuccessfull }  from '../strings/success'
 import Button 		              from '../shared/FormElements/Button'
 import Input 			              from '../shared/FormElements/Input'
-// eslint-disable-next-line max-len
-import FormModal 	              from '../shared/UIElements/FormModal/FormModal'
 
-const ChangeOwner = (props) => {
-  const houseParam = useParams().houseId 
+const ChangeOwner = ({ houseParam, token }) => {
   const dispatch = useDispatch()
   const history = useHistory()
 
@@ -39,10 +36,11 @@ const ChangeOwner = (props) => {
       reqData,
       {
         headers: {
-          authorization: `Bearer ${props.token}`,
+          authorization: `Bearer ${token}`,
         },
       }).
       then((res) => {
+        dispatch(closeForm())
         dispatch(createSuccessMessage(transferSuccessfull))
         dispatch(startRefreshToken(res.data.token))
         history.push('/')
@@ -51,33 +49,22 @@ const ChangeOwner = (props) => {
       })
   }
 
-  const form = (
+  return (
     <Formik
       initialValues={{
         email: '',
       }}
-      onSubmit={async (values) => {
-        changeOwnerHandler(values.email)
+      onSubmit={async ({ email }) => {
+        changeOwnerHandler(email)
       }}
     >
       {() => (
         <Form>
           <Input id='email' name='email' type='input' title='E-MAIL' />
-          <Button type='button' cancel onClick={props.cancel}>
-						CANCEL
-          </Button>
           <Button type='submit'>SUBMIT</Button>
         </Form>
       )}
     </Formik>
-  )
-  return (
-    <FormModal
-      onCancel={props.cancel}
-      header='CHANGE OWNER?'
-      show={props.show}
-      form={form}
-    />
   )
 }
 

@@ -3,15 +3,27 @@ import {
   useEffect,
   useState,
 }                    					from 'react'
-import { connect, useDispatch } 				from 'react-redux'
+import {
+  connect,
+  useDispatch,
+}                      				from 'react-redux'
 import {
   useParams,
 } 														from 'react-router-dom'
 import React 									from 'react'
 
+import { createForm }         from '../Form/thunks'
 import { createError }        from '../Loading/thunks'
+import {
+  changeHousename,
+  changeOwner,
+  changePassword,
+  deleteHouse,
+}                             from '../strings/form'
 
 import {
+  Card,
+  Controller,
   HouseName,
   Inner,
   Main,
@@ -25,10 +37,6 @@ import DeleteHouse            from './DeleteHouse'
 const Info = connect (({ auth: { token }}) => (
   { token }))(
   ({ token }) => {
-    const [showChangeOwner, setShowChangeOwner] = useState(false)
-    const [showChangeHousename, setShowChangeHousename] = useState(false)
-    const [showChangePassword, setShowPassword] = useState(false)
-    const [showDeleteHouse, setShowDeleteHouse] = useState(false)
     const [houseName, setHouseName] = useState('')
     const [roomNumber, setRoomNumber] = useState('')
     const [peopleNumber, setPeopleNumber] = useState('')
@@ -51,42 +59,76 @@ const Info = connect (({ auth: { token }}) => (
         })
     }, [])
 
+    const callDeleteHouse = () => {
+      dispatch(createForm(
+        <DeleteHouse
+          token={token}
+          houseParam={houseParam}
+        />,
+        deleteHouse,
+      ))
+    }
+
+    const callChangeHousename = () => {
+      dispatch(createForm(
+        <ChangeHouseName
+          token={token}
+          houseParam={houseParam}
+          setHouseName={setHouseName}
+        />,
+        changeHousename,
+      ))
+    }
+
+    const callChangeOwner = () => {
+      dispatch(createForm(
+        <ChangeOwner
+          token={token}
+          houseParam={houseParam}
+        />,
+        changeOwner,
+      ))
+    }
+
+    const callChangePassword = () => {
+      dispatch(createForm(
+        <ChangePassword
+          token={token}
+          houseParam={houseParam}
+        />,
+        changePassword,
+      ))
+    }
+
     return (
       <Main>
-        <ChangeOwner
-          show={showChangeOwner}
-          cancel={() => setShowChangeOwner(false)}
-          token={token}
-        />
-        <ChangeHouseName 
-          show={showChangeHousename}
-          cancel={() => setShowChangeHousename(false)}
-          setHouseName={setHouseName}
-          token={token}
-        />
-        <ChangePassword 
-          show={showChangePassword}
-          cancel={() => setShowPassword(false)}
-          token={token}
-        />
-        <DeleteHouse 
-          show={showDeleteHouse}
-          cancel={() => setShowDeleteHouse(false)}
-          token={token}
-        />
         <HouseName>{houseName}</HouseName>
-        <Inner>
-          <p>Residents:</p>
-          <p>{peopleNumber}</p>
-        </Inner>
-        <Inner>
-          <p>Rooms:</p>
-          <p>{roomNumber}</p>
-        </Inner>
-        <p onClick={() => setShowChangeHousename(true)}>Change house name</p>
-        <p onClick={() => setShowPassword(true)}>Change password</p>
-        <p onClick={() => setShowChangeOwner(true)}>Change owner</p>
-        <p onClick={() => setShowDeleteHouse(true)}>Delete house</p>
+        <Card>
+          <Inner>
+            <p>Residents:</p>
+            <p>{peopleNumber}</p>
+          </Inner>
+          <Inner>
+            <p>Rooms:</p>
+            <p>{roomNumber}</p>
+          </Inner>
+          <Controller
+            onClick={() => callChangeHousename()}>
+            Change house name
+          </Controller>
+          <Controller
+            onClick={() => callChangePassword()}>
+            Change password
+          </Controller>
+          <Controller
+            onClick={() => callChangeOwner()}>
+            Change owner
+          </Controller>
+          <Controller
+            onClick={() => callDeleteHouse()}>
+            Delete house
+          </Controller>
+        </Card>
       </Main>
     )
   }

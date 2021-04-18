@@ -9,21 +9,26 @@ import {
   startLogoutTimer,
   refreshToken,
   userAuth,
-}                           from './actions'
+}                          from './actions'
 
 
 export const startRefreshToken = (token) => {
   return (dispatch) => {
-    const storedUserData = JSON.parse(localStorage.getItem('userData'))
-    if (storedUserData) {
+    const {
+      email,
+      expiration,
+      remember,
+      userId,
+    } = JSON.parse(localStorage.getItem('userData'))
+    if (email) {
       localStorage.setItem(
         'userData',
         JSON.stringify({
-          userId:     storedUserData.userId,
-          email:      storedUserData.email,
-          token:      token,
-          remember:   storedUserData.remember,
-          expiration: storedUserData.expiration,
+          userId,
+          email,
+          token,
+          remember,
+          expiration,
         })
       )
       dispatch(refreshToken(token))
@@ -98,34 +103,43 @@ export const startLogout = () => {
 }
 
 export const authFromLocalStorage = () => {
-  const storedUserData = JSON.parse(localStorage.getItem('userData'))
+  const {
+    expiration,
+    houseId,
+    houseName,
+    userId,
+    token,
+    email,
+    remember,
+  } = JSON.parse(localStorage.getItem('userData'))
+  // const storedUserData = JSON.parse(localStorage.getItem('userData'))
   return dispatch => {
-    if (storedUserData) {
-      if(new Date(storedUserData.expiration) < new Date()) {        
+    if (token) {
+      if (expiration && new Date(expiration) < new Date()) { 
         dispatch(startLogout())
         return
       }
-      if (storedUserData.userId) {
+      if (userId) {
         dispatch(
           startUserAuth(
-            storedUserData.userId,
-            storedUserData.token,
-            storedUserData.email,
-            storedUserData.remember,
-            storedUserData.expiration ?
-              new Date(storedUserData.expiration) :
+            userId,
+            token,
+            email,
+            remember,
+            expiration ?
+              new Date(expiration) :
               null
           )
         )
-      } else if (storedUserData.houseId) {
+      } else if (houseId) {
         dispatch(
           startHouseAuth(
-            storedUserData.houseId,
-            storedUserData.token,
-            storedUserData.houseName,
-            storedUserData.remember,
-            storedUserData.expiration ?
-              new Date(storedUserData.expiration) :
+            houseId,
+            token,
+            houseName,
+            remember,
+            expiration ?
+              new Date(expiration) :
               null
           )
         )

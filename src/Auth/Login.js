@@ -33,20 +33,21 @@ const Login = (props) => {
         password,
         remember,
       })
-      .then((res) => {
+      .then(({ data :{ userId, token, email, remember }}) => {
+        console.log(userId)
         dispatch(stopLoading())
         dispatch(
           startUserAuth(
-            res.data.userId,
-            res.data.token,
-            res.data.email,
-            res.data.remember,
+            userId,
+            token,
+            email,
+            remember,
           )
         )
       })
-      .catch((error) => {
-        if (error.response) {
-          dispatch(createError(error.response.data.message))
+      .catch(({ response }) => {
+        if (response) {
+          dispatch(createError(response.data.message))
         }
       })
   }
@@ -59,20 +60,20 @@ const Login = (props) => {
         password,
         remember,
       })
-      .then((res) => {
+      .then(({ data: { houseId, houseName, remember, token}}) => {
         dispatch(stopLoading())
         dispatch(
           startHouseAuth(
-            res.data.houseId,
-            res.data.token,
-            res.data.houseName,
-            res.data.remember
+            houseId,
+            token,
+            houseName,
+            remember
           )
         )
       })
-      .catch((error) => {
-        if (error.response) {
-          dispatch(createError(error.response.data.message))
+      .catch(({ response }) => {
+        if (response) {
+          dispatch(createError(response.data.message))
         }
       })
   }
@@ -85,11 +86,11 @@ const Login = (props) => {
         password:  '',
         remember:  false,
       }}
-      onSubmit={async (values) => {
+      onSubmit={async ({ email, houseName, password, remember }) => {
         if (isUserLogin) {
-          userLogin(values.email, values.password, values.remember)
+          userLogin(email, password, remember)
         } else {
-          houseLogin(values.houseName, values.password, values.remember)
+          houseLogin(houseName, password, remember)
         }
       }}
     >

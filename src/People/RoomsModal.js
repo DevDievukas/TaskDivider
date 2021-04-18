@@ -2,29 +2,31 @@ import {
   Formik,
   Field,
   Form,
-} 										from 'formik'
+} 										   from 'formik'
 import {
   useEffect,
   useState,
-}											from 'react'
-import { useParams } 	from 'react-router-dom'
-import axios 					from 'axios'
-import React 					from 'react'
+}											   from 'react'
+import { useDispatch }   from 'react-redux'
+import axios 					   from 'axios'
+import React 					   from 'react'
 
-import Button 				from '../shared/FormElements/Button'
-import usePostData 		from '../shared/hooks/postData-hook'
-import FormModal 			from '../shared/UIElements/FormModal/FormModal'
+import { closeForm }     from '../Form/thunks'
+import {
+  createSuccessMessage,
+}                        from '../Modal/thunks'
+import { assignedRooms } from '../strings/success'
+import Button 				   from '../shared/FormElements/Button'
+import usePostData 		   from '../shared/hooks/postData-hook'
 
-import styles 				from './PersonElement.module.css'
-import RoomElement 		from './RoomElement'
+import styles 				   from './PersonElement.module.css'
+import RoomElement 		   from './RoomElement'
 
-const RoomsModal = ( props ) => {
+const RoomsModal = ({ houseParam, personId, token }) => {
   const [assigned, setAssigned] = useState([])
   const [unassigned, setUnassigned] = useState([])
   const { post } = usePostData()
-
-  const houseParam = useParams().houseId
-  const { personId, close, token } = props
+  const dispatch = useDispatch()
   let assignedElements
   let unassignedElements
 	
@@ -85,7 +87,10 @@ const RoomsModal = ( props ) => {
         },
       },
       reqData,
-      close
+      () => {
+        dispatch(createSuccessMessage(assignedRooms))
+        dispatch(closeForm())
+      }
     )
   }
 
@@ -115,13 +120,12 @@ const RoomsModal = ( props ) => {
     })
   }
 
-  const form = (
+  return (
     <Formik
       initialValues={{
         rooms: [],
       }}
       onSubmit={async (values) => {
-        console.log(values)
         assignRooms(values.rooms)
       }}
     >
@@ -141,14 +145,6 @@ const RoomsModal = ( props ) => {
             </div>
           ) : null}
           <div className={styles.buttonsDiv}>
-            <Button
-              type='button'
-              cancel
-              className={styles.button}
-              onClick={close}
-            >
-							CANCEL
-            </Button>
             <Button type='submit' className={styles.button}>
 							ASSIGN
             </Button>
@@ -156,14 +152,6 @@ const RoomsModal = ( props ) => {
         </Form>
       )}
     </Formik>
-  )
-  return (
-    <FormModal
-      onCancel={close}
-      show={true}
-      form={form}
-      header='ASSIGN ROOMS?'
-    />
   )
 }
 

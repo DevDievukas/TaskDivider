@@ -1,24 +1,24 @@
 import {
   Formik,
   Form,
-}								 	      from 'formik'              
+}								 	         from 'formik'              
 import { 
   useDispatch,
-}                       from 'react-redux'
+}                          from 'react-redux'
+import React 			         from 'react'
+
+import { closeForm }       from '../Form/thunks'
+import { createError }     from '../Loading/thunks'
 import {
-  useParams,
-}                       from 'react-router-dom'
-import React 			      from 'react'
+  createSuccessMessage,
+}                          from '../Modal/thunks'
+import { changedPassword } from '../strings/success'
+import usePostData 	       from '../shared/hooks/postData-hook'
+import Button 		         from '../shared/FormElements/Button'
+import Input 			         from '../shared/FormElements/Input'
 
-import { createError }  from '../Loading/thunks'
-import usePostData 	    from '../shared/hooks/postData-hook'
-import Button 		      from '../shared/FormElements/Button'
-import Input 			      from '../shared/FormElements/Input'
-import FormModal 	      from '../shared/UIElements/FormModal/FormModal'
-
-const ChangePassword = (props) => {
+const ChangePassword = ({ houseParam, token }) => {
   const { post } = usePostData()
-  const houseParam = useParams().houseId
   const dispatch = useDispatch()
 
   const changePasswordHandler = (oldPassword, newPassword) => {
@@ -32,12 +32,13 @@ const ChangePassword = (props) => {
       `${process.env.REACT_APP_BACKEND_URL}/house/changepassword/`,
       {
         headers: {
-          authorization: `Bearer ${props.token}`,
+          authorization: `Bearer ${token}`,
         },
       },
       reqData,
       () => {
-        props.cancel()
+        dispatch(createSuccessMessage(changedPassword))
+        dispatch(closeForm())
       }
     )
   }
@@ -56,7 +57,7 @@ const ChangePassword = (props) => {
     changePasswordHandler(oldPass, newPass)
   }
 
-  const form = (
+  return (
     <Formik
       initialValues={{
         oldPassword:       '',
@@ -92,22 +93,10 @@ const ChangePassword = (props) => {
             type='password'
             title='REPEAT NEW PASSWORD'
           />
-          <Button type='button' cancel onClick={props.cancel}>
-						CANCEL
-          </Button>
           <Button type='submit'>SUBMIT</Button>
         </Form>
       )}
     </Formik>
-  )
-  
-  return (
-    <FormModal
-      onCancel={props.cancel}
-      header='CHANGE HOUSE PASSWORD?'
-      show={props.show}
-      form={form}
-    />
   )
 }
 

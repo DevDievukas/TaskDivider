@@ -7,7 +7,7 @@ export const Form = styled.form`
   padding-bottom: 10px;
   padding-top: 10px;
   overflow: auto;
-  margin-top: 45px;
+  margin-top: 20px;
   max-height: 60vh;
 `
 

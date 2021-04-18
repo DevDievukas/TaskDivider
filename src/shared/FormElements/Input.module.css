@@ -10,9 +10,22 @@
   height: 30px;
   width: 100%;
   position: relative;
+  margin-top: 15px;
 }
 
-.wrapper .field input {
+.textField {
+  height: 60px;
+  width: 100%;
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.wrapper .textField textarea {
+  padding-top: 30px;
+}
+
+.wrapper .field input,
+.wrapper .textField textarea {
   outline: none;
   height: 100%;
   width: 100%;
@@ -20,11 +33,16 @@
   border-bottom: 2px solid rgb(241, 241, 241);
   font-size: 17px;
 }
+
 /* Change the white to any color ;) */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
+input:-webkit-autofill:active,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+textarea:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px white inset !important;
   box-shadow: 0 0 0 30px white inset !important;
 }
@@ -36,6 +54,15 @@ input:-webkit-autofill:active {
   color: silver;
 }
 
+
+.textField textarea:focus ~ label,
+.textField textarea:valid ~ label {
+  transform: translateY(25px);
+  font-style: 15px;
+  color: silver;
+}
+
+.wrapper .textField label,
 .wrapper .field label {
   position: absolute;
   bottom: 0px;
@@ -45,6 +72,7 @@ input:-webkit-autofill:active {
   transition: all 0.3s ease;
 }
 
+.wrapper .textField .underline,
 .wrapper .field .underline {
   position: absolute;
   bottom: 0;
@@ -53,6 +81,7 @@ input:-webkit-autofill:active {
   width: 100%;
 }
 
+.textField .underline:before,
 .field .underline:before {
   position: absolute;
   content: '';
@@ -63,6 +92,8 @@ input:-webkit-autofill:active {
   transition: transform 0.3s ease;
 }
 
+.textField textarea:focus ~ .underline:before,
+.textField textarea:valid ~ .underline::before,
 .field input:focus ~ .underline:before,
 .field input:valid ~ .underline::before {
   transform: scaleX(1);

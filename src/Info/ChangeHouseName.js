@@ -1,20 +1,22 @@
 import {
   Formik,
   Form,
-}								 	  from 'formik'
+}								 	      from 'formik'
+import { useDispatch }  from 'react-redux'
+import React 			      from 'react'
+
+import { closeForm }    from '../Form/thunks'
 import {
-  useParams,
-}                   from 'react-router-dom'
-import React 			  from 'react'
+  createSuccessMessage,
+}                       from '../Modal/thunks'
+import { nameChanged }  from '../strings/success'
+import usePostData 	    from '../shared/hooks/postData-hook'
+import Button 		      from '../shared/FormElements/Button'
+import Input 			      from '../shared/FormElements/Input'
 
-import usePostData 	from '../shared/hooks/postData-hook'
-import Button 		  from '../shared/FormElements/Button'
-import Input 			  from '../shared/FormElements/Input'
-import FormModal 	  from '../shared/UIElements/FormModal/FormModal'
-
-const ChangeHouseName = (props) => {
+const ChangeHouseName = ({ houseParam, setHouseName, token }) => {
   const { post } = usePostData()
-  const houseParam = useParams().houseId
+  const dispatch = useDispatch()
 
   const changeHouseNameHandler = (newHouseName) => {
     const reqData = {
@@ -26,18 +28,19 @@ const ChangeHouseName = (props) => {
       `${process.env.REACT_APP_BACKEND_URL}/house/changehousename`,
       {
         headers: {
-          authorization: `Bearer ${props.token}`,
+          authorization: `Bearer ${token}`,
         },
       },
       reqData,
       () => {
-        props.setHouseName(newHouseName )
-        props.cancel()
+        setHouseName(newHouseName)
+        dispatch(closeForm())
+        dispatch(createSuccessMessage(nameChanged))
       }
     )
   }
 
-  const form = (
+  return (
     <Formik
       initialValues={{
         houseName: '',
@@ -54,22 +57,10 @@ const ChangeHouseName = (props) => {
             type='input'
             title='NEW HOUSE NAME'
           />
-          <Button type='button' cancel onClick={props.cancel}>
-						CANCEL
-          </Button>
           <Button type='submit'>SUBMIT</Button>
         </Form>
       )}
     </Formik>
-  )
-  
-  return (
-    <FormModal
-      onCancel={props.cancel}
-      header='CHANGE NAME OF THE HOUSE?'
-      show={props.show}
-      form={form}
-    />
   )
 }
 

@@ -10,7 +10,7 @@ import styles       from './Auth.module.css'
 
 const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(true)
-  const [isUserLogin, setIsUserLogin] = useState(true)
+  const [isUserLogin, setIsUserLogin] = useState(false)
   let form
 
   const switchToSignUp = () => {

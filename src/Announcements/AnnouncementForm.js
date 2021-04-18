@@ -115,7 +115,7 @@ const AnnouncementForm = (props) => {
                 value={values.body}
                 id="body"
                 name="body"
-                type="text"
+                type="textarea"
                 title="ANNOUNCEMENT" />
               <Button type="submit">
                 CREATE!

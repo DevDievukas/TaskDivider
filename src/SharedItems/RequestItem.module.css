@@ -29,7 +29,7 @@
   display: flex;
   margin: 0;
   padding: 0;
-  width: 60%;
+  max-width: 60%;
   justify-content: space-between;
 }
 
@@ -48,6 +48,7 @@
   margin: auto;
   padding: 0;
   margin-right: 0.1rem;
-  width: 90%;
+  max-width: 90%;
   text-align: right;
+  word-wrap: break-word;
 }

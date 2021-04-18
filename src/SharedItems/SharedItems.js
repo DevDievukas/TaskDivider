@@ -82,8 +82,6 @@ const SharedItems = connect (({ auth: { houseId, token, userId }}) => (
         request,
         addFilter
       )
-
-    // postData(`${process.env.REACT_APP_BACKEND_URL}/request`, null, request);
     }
 
     const clearRequestsSubmitHandler = (event) => {

@@ -1,25 +1,32 @@
-import { Trash }    from 'phosphor-react'
-import { useState } from 'react'
-import React        from 'react'
+import { Trash }       from 'phosphor-react'
+import { useState }    from 'react'
+import { useDispatch } from 'react-redux'
+import { useParams }   from 'react-router'
+import React           from 'react'
 
-import Button       from '../shared/FormElements/Button'
-import Modal        from '../shared/UIElements/Modal'
+import { createForm }  from '../Form/thunks'
+import { assign }      from '../strings/form'
+import Button          from '../shared/FormElements/Button'
+import Modal           from '../shared/UIElements/Modal'
 
-import styles       from './PersonElement.module.css'
-import RoomsModal   from './RoomsModal'
+import styles          from './PersonElement.module.css'
+import RoomsModal      from './RoomsModal'
 
-const PersonElement = (props) => {
-  const [showRoomsModal, setShowRoomsModal] = useState(false)
+const PersonElement = ({ token, name, id, onDelete }) => {
+  const dispatch = useDispatch()
+  const houseParam = useParams().houseId
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   
-  const { token, name, id, onDelete } = props
 
-  const revealRoomsModal = () => {
-    setShowRoomsModal(true)
-  }
-
-  const closeRoomsModal = () => {
-    setShowRoomsModal(false)
+  const callRoomsModal = () => {
+    dispatch(createForm(
+      <RoomsModal
+        houseParam={houseParam}
+        personId={id}
+        token={token}
+      />,
+      assign
+    ))
   }
 
   const revealDeleteModal = () => {
@@ -37,14 +44,6 @@ const PersonElement = (props) => {
 
   return (
     <React.Fragment>
-      {showRoomsModal ? (
-        <RoomsModal
-          show={showRoomsModal}
-          close={closeRoomsModal}
-          personId={id}
-          token={token}
-        />
-      ) : null}
       <Modal
         show={showDeleteModal}
         onCancel={closeDeleteModal}
@@ -57,15 +56,17 @@ const PersonElement = (props) => {
         <Button type="submit">DELETE</Button>
       </Modal>
       <li className={styles.personCard}>
-        <h6 className={styles.title}>{name}</h6>
-        <p className={styles.rooms} onClick={revealRoomsModal}>
+        <p className={styles.title}>{name}</p>
+        <p className={styles.rooms} onClick={callRoomsModal}>
           Rooms
         </p>
-        <Trash
-          size={24}
-          className={styles.deleteBtn}
-          onClick={revealDeleteModal}
-        />
+        <p>
+          <Trash
+            size={24}
+            className={styles.deleteBtn}
+            onClick={revealDeleteModal}
+          />
+        </p>
       </li>
     </React.Fragment>
   )

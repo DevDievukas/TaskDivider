@@ -24,3 +24,14 @@ padding: 5px;
 font-size: 26px;
 font-weight: bold;
 `
+
+export const Body = styled.div`
+  display: block;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  overflow: auto;
+  margin-top: 55px;
+  max-height: 60vh;
+`
