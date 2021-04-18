@@ -22,6 +22,8 @@ import {
 }                             from '../strings/form'
 
 import {
+  Card,
+  Controller,
   HouseName,
   Inner,
   Main,
@@ -101,18 +103,32 @@ const Info = connect (({ auth: { token }}) => (
     return (
       <Main>
         <HouseName>{houseName}</HouseName>
-        <Inner>
-          <p>Residents:</p>
-          <p>{peopleNumber}</p>
-        </Inner>
-        <Inner>
-          <p>Rooms:</p>
-          <p>{roomNumber}</p>
-        </Inner>
-        <p onClick={() => callChangeHousename()}>Change house name</p>
-        <p onClick={() => callChangePassword()}>Change password</p>
-        <p onClick={() => callChangeOwner()}>Change owner</p>
-        <p onClick={() => callDeleteHouse()}>Delete house</p>
+        <Card>
+          <Inner>
+            <p>Residents:</p>
+            <p>{peopleNumber}</p>
+          </Inner>
+          <Inner>
+            <p>Rooms:</p>
+            <p>{roomNumber}</p>
+          </Inner>
+          <Controller
+            onClick={() => callChangeHousename()}>
+            Change house name
+          </Controller>
+          <Controller
+            onClick={() => callChangePassword()}>
+            Change password
+          </Controller>
+          <Controller
+            onClick={() => callChangeOwner()}>
+            Change owner
+          </Controller>
+          <Controller
+            onClick={() => callDeleteHouse()}>
+            Delete house
+          </Controller>
+        </Card>
       </Main>
     )
   }
