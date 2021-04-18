@@ -7,18 +7,20 @@ import {
   useDispatch,
 }                       from 'react-redux'
 import {
-  useParams,
   useHistory,
 }                       from 'react-router-dom'
 import React 			      from 'react'
 
+import { closeForm }    from '../Form/thunks'
 import { createError }  from '../Loading/thunks'
+import {
+  createSuccessMessage,
+}                       from '../Modal/thunks'
+import { houseDeleted } from '../strings/success'
 import Button 		      from '../shared/FormElements/Button'
 import Input 			      from '../shared/FormElements/Input'
-import FormModal 	      from '../shared/UIElements/FormModal/FormModal'
 
-const DeleteHouse = (props) => {
-  const houseParam = useParams().houseId
+const DeleteHouse = ({ houseParam, token }) => {
   const dispatch = useDispatch()
   const history = useHistory()
 
@@ -30,13 +32,15 @@ const DeleteHouse = (props) => {
     axios.delete(`${process.env.REACT_APP_BACKEND_URL}/house/`,
       {
         headers: {
-          authorization: `Bearer ${props.token}`,
+          authorization: `Bearer ${token}`,
         },
         data: {
           password,
           houseId: houseParam,
         },
       }).then(() => {
+      dispatch(closeForm())
+      dispatch(createSuccessMessage(houseDeleted))
       deleteSuccess()
     }).catch(() => {
       dispatch(createError('Deleting house failed'))
@@ -44,7 +48,7 @@ const DeleteHouse = (props) => {
   }
 
 
-  const form = (
+  return (
     <Formik
       initialValues={{
         password: '',
@@ -61,22 +65,10 @@ const DeleteHouse = (props) => {
             type='password'
             title='HOUSE PASSWORD'
           />
-          <Button type='button' cancel onClick={props.cancel}>
-						CANCEL
-          </Button>
           <Button type='submit'>SUBMIT</Button>
         </Form>
       )}
     </Formik>
-  )
-
-  return (
-    <FormModal
-      onCancel={props.cancel}
-      header='DELETE HOUSE?'
-      show={props.show}
-      form={form}
-    />
   )
 }
 

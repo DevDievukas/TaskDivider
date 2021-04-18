@@ -32,6 +32,6 @@ export const Body = styled.div`
   padding-bottom: 10px;
   padding-top: 10px;
   overflow: auto;
-  margin-top: 45px;
+  margin-top: 55px;
   max-height: 60vh;
 `
