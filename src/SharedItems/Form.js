@@ -40,8 +40,7 @@ const RequestForm = (props) => {
       {() => (
         <Form className={styles.form}>
           <Input id="author" name="author" type="input" title="NAME" />
-          <Input id="body" name="body" type="text" title="REQUEST" />
-
+          <Input id="body" name="body" type="textarea" title="REQUEST"/>
           <Button type="submit" className={styles.button}>
             SUBMIT REQUEST
           </Button>

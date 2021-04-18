@@ -51,7 +51,6 @@ const ImageUpload = (props) => {
     filePickerRef.current.click()
   }
   return (
-    // <div className={styles.formControl}>
     <React.Fragment>
       {button ?
         <div
@@ -82,7 +81,6 @@ const ImageUpload = (props) => {
         onChange={pickedHandler}
       />
     </React.Fragment>
-    // </div>
   )
 }
 
