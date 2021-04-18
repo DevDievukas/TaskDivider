@@ -13,7 +13,10 @@ import {
   createSuccessMessage,
 }                       from '../Modal/thunks'
 import { person }       from '../strings/form'
-import { personAdded }  from '../strings/success'
+import {
+  personAdded,
+  personDeleted,
+}                       from '../strings/success'
 import Button           from '../shared/FormElements/Button'
 import EmptyData 				from '../shared/UIElements/EmptyData/EmptyData'
 import useDeleteData 		from '../shared/hooks/deleteData-hook'
@@ -42,6 +45,7 @@ const People = connect (({ auth: { token, userId }}) => (
 
     const PersonDeleteHandler = (personId) => {
       const deleteFilter = () => {
+        dispatch(createSuccessMessage(personDeleted))
         loadedData.setData((prevData) =>
           prevData.filter((element) => element._id !== personId)
         )

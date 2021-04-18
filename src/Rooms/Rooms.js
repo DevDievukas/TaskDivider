@@ -13,7 +13,10 @@ import {
   createSuccessMessage,
 }                       from '../Modal/thunks'
 import { room }         from '../strings/form'
-import { roomAdded }    from '../strings/success'
+import {
+  roomAdded,
+  roomDeleted,
+}                       from '../strings/success'
 import Button           from '../shared/FormElements/Button'
 import EmptyData 				from '../shared/UIElements/EmptyData/EmptyData'
 import useDeleteData 		from '../shared/hooks/deleteData-hook'
@@ -54,7 +57,6 @@ const Rooms = connect (({ auth: { houseId, token, userId }}) => (
         formData.append('images', img)
       })
 
-
       const addFilter = (res) => {
         dispatch(createSuccessMessage(roomAdded))
         dispatch(closeForm())
@@ -81,6 +83,7 @@ const Rooms = connect (({ auth: { houseId, token, userId }}) => (
         loadedData.setData((prevData) =>
           prevData.filter((element) => element._id !== id)
         )
+        dispatch(createSuccessMessage(roomDeleted))
       }
       deleteData(
         `${process.env.REACT_APP_BACKEND_URL}/room/`,
