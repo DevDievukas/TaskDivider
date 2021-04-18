@@ -33,7 +33,8 @@ const Login = (props) => {
         password,
         remember,
       })
-      .then(({ userId, token, email, remember }) => {
+      .then(({ data :{ userId, token, email, remember }}) => {
+        console.log(userId)
         dispatch(stopLoading())
         dispatch(
           startUserAuth(
